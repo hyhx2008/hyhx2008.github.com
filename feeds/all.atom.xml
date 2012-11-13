@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/all.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2012-11-11T22:20:00+09:00</updated><entry><title>使用pelican生成github博客</title><link href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html" rel="alternate"></link><updated>2012-11-11T22:20:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-11:shi-yong-pelicansheng-cheng-githubbo-ke.html</id><summary type="html">&lt;p&gt;自从马星给我推荐在github上写博客到现在已经好久了，今天我终于算是学会了。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/all.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2012-11-13T17:26:00+09:00</updated><entry><title>VMware虚拟机启动时总提示cann't connect to floopy0的问题</title><link href="http://hyhx2008.github.com/vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html" rel="alternate"></link><updated>2012-11-13T17:26:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-13:vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html</id><summary type="html">&lt;p&gt;在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。&lt;/p&gt;
+&lt;p&gt;百度了一下解决办法: 修改虚拟机的.vmx文件。&lt;/p&gt;
+&lt;p&gt;1.将floppy0.autodetect这项改为FALSE:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;floppy0.autodetect = &amp;quot;FALSE&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2.添加一句:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;floppy0.startConnected = &amp;quot;FALSE&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The End!!&lt;/p&gt;
+</summary><category term="ubuntu"></category><category term="VMware"></category></entry><entry><title>使用pelican生成github博客</title><link href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html" rel="alternate"></link><updated>2012-11-11T22:20:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-11:shi-yong-pelicansheng-cheng-githubbo-ke.html</id><summary type="html">&lt;p&gt;自从马星给我推荐在github上写博客到现在已经好久了，今天我终于算是学会了。
 我看人家都是用jekyll生成静态页面的，果然和专业到技术宅差得太多，自己尝试折腾了一天也没弄出什么名堂。
 马星觉得自己很菜，我居然比马星还菜。。。。。
 在马星的诱惑下，用了这个不知到他从哪找来的工具，说实话倒是挺好用的。&lt;/p&gt;

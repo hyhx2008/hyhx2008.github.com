@@ -150,6 +150,25 @@ tags: <a href=".././tag/ubuntu.html">ubuntu</a> </div>
 	</div>
 </div>	
 
+<div class='article'>
+	<h2>VMware虚拟机启动时总提示cann't connect to floopy0的问题</h2>
+	<div class="well small">Permalink: <a class="more" href=".././vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
+by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
+in <a href=".././category/tech.html">tech</a>
+tags: <a href=".././tag/ubuntu.html">ubuntu</a> <a href=".././tag/VMware.html">VMware</a> </div>
+	<div class="summary"><p>在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。</p>
+<p>百度了一下解决办法: 修改虚拟机的.vmx文件。</p>
+<p>1.将floppy0.autodetect这项改为FALSE:</p>
+<div class="highlight"><pre><span class="go">floppy0.autodetect = &quot;FALSE&quot;</span>
+</pre></div>
+<p>2.添加一句:</p>
+<div class="highlight"><pre><span class="go">floppy0.startConnected = &quot;FALSE&quot;</span>
+</pre></div>
+<p>The End!!</p>
+ <a class="btn primary xsmall" href=".././vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">more…</a>
+	</div>
+</div>	
+
 
 
 
