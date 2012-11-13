@@ -154,4 +154,4 @@ pelican支持markdown和reST两种格式，由于reST的语法高亮比较容易
 
 在linux环境下可以使用具有实时预览功能的ReText编辑器编辑reST文件，但是后来发现vim中支持reST文件的语法高亮，写起来也挺方便的。
 
-The End!!
+The End!

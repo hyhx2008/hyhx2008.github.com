@@ -102,7 +102,7 @@
 &lt;a class="reference external" href="http://docutils.sourceforge.net/rst.html"&gt;官方英文教程&lt;/a&gt;
 。&lt;/p&gt;
 &lt;p&gt;在linux环境下可以使用具有实时预览功能的ReText编辑器编辑reST文件，但是后来发现vim中支持reST文件的语法高亮，写起来也挺方便的。&lt;/p&gt;
-&lt;p&gt;The End!!&lt;/p&gt;
+&lt;p&gt;The End!&lt;/p&gt;
 </summary><category term="GitHub"></category><category term="pelican"></category></entry><entry><title>重新安装unbutu后的todo list</title><link href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html" rel="alternate"></link><updated>2012-11-11T21:44:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-11:ubuntu_reinstall_todo-zh.html</id><summary type="html">&lt;p&gt;经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。&lt;/p&gt;
 &lt;p&gt;写在这里做个提醒吧，以后再慢慢添加。&lt;/p&gt;
 &lt;p&gt;1.安装aptitude&lt;/p&gt;
