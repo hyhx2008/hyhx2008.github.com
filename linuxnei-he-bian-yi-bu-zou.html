@@ -20,7 +20,7 @@
 
 	
 <script type="text/javascript">
-	var disqus_identifier = "ubuntu_reinstall_todo-zh.html";
+	var disqus_identifier = "linuxnei-he-bian-yi-bu-zou.html";
 	(function() {
 		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 		dsq.src = 'http://hysblog.disqus.com/embed.js';
@@ -44,11 +44,11 @@
 					
 				
 				
-					<li ><a href="./category/intern.html">intern</a></li>
+					<li class="active"><a href="./category/intern.html">intern</a></li>
 				
 					<li ><a href="./category/my.html">my</a></li>
 				
-					<li class="active"><a href="./category/tech.html">tech</a></li>
+					<li ><a href="./category/tech.html">tech</a></li>
 				
 			</ul>
 			<p class="pull-right"><a href="./archives.html">[archives]</a> <a href="./tags.html">[tags]</a></p>
@@ -81,37 +81,38 @@
 			
 			
 	<div class='article'>
-		<div class="page-header"><h1>重新安装unbutu后的todo list</h1></div>
-		<div class="well small">Permalink: <a class="more" href="./ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
+		<div class="page-header"><h1>Linux内核编译步骤</h1></div>
+		<div class="well small">Permalink: <a class="more" href="./linuxnei-he-bian-yi-bu-zou.html">2012-07-18 22:00:00</a>
 by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
-in <a href="./category/tech.html">tech</a>
-tags: <a href="./tag/ubuntu.html">ubuntu</a> </div>
-		<div><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
-<p>写在这里做个提醒吧，以后再慢慢添加。</p>
-<p>1.安装aptitude</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo apt-get install aptitude
+in <a href="./category/intern.html">intern</a>
+tags: <a href="./tag/linux.html">linux</a> <a href="./tag/kernel.html">kernel</a> <a href="./tag/compile.html">compile</a> </div>
+		<div><p>实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。</p>
+<p>首先进入到内核源码的目录，然后按照以下步骤编译:</p>
+<p><strong>1.配置内核</strong></p>
+<div class="highlight"><pre><span class="gp">$</span>make menuconfig
 </pre></div>
-<p>2.安装vim</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install vim
+<p>这条命令可以在一个GUI下设置用户需要的内核参数，并生成编译需要的.config配置文件。</p>
+<p><strong>2.编译内核</strong></p>
+<div class="highlight"><pre><span class="gp">$</span>make -j 2
 </pre></div>
-<p>并修改/usr/share/vim/vimrc 。</p>
-<p>3.添加sudoers</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo visudo
+<p>后面的-j参数指的是可以允许多少个module同时编译，-j 2 就是允许2个module同时编译，也可以省略-j参数。如果CPU是多核的话，可以加上该参数提高编译速度。</p>
+<p>接下来就是漫长的等待。。。</p>
+<p><strong>3.加入模块</strong></p>
+<div class="highlight"><pre><span class="gp">$</span>sudo make modules_install
+<span class="gp">$</span>sudo make install
 </pre></div>
-<p>加入 hy ALL = （ALL）ALL。</p>
-<p>ubuntu下好像这样做后还是不能使用su命令切换到root，百度解决办法:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo passwd
+<p><strong>4.更新引导文件</strong></p>
+<div class="highlight"><pre><span class="gp">$</span>sudo update-initramfs -c -k <span class="s2">&quot;kernel version&quot;</span>
 </pre></div>
-<p>修改一下密码就好了。</p>
-<p>4.安装openssh</p>
-<p>为了能让secureCRT连上虚拟机里的ubuntu，需要安装openssh。</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install openssh-server openssh-client
+<p>这里的kernel version可以在make menuconfig的时候自己设置名称，具体应该写什么需要在/boot文件夹下查看:</p>
+<div class="highlight"><pre><span class="gp">$</span>ls -lF /boot
 </pre></div>
-<p>再用ifconfig查一下ip，填到secureCRT里就好了。</p>
-<p>5.安装中文输入法</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install ibus ibus-pinyin ibus-gtk ibus-qt4
+<p>比如内核版本为2.6.36，则/boot下就会有一个vmlinuz-2.6.36文件，把vmlinuz-后面的字符放在kernel version的位置即可。</p>
+<p><strong>5.更新grub</strong></p>
+<div class="highlight"><pre><span class="gp">$</span>sudo update-grub
 </pre></div>
-<p>暂时想到这么多。。。。</p>
+<p>整个编译过程大概也得一两个小时左右吧，耐心等待。</p>
+<p>The End！！</p>
 </div>
 		<div>
 			<h2>Comments</h2>
