@@ -1,4 +1,4 @@
-重新安装unbutu后的todo list
+重新安装ubuntu后的todo list
 ============================
 
 :slug: ubuntu_reinstall_todo

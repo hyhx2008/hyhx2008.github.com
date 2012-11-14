@@ -112,7 +112,7 @@
 。&lt;/p&gt;
 &lt;p&gt;在linux环境下可以使用具有实时预览功能的ReText编辑器编辑reST文件，但是后来发现vim中支持reST文件的语法高亮，写起来也挺方便的。&lt;/p&gt;
 &lt;p&gt;The End!&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 11 Nov 2012 22:20:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-11-11:shi-yong-pelicansheng-cheng-githubbo-ke.html</guid><category>GitHub</category><category>pelican</category></item><item><title>重新安装unbutu后的todo list</title><link>http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html</link><description>&lt;p&gt;经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 11 Nov 2012 22:20:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-11-11:shi-yong-pelicansheng-cheng-githubbo-ke.html</guid><category>GitHub</category><category>pelican</category></item><item><title>重新安装ubuntu后的todo list</title><link>http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html</link><description>&lt;p&gt;经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。&lt;/p&gt;
 &lt;p&gt;写在这里做个提醒吧，以后再慢慢添加。&lt;/p&gt;
 &lt;p&gt;1.安装aptitude&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo apt-get install aptitude
