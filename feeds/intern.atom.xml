@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/intern.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2012-07-22T22:00:00+09:00</updated><entry><title>trace-cmd与kernelshark使用总结</title><link href="http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html" rel="alternate"></link><updated>2012-07-22T22:00:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-07-22:trace-cmdyu-kernelsharkshi-yong-zong-jie.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;1.trace-cmd&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/intern.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2012-08-24T22:00:00+09:00</updated><entry><title>Festival tts 使用总结</title><link href="http://hyhx2008.github.com/festival-tts-shi-yong-zong-jie.html" rel="alternate"></link><updated>2012-08-24T22:00:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-08-24:festival-tts-shi-yong-zong-jie.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/"&gt;Festival-tts&lt;/a&gt;
+是一个免费的tts (text to speech) 工具，可以将字符串转为声音播放出来或者存为声音文件。&lt;/p&gt;
+&lt;p&gt;首先安装:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sodu aptitude install festival
+&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install festival-dev
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;可以用下面的命令测试一下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;echo &lt;/span&gt;hellow world | festival --tts
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;此时可以听到喇叭中念出hello world，如果没有声音可能是声卡驱动的问题。&lt;/p&gt;
+&lt;p&gt;如果想在自己的程序中使用festival tts的功能，则需要用到festival提供的API，可以参考festiva的文档:
+&lt;a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/manual/festival_28.html#SEC126"&gt;festival:API&lt;/a&gt;
+。&lt;/p&gt;
+&lt;p&gt;这里以C++的API为例，介绍两个常用的函数。&lt;/p&gt;
+&lt;p&gt;首先程序需要include一个头文件:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &amp;lt;festival.h&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;两个常用API为:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;festival_initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;load_init_files&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;heap_size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;festival_say_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;从函数名就可以看出这两个API的作用，第一个为初始化函数，需要在使用其他API之前调用，第二个函数即将text转为声音播放出来。&lt;/p&gt;
+&lt;p&gt;下面给出一个样例程序，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &amp;lt;festival/festival.h&amp;gt;&lt;/span&gt;
+
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//EST_Wave wave;&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;heap_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;210000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  &lt;span class="c1"&gt;// default scheme heap size&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;load_init_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// we want the festival init files loaded&lt;/span&gt;
+
+        &lt;span class="n"&gt;festival_initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;load_init_files&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;heap_size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="c1"&gt;// Say simple file&lt;/span&gt;
+        &lt;span class="c1"&gt;//festival_say_file(&amp;quot;/etc/motd&amp;quot;);&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//festival_eval_command(&amp;quot;(voice_ked_diphone)&amp;quot;);&lt;/span&gt;
+
+        &lt;span class="c1"&gt;// Say some text;&lt;/span&gt;
+        &lt;span class="n"&gt;festival_say_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="c1"&gt;// Convert to a waveform&lt;/span&gt;
+        &lt;span class="c1"&gt;//festival_text_to_wave(&amp;quot;hello world&amp;quot;,wave);&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//wave.save(&amp;quot;/tmp/wave.wav&amp;quot;,&amp;quot;riff&amp;quot;);&lt;/span&gt;
+        &lt;span class="c1"&gt;// festival_say_file puts the system in async mode so we better&lt;/span&gt;
+        &lt;span class="c1"&gt;// wait for the spooler to reach the last waveform before exiting&lt;/span&gt;
+        &lt;span class="c1"&gt;// This isn&amp;#39;t necessary if only festival_say_text is being used (and your own wave playing stuff)&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//festival_wait_for_spooler();&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其他一些可用的API被我注释掉了，感兴趣的话可以尝试一下。&lt;/p&gt;
+&lt;p&gt;程序很简单，麻烦的是编译，需要include很多头文件并连接一大堆库，搞了半天才可以编译通过，下面的编译命令供参考:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;g++ festival_src.cpp -o festival_app -lpthread -lFestival -I/usr/include/festival -I/usr/include/speech_tools -L/usr/lib/speech_tools/lib -lestools -lestbase -leststring&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The End!!&lt;/p&gt;
+</summary><category term="festival"></category></entry><entry><title>trace-cmd与kernelshark使用总结</title><link href="http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html" rel="alternate"></link><updated>2012-07-22T22:00:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-07-22:trace-cmdyu-kernelsharkshi-yong-zong-jie.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;1.trace-cmd&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;trace-cmd是对ftrace的封装，是一个可以用来跟踪linux内核中事件(event)发生的时间、次数等的工具。&lt;/p&gt;
 &lt;p&gt;首先需要安装trace-cmd:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install trace-cmd

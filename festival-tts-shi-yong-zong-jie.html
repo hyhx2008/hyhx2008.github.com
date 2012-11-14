@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>H.y's Blog</title>
+	<meta name="description" content="">
+	<meta name="author" content="hyhx2008">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="./theme/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="./theme/bootstrap.min.css" rel="stylesheet">
+	<link href="./theme/local.css" rel="stylesheet">
+	<link href="./theme/pygments.css" rel="stylesheet">
+	
+<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+
+	
+<script type="text/javascript">
+	var disqus_identifier = "festival-tts-shi-yong-zong-jie.html";
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://hysblog.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+
+</head>
+<body>
+	
+	
+<a href="https://github.com/hyhx2008"><img style="position: absolute; top: 39px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+
+	<div class="topbar">
+	  <div class="topbar-inner">
+		<div class="container-fluid">
+		  <a class="brand" href="./index.html">H.y's Blog</a>
+			<ul class="nav">
+				
+				
+					
+				
+				
+					<li class="active"><a href="./category/intern.html">intern</a></li>
+				
+					<li ><a href="./category/my.html">my</a></li>
+				
+					<li ><a href="./category/tech.html">tech</a></li>
+				
+			</ul>
+			<p class="pull-right"><a href="./archives.html">[archives]</a> <a href="./tags.html">[tags]</a></p>
+		</div>
+	  </div>
+	</div>
+
+	<div class="container-fluid">	
+	  <div class="sidebar">
+		<div class="well">
+			<h3>Blogroll</h3>
+			<ul>
+				
+				<li><a href="http://x-wei.github.com">x-wei</a></li>
+				
+				<li><a href="http://farseerfc.github.com/">farseerfc</a></li>
+				
+			</ul>
+			<div class="social">
+			<h3>Social</h3>
+			<ul>
+				
+				<li><a href="https://github.com/hyhx2008">github</a></li>
+				
+			</ul>
+			</div>
+		</div>
+	  </div>
+	  <div class="content">
+			
+			
+	<div class='article'>
+		<div class="page-header"><h1>Festival tts 使用总结</h1></div>
+		<div class="well small">Permalink: <a class="more" href="./festival-tts-shi-yong-zong-jie.html">2012-08-24 22:00:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
+in <a href="./category/intern.html">intern</a>
+tags: <a href="./tag/festival.html">festival</a> </div>
+		<div><p><a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/">Festival-tts</a>
+是一个免费的tts (text to speech) 工具，可以将字符串转为声音播放出来或者存为声音文件。</p>
+<p>首先安装:</p>
+<div class="highlight"><pre><span class="gp">$</span>sodu aptitude install festival
+<span class="gp">$</span>sudo aptitude install festival-dev
+</pre></div>
+<p>可以用下面的命令测试一下:</p>
+<div class="highlight"><pre><span class="gp">$</span><span class="nb">echo </span>hellow world | festival --tts
+</pre></div>
+<p>此时可以听到喇叭中念出hello world，如果没有声音可能是声卡驱动的问题。</p>
+<p>如果想在自己的程序中使用festival tts的功能，则需要用到festival提供的API，可以参考festiva的文档:
+<a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/manual/festival_28.html#SEC126">festival:API</a>
+。</p>
+<p>这里以C++的API为例，介绍两个常用的函数。</p>
+<p>首先程序需要include一个头文件:</p>
+<div class="highlight"><pre><span class="cp">#include &lt;festival.h&gt;</span>
+</pre></div>
+<p>两个常用API为:</p>
+<div class="highlight"><pre><span class="n">festival_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">load_init_files</span><span class="p">,</span><span class="kt">int</span> <span class="n">heap_size</span><span class="p">);</span>
+
+<span class="n">festival_say_text</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">text</span><span class="p">);</span>
+</pre></div>
+<p>从函数名就可以看出这两个API的作用，第一个为初始化函数，需要在使用其他API之前调用，第二个函数即将text转为声音播放出来。</p>
+<p>下面给出一个样例程序，</p>
+<div class="highlight"><pre><span class="cp">#include &lt;festival/festival.h&gt;</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+
+        <span class="c1">//EST_Wave wave;</span>
+        <span class="kt">int</span> <span class="n">heap_size</span> <span class="o">=</span> <span class="mi">210000</span><span class="p">;</span>  <span class="c1">// default scheme heap size</span>
+        <span class="kt">int</span> <span class="n">load_init_files</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// we want the festival init files loaded</span>
+
+        <span class="n">festival_initialize</span><span class="p">(</span><span class="n">load_init_files</span><span class="p">,</span><span class="n">heap_size</span><span class="p">);</span>
+
+        <span class="c1">// Say simple file</span>
+        <span class="c1">//festival_say_file(&quot;/etc/motd&quot;);</span>
+
+        <span class="c1">//festival_eval_command(&quot;(voice_ked_diphone)&quot;);</span>
+
+        <span class="c1">// Say some text;</span>
+        <span class="n">festival_say_text</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Convert to a waveform</span>
+        <span class="c1">//festival_text_to_wave(&quot;hello world&quot;,wave);</span>
+
+        <span class="c1">//wave.save(&quot;/tmp/wave.wav&quot;,&quot;riff&quot;);</span>
+        <span class="c1">// festival_say_file puts the system in async mode so we better</span>
+        <span class="c1">// wait for the spooler to reach the last waveform before exiting</span>
+        <span class="c1">// This isn&#39;t necessary if only festival_say_text is being used (and your own wave playing stuff)</span>
+
+        <span class="c1">//festival_wait_for_spooler();</span>
+
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+<p>其他一些可用的API被我注释掉了，感兴趣的话可以尝试一下。</p>
+<p>程序很简单，麻烦的是编译，需要include很多头文件并连接一大堆库，搞了半天才可以编译通过，下面的编译命令供参考:</p>
+<div class="highlight"><pre><span class="go">g++ festival_src.cpp -o festival_app -lpthread -lFestival -I/usr/include/festival -I/usr/include/speech_tools -L/usr/lib/speech_tools/lib -lestools -lestbase -leststring</span>
+</pre></div>
+<p>The End!!</p>
+</div>
+		<div>
+			<h2>Comments</h2>
+		 	
+			<div id="disqus_thread"></div>
+			
+		<div>
+	</div>	
+
+		<footer>
+		  <p> Powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>, theme based on <a href="http://twitter.github.com/bootstrap/">Bootstrap, from Twitter</a>.</p>
+		  <p>&copy; hyhx2008 2011</p>
+		</footer>
+	  </div>
+   
+	</div>
+</body>
+</html>
