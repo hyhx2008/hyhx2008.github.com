@@ -142,7 +142,44 @@
 &lt;p&gt;感谢马星手把手一步一步教我如何在github上写博客。&lt;/p&gt;
 &lt;p&gt;说是博客，其实估计也没人看，就当做记笔记写总结到好地方了。&lt;/p&gt;
 &lt;p&gt;以前都是用evernote写笔记的，但是在粘代码的时候不能语法高亮，所以听了马星的推荐在github上写博客，也算是赶个时髦吧～&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 11 Nov 2012 02:16:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-11-11:hello-world.html</guid><category>GitHub</category></item><item><title>Linux内核编译步骤</title><link>http://hyhx2008.github.com/linuxnei-he-bian-yi-bu-zou.html</link><description>&lt;p&gt;实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 11 Nov 2012 02:16:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-11-11:hello-world.html</guid><category>GitHub</category></item><item><title>trace-cmd与kernelshark使用总结</title><link>http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html</link><description>&lt;p&gt;&lt;strong&gt;1.trace-cmd&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;trace-cmd是对ftrace的封装，是一个可以用来跟踪linux内核中事件(event)发生的时间、次数等的工具。&lt;/p&gt;
+&lt;p&gt;首先需要安装trace-cmd:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install trace-cmd
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;使用也非常简单:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo trace-cmd record -e sched_switch
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;-e 参数指出需要跟踪的事件，这里的sched_switch指的是进程切换，还可以是hrtimer、irq等，例如:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo trace-cmd record -e sched_switch -e hrtimer*
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;命令输完回车后，trace-cmd就开始记录内核中事件的发生了，ctrl+C 停止跟踪，此时会生成一个trace.dat文件，相当于一个log吧。&lt;/p&gt;
+&lt;p&gt;trace.dat里的内容不易读，trace-cmd提供分析trace.dat的功能:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;trace-cmd report
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;就可以看到所跟踪的事件发生的情况了，和下图差不多。&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/trace_cmd_kernelshark1.png" src="../statics/pics/trace_cmd_kernelshark1.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;也可以重定向到一个文本文件中再做分析，比如:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;trace-cmd report &amp;gt; report.txt
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;跟踪的报告就存入report.txt中了，可以用Perl等来处理。&lt;/p&gt;
+&lt;p&gt;注:使用trace-cmd需要内核开启ftrace，即在编译内核make menuconfig时，选择下面的选项:&lt;/p&gt;
+&lt;p&gt;Kernel Hacking -&amp;gt; Tracers -&amp;gt; Kernel Function Tracer&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.kernelshark&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;kernelshark提供了对trace.dat的可视化分析，首先安装:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install kernelshark
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后在trace.dat所在的目录输入:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;kernelshark
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;即可看到图形化界面了:&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/trace_cmd_kernelshark2.png" src="../statics/pics/trace_cmd_kernelshark2.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;The End!!&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 22 Jul 2012 22:00:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-07-22:trace-cmdyu-kernelsharkshi-yong-zong-jie.html</guid><category>trace-cmd</category><category>kernelshark</category></item><item><title>Linux内核编译步骤</title><link>http://hyhx2008.github.com/linuxnei-he-bian-yi-bu-zou.html</link><description>&lt;p&gt;实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。&lt;/p&gt;
 &lt;p&gt;首先进入到内核源码的目录，然后按照以下步骤编译:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;1.配置内核&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;make menuconfig
