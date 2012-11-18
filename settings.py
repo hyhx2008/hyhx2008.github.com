@@ -33,5 +33,4 @@ SOCIAL = (
           ('github', 'https://github.com/hyhx2008'),
           )
 
-          
-
+GOOGLE_CUSTOM_SEARCH_SIDEBAR = "007947589229995882978:padodsakamc"
