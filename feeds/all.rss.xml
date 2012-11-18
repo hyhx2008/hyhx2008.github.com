@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 13 Nov 2012 17:26:00 +0900</lastBuildDate><item><title>VMware虚拟机启动时总提示cann't connect to floopy0的问题</title><link>http://hyhx2008.github.com/vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html</link><description>&lt;p&gt;在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 18 Nov 2012 23:58:00 +0900</lastBuildDate><item><title>让google和百度检索自己的网站</title><link>http://hyhx2008.github.com/rang-googlehe-bai-du-jian-suo-zi-ji-de-wang-zhan.html</link><description>&lt;p&gt;自从建立起github博客也有两个星期了，但是在google上一直搜索不到自己的博客。&lt;/p&gt;
+&lt;p&gt;等了这么久google还没有抓取我的博客内容。今天问了马星这个问题，马星又早就把解决办法贴在他的
+&lt;a class="reference external" href="http://x-wei.github.com/add-google-custom-search.html"&gt;blog&lt;/a&gt;
+上了。。&lt;/p&gt;
+&lt;p&gt;其实可以主动向搜索引擎申请检索自己的网站，申请链接如下:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.google.com/addurl/?hl=zh-CN&amp;amp;continue=/addurl"&gt;google: http://www.google.com/addurl/?hl=zh-CN&amp;amp;continue=/addurl&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.baidu.com/search/url_submit.html"&gt;baidu: http://www.baidu.com/search/url_submit.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;填写自己的网址即可。&lt;/p&gt;
+&lt;p&gt;(问完马星才发现google好像几天前已经检索了我的博客内容。。。)&lt;/p&gt;
+&lt;p&gt;马星那那篇
+&lt;a class="reference external" href="http://x-wei.github.com/add-google-custom-search.html"&gt;blog&lt;/a&gt;
+上还讲了如何添加google自定义搜索，不过要使用bootsrap2主题。。&lt;/p&gt;
+&lt;p&gt;我瞎折腾了一会儿，也在左边添加了个畸形的自定义搜索框。。。&lt;/p&gt;
+&lt;p&gt;The End！！&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 18 Nov 2012 23:58:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-11-18:rang-googlehe-bai-du-jian-suo-zi-ji-de-wang-zhan.html</guid><category>google</category><category>baidu</category></item><item><title>VMware虚拟机启动时总提示cann't connect to floopy0的问题</title><link>http://hyhx2008.github.com/vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html</link><description>&lt;p&gt;在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。&lt;/p&gt;
 &lt;p&gt;百度了一下解决办法: 修改虚拟机的.vmx文件。&lt;/p&gt;
 &lt;p&gt;1.将floppy0.autodetect这项改为FALSE:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;floppy0.autodetect = &amp;quot;FALSE&amp;quot;&lt;/span&gt;
