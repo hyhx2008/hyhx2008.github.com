@@ -20,21 +20,6 @@
 
 	
 	
-<li class="nav-header"><h4><i class="icon-search"></i>Google Search</h4></li>
-<div id="cse" style="width: 100%;">Loading</div>
-<script src="http://www.google.com/jsapi" type="text/javascript"></script>
-<script type="text/javascript"> 
-  google.load('search', '1');
-  google.setOnLoadCallback(function() {
-    var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
-      '007947589229995882978:padodsakamc', customSearchOptions);
-    customSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
-    customSearchControl.draw('cse');
-  }, true);
-</script>
-<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
-
-
 </head>
 <body>
 	
@@ -83,6 +68,23 @@
 			</ul>
 			</div>
 		</div>
+		<div class="span3 well sidebar-nav" id="sidebar">
+            
+<li class="nav-header"><h4><i class="icon-search"></i>Google Search</h4></li>
+<div id="cse" style="width: 100%;">Loading</div>
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript"> 
+  google.load('search', '1');
+  google.setOnLoadCallback(function() {
+    var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+      '007947589229995882978:padodsakamc', customSearchOptions);
+    customSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
+    customSearchControl.draw('cse');
+  }, true);
+</script>
+<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
+
+        </div>
 	  </div>
 	  <div class="content">
 			<div class="page-header"><h1>H.y's Blog <small>ubuntu</small></h1></div>
