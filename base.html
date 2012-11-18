@@ -46,7 +46,7 @@
 
 	<div class="container-fluid">	
 	  <div class="sidebar">
-		<div class="well">
+		<div class="span9">
 			<h3>Blogroll</h3>
 			<ul>
 				{% for name, link in LINKS %}
@@ -61,14 +61,13 @@
 				{% endfor %}
 			</ul>
 			</div>
-			
-		</div>
-		
-		<div class="well">
 			<div class="search_sidebar">
-				{% include 'search_sidebar.html' %}
+            {% include 'search_sidebar.html' %}
 			</div>
 		</div>
+		
+		
+		
 	  </div>
 	  <div class="content">
 			{% block indextitle %}<div class="page-header"><h1>{% block title %} {{ self.windowtitle() }} {% endblock %}</h1></div>{% endblock %}
