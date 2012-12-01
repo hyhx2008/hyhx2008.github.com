@@ -147,7 +147,124 @@ tags: <a href="./tag/ocr Linux.html">ocr Linux</a> </div>
 </pre></div>
 <p>以上命令将从photo.tif中识别的文字存储在1.txt中。</p>
 <p><strong>3.tesseract api 使用</strong></p>
-<p>未完待续。。。。</p>
+<p>tesseract现在已经出到3.0.1版本了，网上的资料也大多基于3.0.1版本，比如
+<a class="reference external" href="http://www.cnblogs.com/zsb517/archive/2012/06/06/2537540.html">Tesseract3.01在VS2008下面的使用</a> 和
+<a class="reference external" href="http://blog.csdn.net/foxwit/article/details/6547465">OCR识别引擎tesseract使用方法</a> 。</p>
+<p>不幸的是，Debian下安装的是2.0.4版本，api的命名与用法和新版本有所不同。在项目主页上我也没有找到api的使用手册之类的东西，只能自己琢磨。</p>
+<p>我发现查看tesseract的source code是一个很好的学习api用法的途径，源码可以在下面的链接中下载:
+<a class="reference external" href="http://code.google.com/p/tesseract-ocr/downloads/detail?name=tesseract-2.04.tar.gz&amp;can=2&amp;q=">tesseract 2.0.4 Source</a>
+，
+<a class="reference external" href="http://code.google.com/p/tesseract-ocr/downloads/detail?name=tesseract-3.01.tar.gz&amp;can=2&amp;q=">tesseract 3.0.1 Source</a>
+。</p>
+<p>下载并解压后在ccmain文件夹中的
+<strong>tesseractmain.cpp</strong>
+就是tesseract工具的主程序，是很好的api用法参考。api的声明在
+<strong>baseapi.h</strong>
+中(ccmain中或/usr/include下都可以找到)。</p>
+<p>所有需要include的头文件都在 /usr/include/tesseract 和 /usr/include/lptonica 中，需要链接的库在/usr/lib中。</p>
+<p>api的具体用法参见后面附的源码的注释。</p>
+<p>编译真的是最痛苦的事情，不清楚需要链接哪些库，于是/usr/lib里用下面的命令找到相关的库，全都链接进来:</p>
+<div class="highlight"><pre><span class="gp">$</span>ls | grep tesseract
+<span class="gp">$</span>ls | grep leptonica
+<span class="gp">$</span>ls | grep tiff
+</pre></div>
+<p>结果编译还是不通过，提示一大堆未定义的函数，发现都和png有关系，于是又用</p>
+<div class="highlight"><pre><span class="gp">$</span>ls | grep png
+</pre></div>
+<p>找到一个库链接后才编译成功。我编译用的Makefile附在最后。</p>
+<p><strong>4.api使用的例子</strong></p>
+<p>新建一个ocr_test.cpp文件，将下面的代码粘贴进去即可。</p>
+<div class="highlight"><pre><span class="cp">#include &lt;mfcpch.h&gt;</span>
+<span class="cp">#include &lt;ctype.h&gt;</span>
+<span class="cp">#include &quot;applybox.h&quot;</span>
+<span class="cp">#include &quot;control.h&quot;</span>
+<span class="cp">#include &quot;tessvars.h&quot;</span>
+<span class="cp">#include &quot;tessedit.h&quot;</span>
+<span class="cp">#include &quot;baseapi.h&quot;</span>
+<span class="cp">#include &quot;pageres.h&quot;</span>
+<span class="cp">#include &quot;imgs.h&quot;</span>
+<span class="cp">#include &quot;varabled.h&quot;</span>
+<span class="cp">#include &quot;tprintf.h&quot;</span>
+<span class="cp">#include &quot;stderr.h&quot;</span>
+<span class="cp">#include &quot;notdll.h&quot;</span>
+<span class="cp">#include &quot;mainblk.h&quot;</span>
+<span class="cp">#include &quot;output.h&quot;</span>
+<span class="cp">#include &quot;globals.h&quot;</span>
+<span class="cp">#include &quot;blread.h&quot;</span>
+<span class="cp">#include &quot;tfacep.h&quot;</span>
+<span class="cp">#include &quot;callnet.h&quot;</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">){</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">argc</span><span class="o">!=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;usage:%s &lt;tiff file&gt; &lt;txt file&gt;/n&quot;</span><span class="p">,</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kt">char</span> <span class="o">*</span><span class="n">image_file</span><span class="o">=</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>       <span class="c1">//程序的第一个参数为图片路径</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">txt_file</span><span class="o">=</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>         <span class="c1">//第二个参数为保存识别出的字符的文件路径</span>
+
+        <span class="n">STRING</span> <span class="n">text_out</span><span class="p">;</span>                        <span class="c1">//存储识别出的字符</span>
+
+        <span class="n">TessBaseAPI</span>  <span class="n">api</span><span class="p">;</span>
+        <span class="n">IMAGE</span> <span class="n">image</span><span class="p">;</span>
+
+        <span class="n">api</span><span class="p">.</span><span class="n">SimpleInit</span><span class="p">(</span><span class="s">&quot;/usr/share/tesseract-ocr/tessdata/&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span> <span class="c1">// 初始化函数，tesseract还提供其他的初始化函数 参考 baseapi.h</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">read_header</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;read image header error!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">get_ysize</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;read image error!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">//读取图片并判断是否读取成功</span>
+
+        <span class="kt">int</span> <span class="n">bytes_per_line</span> <span class="o">=</span> <span class="n">check_legal_image_size</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">get_xsize</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">get_ysize</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">get_bpp</span><span class="p">());</span>
+
+        <span class="kt">char</span><span class="o">*</span> <span class="n">text</span> <span class="o">=</span> <span class="n">api</span><span class="p">.</span><span class="n">TesseractRect</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">get_buffer</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">get_bpp</span><span class="p">()</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="n">bytes_per_line</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">image</span><span class="p">.</span><span class="n">get_xsize</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">get_ysize</span><span class="p">());</span>
+        <span class="c1">//tesseract核心api，通过该函数识别出图片中的字符</span>
+
+        <span class="n">text_out</span> <span class="o">+=</span> <span class="n">text</span><span class="p">;</span>
+
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;output: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+        <span class="k">delete</span> <span class="p">[]</span> <span class="n">text</span><span class="p">;</span>
+
+        <span class="n">FILE</span><span class="o">*</span> <span class="n">fout</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">txt_file</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">);</span>
+
+        <span class="n">fwrite</span><span class="p">(</span><span class="n">text_out</span><span class="p">.</span><span class="n">string</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">text_out</span><span class="p">.</span><span class="n">length</span><span class="p">(),</span> <span class="n">fout</span><span class="p">);</span>
+
+        <span class="n">fclose</span><span class="p">(</span><span class="n">fout</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>5.编译并运行</strong></p>
+<p>新建Makefile如下所示。</p>
+<div class="highlight"><pre><span class="go">LDFLAGS= -ltesseract_full -ltesseract_pageseg -ltesseract_training -ltesseract_textord -ltesseract_wordrec -ltesseract_classify -ltesseract_dict -ltesseract_ccstruct -ltesseract_cutil -ltesseract_viewer -ltesseract_ccutil -ltesseract_image -ltesseract_main -llept -ltiff -ltiffxx -lpthread -lpng -lpng12</span>
+
+<span class="go">INCLUDES= -I/usr/include/tesseract/ -I/usr/include/leptonica/</span>
+
+<span class="go">all:ocr</span>
+
+<span class="go">ocr:</span>
+<span class="go">        g++ -g -o ocr ocr_test.cpp $(LDFLAGS) $(INCLUDES)</span>
+
+<span class="go">clean:</span>
+<span class="go">        rm ocr</span>
+</pre></div>
+<p>用下面的命令运行样例程序:</p>
+<div class="highlight"><pre><span class="gp">$</span>make
+<span class="gp">$</span>ocr photo.tif 1.txt
+</pre></div>
+<p>The End!!</p>
 </div>
 		<div>
 			<h2>Comments</h2>

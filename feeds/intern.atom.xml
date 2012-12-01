@@ -19,7 +19,124 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;以上命令将从photo.tif中识别的文字存储在1.txt中。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;3.tesseract api 使用&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;未完待续。。。。&lt;/p&gt;
+&lt;p&gt;tesseract现在已经出到3.0.1版本了，网上的资料也大多基于3.0.1版本，比如
+&lt;a class="reference external" href="http://www.cnblogs.com/zsb517/archive/2012/06/06/2537540.html"&gt;Tesseract3.01在VS2008下面的使用&lt;/a&gt; 和
+&lt;a class="reference external" href="http://blog.csdn.net/foxwit/article/details/6547465"&gt;OCR识别引擎tesseract使用方法&lt;/a&gt; 。&lt;/p&gt;
+&lt;p&gt;不幸的是，Debian下安装的是2.0.4版本，api的命名与用法和新版本有所不同。在项目主页上我也没有找到api的使用手册之类的东西，只能自己琢磨。&lt;/p&gt;
+&lt;p&gt;我发现查看tesseract的source code是一个很好的学习api用法的途径，源码可以在下面的链接中下载:
+&lt;a class="reference external" href="http://code.google.com/p/tesseract-ocr/downloads/detail?name=tesseract-2.04.tar.gz&amp;amp;can=2&amp;amp;q="&gt;tesseract 2.0.4 Source&lt;/a&gt;
+，
+&lt;a class="reference external" href="http://code.google.com/p/tesseract-ocr/downloads/detail?name=tesseract-3.01.tar.gz&amp;amp;can=2&amp;amp;q="&gt;tesseract 3.0.1 Source&lt;/a&gt;
+。&lt;/p&gt;
+&lt;p&gt;下载并解压后在ccmain文件夹中的
+&lt;strong&gt;tesseractmain.cpp&lt;/strong&gt;
+就是tesseract工具的主程序，是很好的api用法参考。api的声明在
+&lt;strong&gt;baseapi.h&lt;/strong&gt;
+中(ccmain中或/usr/include下都可以找到)。&lt;/p&gt;
+&lt;p&gt;所有需要include的头文件都在 /usr/include/tesseract 和 /usr/include/lptonica 中，需要链接的库在/usr/lib中。&lt;/p&gt;
+&lt;p&gt;api的具体用法参见后面附的源码的注释。&lt;/p&gt;
+&lt;p&gt;编译真的是最痛苦的事情，不清楚需要链接哪些库，于是/usr/lib里用下面的命令找到相关的库，全都链接进来:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;ls | grep tesseract
+&lt;span class="gp"&gt;$&lt;/span&gt;ls | grep leptonica
+&lt;span class="gp"&gt;$&lt;/span&gt;ls | grep tiff
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;结果编译还是不通过，提示一大堆未定义的函数，发现都和png有关系，于是又用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;ls | grep png
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;找到一个库链接后才编译成功。我编译用的Makefile附在最后。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.api使用的例子&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;新建一个ocr_test.cpp文件，将下面的代码粘贴进去即可。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &amp;lt;mfcpch.h&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;lt;ctype.h&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;applybox.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;control.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;tessvars.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;tessedit.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;baseapi.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;pageres.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;imgs.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;varabled.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;tprintf.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;stderr.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;notdll.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;mainblk.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;output.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;globals.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;blread.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;tfacep.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#include &amp;quot;callnet.h&amp;quot;&lt;/span&gt;
+
+
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;usage:%s &amp;lt;tiff file&amp;gt; &amp;lt;txt file&amp;gt;/n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;image_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;       &lt;span class="c1"&gt;//程序的第一个参数为图片路径&lt;/span&gt;
+        &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;txt_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;         &lt;span class="c1"&gt;//第二个参数为保存识别出的字符的文件路径&lt;/span&gt;
+
+        &lt;span class="n"&gt;STRING&lt;/span&gt; &lt;span class="n"&gt;text_out&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                        &lt;span class="c1"&gt;//存储识别出的字符&lt;/span&gt;
+
+        &lt;span class="n"&gt;TessBaseAPI&lt;/span&gt;  &lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;IMAGE&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SimpleInit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/usr/share/tesseract-ocr/tessdata/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// 初始化函数，tesseract还提供其他的初始化函数 参考 baseapi.h&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_header&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;read image header error!&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_ysize&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;read image error!&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="c1"&gt;//读取图片并判断是否读取成功&lt;/span&gt;
+
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bytes_per_line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;check_legal_image_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_xsize&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_ysize&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_bpp&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+
+        &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TesseractRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_buffer&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_bpp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;bytes_per_line&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_xsize&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_ysize&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+        &lt;span class="c1"&gt;//tesseract核心api，通过该函数识别出图片中的字符&lt;/span&gt;
+
+        &lt;span class="n"&gt;text_out&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;output: %s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="k"&gt;delete&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;FILE&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;fout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;txt_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;w&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="n"&gt;fwrite&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text_out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text_out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;fout&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="n"&gt;fclose&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fout&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;5.编译并运行&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;新建Makefile如下所示。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;LDFLAGS= -ltesseract_full -ltesseract_pageseg -ltesseract_training -ltesseract_textord -ltesseract_wordrec -ltesseract_classify -ltesseract_dict -ltesseract_ccstruct -ltesseract_cutil -ltesseract_viewer -ltesseract_ccutil -ltesseract_image -ltesseract_main -llept -ltiff -ltiffxx -lpthread -lpng -lpng12&lt;/span&gt;
+
+&lt;span class="go"&gt;INCLUDES= -I/usr/include/tesseract/ -I/usr/include/leptonica/&lt;/span&gt;
+
+&lt;span class="go"&gt;all:ocr&lt;/span&gt;
+
+&lt;span class="go"&gt;ocr:&lt;/span&gt;
+&lt;span class="go"&gt;        g++ -g -o ocr ocr_test.cpp $(LDFLAGS) $(INCLUDES)&lt;/span&gt;
+
+&lt;span class="go"&gt;clean:&lt;/span&gt;
+&lt;span class="go"&gt;        rm ocr&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;用下面的命令运行样例程序:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;make
+&lt;span class="gp"&gt;$&lt;/span&gt;ocr photo.tif 1.txt
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The End!!&lt;/p&gt;
 </summary><category term="ocr Linux"></category></entry><entry><title>Festival tts 使用总结</title><link href="http://hyhx2008.github.com/festival-tts-shi-yong-zong-jie.html" rel="alternate"></link><updated>2012-08-24T22:00:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-08-24:festival-tts-shi-yong-zong-jie.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/"&gt;Festival-tts&lt;/a&gt;
 是一个免费的tts (text to speech) 工具，可以将字符串转为声音播放出来或者存为声音文件。&lt;/p&gt;
 &lt;p&gt;首先安装:&lt;/p&gt;
