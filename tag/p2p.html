@@ -112,37 +112,31 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 	  </div>
 	  <div class="content">
-			<div class="page-header"><h1>H.y's Blog <small>kernel</small></h1></div>
+			<div class="page-header"><h1>H.y's Blog <small>P2P</small></h1></div>
 			
 
 
 
 <div class='article'>
-	<h2>Linux内核编译步骤</h2>
-	<div class="well small">Permalink: <a class="more" href=".././linuxnei-he-bian-yi-bu-zou.html">2012-07-18 22:00:00</a>
+	<h2>PeerSim使用教程(1)-入门</h2>
+	<div class="well small">Permalink: <a class="more" href=".././peersimshi-yong-jiao-cheng-1-ru-men.html">2013-03-20 13:40:00</a>
 by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
-in <a href=".././category/intern.html">intern</a>
-tags: <a href=".././tag/linux.html">linux</a> <a href=".././tag/kernel.html">kernel</a> <a href=".././tag/compile.html">compile</a> </div>
-	<div class="summary"><p>实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。</p>
-<p>首先进入到内核源码的目录，然后按照以下步骤编译:</p>
-<p><strong>1.配置内核</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>make menuconfig
-</pre></div>
-<p>这条命令可以在一个GUI下设置用户需要的内核参数，并生成编译需要的.config配置文件。</p>
-<p><strong>2.编译内核</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>make -j 2
-</pre></div>
-<p>后面的-j参数指的是可以允许多少个module同时编译，-j 2 就是允许2个module同时编译，也可以省略-j参数。如果CPU是多核的话，可以加上该参数提高编译速度。</p>
-<p>接下来就是漫长的等待。。。</p>
-<p><strong>3.加入模块</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>sudo make modules_install
-<span class="gp">$</span>sudo make install
-</pre></div>
-<p><strong>4.更新引导文件</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>sudo update-initramfs -c -k <span class="s2">&quot;kernel version&quot;</span>
-</pre></div>
-<p>这里的kernel version可以在make menuconfig的时候自己设置名称，具体应该写什么需要在/boot文件夹下查看:</p>
-<div class="highlight"><pre><span class="gp">$</span>ls -lF ...</pre></div> <a class="btn primary xsmall" href=".././linuxnei-he-bian-yi-bu-zou.html">more…</a>
+in <a href=".././category/peerSim.html">peerSim</a>
+tags: <a href=".././tag/PeerSim.html">PeerSim</a> <a href=".././tag/P2P.html">P2P</a> </div>
+	<div class="summary"><p>最近一年所谓的研究几乎没有什么大的收获，研究的题目也一直局限在P2P，除了水文一篇，最大的收获就是学会使用PeerSim这个P2P模拟器。在这里总结一下PeerSim的使用方法，以此来结束对P2P的研究。</p>
+<p><strong>1.PeerSim简介</strong></p>
+<p>PeerSim是一个用java编写的P2P overlay Network的模拟器，可以模拟结构化和非结构化的P2P网络。根据模拟的方式不同，在4GB的内存情况下，支持模拟十万到千万个节点级别。其本身并没有实现任何具体的协议，但是提供了很好的扩展性，研究人员已经在其基础上实现了各种流行的P2P协议，官方网站上也提供下载。</p>
+<p><strong>2.PeerSim 下载与运行</strong></p>
+<p>PeerSim实际上是一个java的工程，我们可以在其官方网站上下载源代码，官网链接为:
+<a class="reference external" href="http://peersim.sourceforge.net/">PeerSim: A Peer-to-Peer Simulator</a>
+，下载并解压得到一个名为
+<strong>peersim-1.0.5的文件夹</strong>
+。</p>
+<p>由于PeerSim是用java编写的，学习如何时需要经常阅读源代码，所以推荐使用Eclipse来运行(当然高手也可以直接通过命令行来运行)。
+这里也只说明如何在Eclipse环境下运行PeerSim。</p>
+<p>1&gt; 新建java工程，命名例如PeerSim_t。</p>
+<p>2&gt; 将peersim-1.0.5中的src文件夹内的全部内容(包括两个包，peersim和example)拖入工程的src文件夹下。</p>
+<p>3&gt; 将peersim-1 ...</p> <a class="btn primary xsmall" href=".././peersimshi-yong-jiao-cheng-1-ru-men.html">more…</a>
 	</div>
 </div>	
 
