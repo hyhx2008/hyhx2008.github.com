@@ -118,6 +118,29 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 
 <div class='article'>
+	<h2>PeerSim使用教程(2)-解析Cycle-based模式仿真</h2>
+	<div class="well small">Permalink: <a class="more" href="./peersimshi-yong-jiao-cheng-2-jie-xi-cycle-basedmo-shi-fang-zhen.html">2013-03-21 20:10:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
+in <a href="./category/PeerSim.html">PeerSim</a>
+tags: <a href="./tag/PeerSim.html">PeerSim</a> <a href="./tag/Cycle-based.html">Cycle-based</a> </div>
+	<div class="summary"><p>PeerSim提供的文档并不多，一共三篇，可以在其官网上下载，这里给一个链接:
+<a class="reference external" href="http://peersim.sourceforge.net/#docs">PeerSim: Documentation</a>
+，是学习PeerSim必看资料。</p>
+<p>英文有时不是很好理解，网上有个哥们将其翻译成中文了，不过他的网页最近好像失效了，这里和后面的教程基本上是整理了一下他的翻译，同时也感谢那位哥们的工作。</p>
+<p>本文介绍了PeerSim的基本概念，并解析了两个示例以更清晰地说明PeeSim的仿真流程。</p>
+<p>Peersim支持两种仿真模式，即Cycle-based模型和传统的Event-based模型，本文专注于前者的讲解。</p>
+<p>Cycle-based模型是一个简化的模型，拥有更好的伸缩性及性能，在拥有4GB内存的情况下，Event-driven模式目前最多支持十万节点级别，而Cycle-based模式则支持千万个节点级别。 但是Cycle-based模型缺少对传输层的仿真和并行处理，节点之间是直接通信的，仿真核心以一定的顺序周期性地给以节点控制。在运行时，可以进行任意的操作，如调用其它对象的方法并执行一些计算。</p>
+<p>Cycle-based模型损失了一些真实性，虽然一些简单的协议可以忽略这些差别，但是在选择使用这个模型时，需要注意这些区别。我们可以相对简单地将Cycle-based的仿真移植到Event-driven引擎上，但在本文中不讨论这个话题。</p>
+<p><strong>1.PeerSim仿真的生命周期</strong></p>
+<p>PeerSim鼓励基于接口的模块化编程，每一个组件都能被其它实现了相同接口的组件代替，一般的仿真过程如下：</p>
+<blockquote>
+<p>1&gt; 选择网络大小(即节点数量)。</p>
+<p>2&gt; 选择要实验的一个或多协议并进行初始化。</p>
+<p>3&gt; 选择一个或多个Control对象来监视感兴趣的属性，并在仿真时修改一些参数(比如，网络大小，协议的内部状态 ...</p></blockquote> <a class="btn primary xsmall" href="./peersimshi-yong-jiao-cheng-2-jie-xi-cycle-basedmo-shi-fang-zhen.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>PeerSim使用教程(1)-入门</h2>
 	<div class="well small">Permalink: <a class="more" href="./peersimshi-yong-jiao-cheng-1-ru-men.html">2013-03-20 13:40:00</a>
 by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
@@ -351,37 +374,24 @@ tags: <a href="./tag/trace-cmd.html">trace-cmd</a> <a href="./tag/kernelshark.ht
 	</div>
 </div>	
 
-<div class='article'>
-	<h2>Linux内核编译步骤</h2>
-	<div class="well small">Permalink: <a class="more" href="./linuxnei-he-bian-yi-bu-zou.html">2012-07-18 22:00:00</a>
-by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
-in <a href="./category/intern.html">intern</a>
-tags: <a href="./tag/linux.html">linux</a> <a href="./tag/kernel.html">kernel</a> <a href="./tag/compile.html">compile</a> </div>
-	<div class="summary"><p>实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。</p>
-<p>首先进入到内核源码的目录，然后按照以下步骤编译:</p>
-<p><strong>1.配置内核</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>make menuconfig
-</pre></div>
-<p>这条命令可以在一个GUI下设置用户需要的内核参数，并生成编译需要的.config配置文件。</p>
-<p><strong>2.编译内核</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>make -j 2
-</pre></div>
-<p>后面的-j参数指的是可以允许多少个module同时编译，-j 2 就是允许2个module同时编译，也可以省略-j参数。如果CPU是多核的话，可以加上该参数提高编译速度。</p>
-<p>接下来就是漫长的等待。。。</p>
-<p><strong>3.加入模块</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>sudo make modules_install
-<span class="gp">$</span>sudo make install
-</pre></div>
-<p><strong>4.更新引导文件</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>sudo update-initramfs -c -k <span class="s2">&quot;kernel version&quot;</span>
-</pre></div>
-<p>这里的kernel version可以在make menuconfig的时候自己设置名称，具体应该写什么需要在/boot文件夹下查看:</p>
-<div class="highlight"><pre><span class="gp">$</span>ls -lF ...</pre></div> <a class="btn primary xsmall" href="./linuxnei-he-bian-yi-bu-zou.html">more…</a>
-	</div>
-</div>	
 
 
 
+<div class="pagination">
+<ul>
+	
+		<li class="prev disabled"><a href="#">&larr; Previous</a></li>
+	
+	
+		<li class="active"><a href="./index.html">1</a></li>
+	
+		<li class=""><a href="./index2.html">2</a></li>
+	
+	
+		<li class="next"><a href="./index2.html">Next &rarr;</a></li>
+	
+</ul>
+</div>
 
 
 
