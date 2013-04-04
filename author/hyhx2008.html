@@ -239,6 +239,27 @@ tags: <a href=".././tag/PeerSim.html">PeerSim</a> <a href=".././tag/Cycle-based.
 </div>	
 
 <div class='article'>
+	<h2>PeerSim使用教程(3)-编写一个新协议</h2>
+	<div class="well small">Permalink: <a class="more" href=".././peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">2013-03-24 19:35:00</a>
+by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
+in <a href=".././category/peersim.html">peersim</a>
+tags: <a href=".././tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p><strong>1.编写一个新协议</strong></p>
+<p>我们将要实现的协议是在PeerSim中基于Cycle-based模型的一个简单的负载均衡算法。节点的状态有两种值：本地负载(local load)和配额(quota)，其中配额是指节点在每个周期中允许传输的“负载”的大小。配额是必要的，是一个时间单元中能传输的负载上限。每个节点与和它距离最远的邻居节点交换配额值，这里“距离最远”是指与当前节点的负载差异最大。经过对比距离，协议将在负载均衡时选用push或pull的方式。</p>
+<p>在每个周期之后，配额值将会被存储。协议并不关心拓扑管理，它依赖于其它组件来访问邻居节点(例如，Newscast，或者由IdleProtocol实现的静态拓扑)。</p>
+<p><strong>1.1 必要的组件</strong></p>
+<p>一般来说只编写一个协议类是不足够的，还需要一些附加的组件。例如，为了在每个周期结束时为每个节点存储配额值，需要一个特定的Control对象。基本上来说，PeerSim是一个可替换的组件集合，所以在开发时需要注意模块化以让代码尽可能重用，出于这样的目的，我们这样设计下面的类：</p>
+<p><em>protocol</em></p>
+<blockquote>
+它基于peersim.vector.SimpleValueHolder，这是一个简单的基类，用于访问一个浮点变量。Aggreation协议也使用了同样的基类。</blockquote>
+<p><em>ResetQuota</em></p>
+<blockquote>
+用于在每个周期结束时存储每个节点配额的Control。</blockquote>
+<p><em>QuotaObserver ...</em></p> <a class="btn primary xsmall" href=".././peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>让google和百度检索自己的网站</h2>
 	<div class="well small">Permalink: <a class="more" href=".././rang-googlehe-bai-du-jian-suo-zi-ji-de-wang-zhan.html">2012-11-18 23:58:00</a>
 by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
@@ -348,39 +369,6 @@ tags: <a href=".././tag/trace-cmd.html">trace-cmd</a> <a href=".././tag/kernelsh
 </div>
 <p>也可以重定向到一个文本文件中再做分析，比如:</p>
 <div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href=".././trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
-	</div>
-</div>	
-
-<div class='article'>
-	<h2>重新安装ubuntu后的todo list</h2>
-	<div class="well small">Permalink: <a class="more" href=".././ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
-by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
-in <a href=".././category/tech.html">tech</a>
-tags: <a href=".././tag/ubuntu.html">ubuntu</a> </div>
-	<div class="summary"><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
-<p>写在这里做个提醒吧，以后再慢慢添加。</p>
-<p>1.安装aptitude</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo apt-get install aptitude
-</pre></div>
-<p>2.安装vim</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install vim
-</pre></div>
-<p>并修改/usr/share/vim/vimrc 。</p>
-<p>3.添加sudoers</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo visudo
-</pre></div>
-<p>加入 hy ALL = （ALL）ALL。</p>
-<p>ubuntu下好像这样做后还是不能使用su命令切换到root，百度解决办法:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo passwd
-</pre></div>
-<p>修改一下密码就好了。</p>
-<p>4.安装openssh</p>
-<p>为了能让secureCRT连上虚拟机里的ubuntu，需要安装openssh。</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install openssh-server openssh-client
-</pre></div>
-<p>再用ifconfig查一下ip，填到secureCRT里就好了。</p>
-<p>5.安装中文输入法</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href=".././ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
 

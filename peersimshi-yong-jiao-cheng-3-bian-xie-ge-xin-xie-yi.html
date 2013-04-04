@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>H.y's Blog</title>
+	<meta name="description" content="">
+	<meta name="author" content="hyhx2008">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="./theme/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="./theme/bootstrap.min.css" rel="stylesheet">
+	<link href="./theme/local.css" rel="stylesheet">
+	<link href="./theme/pygments.css" rel="stylesheet">
+	
+<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+
+	
+<script type="text/javascript">
+	var disqus_identifier = "peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html";
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://hysblog.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+
+		
+	<link rel="shortcut icon" href="./theme/images/icons/icon1.png">
+</head>
+<body>
+	
+	
+<a href="https://github.com/hyhx2008"><img style="position: absolute; top: 39px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+
+	<div class="topbar">
+	  <div class="topbar-inner">
+		<div class="container-fluid">
+		  <a class="brand" href="./index.html">H.y's Blog</a>
+			<ul class="nav">
+				
+				
+					
+				
+				
+					<li ><a href="./category/intern.html">intern</a></li>
+				
+					<li ><a href="./category/my.html">my</a></li>
+				
+					<li class="active"><a href="./category/peersim.html">peersim</a></li>
+				
+					<li ><a href="./category/tech.html">tech</a></li>
+				
+			</ul>
+			<p class="pull-right"><a href="./archives.html">[archives]</a> <a href="./tags.html">[tags]</a></p>
+		</div>
+	  </div>
+	</div>
+
+	<div class="container-fluid">	
+	  <div class="span5 sidebar">
+		<div class="well">
+			<h3>Blogroll</h3>
+			<ul>
+				
+				<li><a href="http://x-wei.github.com">x-wei</a></li>
+				
+				<li><a href="http://farseerfc.github.com/">farseerfc</a></li>
+				
+			</ul>
+			<div class="social">
+			<h3>Social</h3>
+			<ul>
+				
+				<li><a href="https://github.com/hyhx2008">github</a></li>
+				
+			</ul>
+			</div>
+			
+		</div>
+		
+		<div class="well">
+			<div class="search_sidebar">
+				
+<li class="nav-header"><h4><i class="icon-search"></i>Google Search</h4></li>
+<!-- Put the following javascript before the closing </head> tag. -->
+<script>
+  (function() {
+    var cx = '007947589229995882978:padodsakamc';
+    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<!-- Place this tag where you want both of the search box and the search results to render -->
+<gcse:search></gcse:search>
+
+			</div>
+
+			<div class="google_ads">
+				
+<li class="nav-header"><h4><i class="icon-search"></i>Google Ads</h4></li>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-5617943900713834";
+/* HY&#39;s github blog */
+google_ad_slot = "7280262031";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+			</div>
+		</div>
+
+	  </div>
+	  <div class="content">
+			
+			
+	<div class='article'>
+		<div class="page-header"><h1>PeerSim使用教程(3)-编写一个新协议</h1></div>
+		<div class="well small">Permalink: <a class="more" href="./peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">2013-03-24 19:35:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
+in <a href="./category/peersim.html">peersim</a>
+tags: <a href="./tag/PeerSim.html">PeerSim</a> </div>
+		<div><p><strong>1.编写一个新协议</strong></p>
+<p>我们将要实现的协议是在PeerSim中基于Cycle-based模型的一个简单的负载均衡算法。节点的状态有两种值：本地负载(local load)和配额(quota)，其中配额是指节点在每个周期中允许传输的“负载”的大小。配额是必要的，是一个时间单元中能传输的负载上限。每个节点与和它距离最远的邻居节点交换配额值，这里“距离最远”是指与当前节点的负载差异最大。经过对比距离，协议将在负载均衡时选用push或pull的方式。</p>
+<p>在每个周期之后，配额值将会被存储。协议并不关心拓扑管理，它依赖于其它组件来访问邻居节点(例如，Newscast，或者由IdleProtocol实现的静态拓扑)。</p>
+<p><strong>1.1 必要的组件</strong></p>
+<p>一般来说只编写一个协议类是不足够的，还需要一些附加的组件。例如，为了在每个周期结束时为每个节点存储配额值，需要一个特定的Control对象。基本上来说，PeerSim是一个可替换的组件集合，所以在开发时需要注意模块化以让代码尽可能重用，出于这样的目的，我们这样设计下面的类：</p>
+<p><em>protocol</em></p>
+<blockquote>
+它基于peersim.vector.SimpleValueHolder，这是一个简单的基类，用于访问一个浮点变量。Aggreation协议也使用了同样的基类。</blockquote>
+<p><em>ResetQuota</em></p>
+<blockquote>
+用于在每个周期结束时存储每个节点配额的Control。</blockquote>
+<p><em>QuotaObserver</em></p>
+<blockquote>
+一个control，用于监视quota参数，即覆盖网中交换的流量大小。</blockquote>
+<p><em>initialization</em></p>
+<blockquote>
+这是在aggregation示例中的初始化器，这里也可以直接使用，因为它们实现了同样的接口SingleValueHolder。注意在example包中提供的初始化器是轻量级的，开发者应当更多地使用peersim.vector.*包中的初始化器。</blockquote>
+<p><em>observers</em></p>
+<blockquote>
+可以使用aggreagation.AverageObserver，因为这些组件实现了相同接口。</blockquote>
+<p>下面将根据源代码来解释这一过程：</p>
+<p><strong>1.2 负载均衡的核心类</strong></p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">example</span><span class="o">.</span><span class="na">loadbalance</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">peersim.config.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.config.FastConfig</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.core.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.vector.SingleValueHolder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.cdsim.CDProtocol</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BasicBalance</span> <span class="kd">extends</span> <span class="n">SingleValueHolder</span> <span class="kd">implements</span> <span class="n">CDProtocol</span> <span class="o">{</span>
+
+        <span class="c1">// ------------------------------------------------------------------------</span>
+        <span class="c1">// Parameters</span>
+        <span class="c1">// ------------------------------------------------------------------------</span>
+
+        <span class="kd">protected</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">PAR_QUOTA</span> <span class="o">=</span> <span class="s">&quot;quota&quot;</span><span class="o">;</span>
+
+        <span class="c1">// ------------------------------------------------------------------------</span>
+        <span class="c1">// Fields</span>
+        <span class="c1">// ------------------------------------------------------------------------</span>
+
+        <span class="c1">// Quota amount. Obtained from config property {@link #PAR_QUOTA}.</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">double</span> <span class="n">quota_value</span><span class="o">;</span>
+
+        <span class="kd">protected</span> <span class="kt">double</span> <span class="n">quota</span><span class="o">;</span> <span class="c1">// current cycle quota</span>
+
+        <span class="c1">// ------------------------------------------------------------------------</span>
+        <span class="c1">// Initialization</span>
+        <span class="c1">// ------------------------------------------------------------------------</span>
+
+        <span class="kd">public</span> <span class="nf">BasicBalance</span><span class="o">(</span><span class="n">String</span> <span class="n">prefix</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kd">super</span><span class="o">(</span><span class="n">prefix</span><span class="o">);</span>
+                <span class="c1">// get quota value from the config file. Default 1.</span>
+                <span class="n">quota_value</span> <span class="o">=</span> <span class="o">(</span><span class="n">Configuration</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span> <span class="o">+</span> <span class="n">PAR_QUOTA</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+                <span class="n">quota</span> <span class="o">=</span> <span class="n">quota_value</span><span class="o">;</span>
+        <span class="o">}</span>
+</pre></div>
+<p>这个类需要实现peersim.cdsim.CDProtocol接口，其中最重要的是实现nextCycle()方法，这个方法包含了协议的算法。顾名思义，协议每个周期内的行为就在这个方法中描述。而且，这个协议继承了SingleValueHolder类（它是SingleValue接口的实现），为内部变量提供getter和setter方法，允许Control以可重用的方式来操作这些数据，在这个例子中，变量保存了节点的实际负载。</p>
+<p>在构造方法中的String参数是配置组件的全名，例如，对于LoadBanlance协议来说是protocol.lb。</p>
+<div class="highlight"><pre><span class="c1">// Resets the quota.</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">resetQuota</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">quota</span> <span class="o">=</span> <span class="n">quota_value</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+<p>resetQuota()方法在每个周期结束时被一个Control对象调用，显然地，一个恰当的control条目应该在配置文件中出现，这里是loadbalance.ResetQu。</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">nextCycle</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="kt">int</span> <span class="n">protocolID</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">linkableID</span> <span class="o">=</span> <span class="n">FastConfig</span><span class="o">.</span><span class="na">getLinkable</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+        <span class="n">Linkable</span> <span class="n">linkable</span> <span class="o">=</span> <span class="o">(</span><span class="n">Linkable</span><span class="o">)</span> <span class="n">node</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">linkableID</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">quota</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span><span class="o">;</span> <span class="c1">// quota is exceeded</span>
+        <span class="o">}</span>
+<span class="c1">// this takes the most distant neighbor based on local load</span>
+        <span class="n">BasicBalance</span> <span class="n">neighbor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kt">double</span> <span class="n">maxdiff</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">linkable</span><span class="o">.</span><span class="na">degree</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">peer</span> <span class="o">=</span> <span class="n">linkable</span><span class="o">.</span><span class="na">getNeighbor</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                <span class="c1">// The selected peer could be inactive</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="n">peer</span><span class="o">.</span><span class="na">isUp</span><span class="o">())</span>
+                        <span class="k">continue</span><span class="o">;</span>
+                <span class="n">BasicBalance</span> <span class="n">n</span> <span class="o">=</span> <span class="o">(</span><span class="n">BasicBalance</span><span class="o">)</span><span class="n">peer</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">quota</span> <span class="o">==</span> <span class="mf">0.0</span><span class="o">)</span>
+                        <span class="k">continue</span><span class="o">;</span>
+
+                <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">n</span><span class="o">.</span><span class="na">value</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="n">maxdiff</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">neighbor</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+                        <span class="n">maxdiff</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
+                <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">neighbor</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">doTransfer</span><span class="o">(</span><span class="n">neighbor</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+<p>这个方法是由CDProtocol接口声明的，它定义了协议的行为。这里的参数代表了一个对节点自身的引用（即仿真器调用其nextCycle方法的那个节点）和正在运行的协议的protocol ID。首先我们要取得实现了Linkable接口的协议的protocol ID来访问节点的邻居节点，这可以由下面的代码来完成：</p>
+<div class="highlight"><pre><span class="kt">int</span> <span class="n">linkableID</span> <span class="o">=</span> <span class="n">FastConfig</span><span class="o">.</span><span class="na">getLinkable</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+<span class="n">Linkable</span> <span class="n">linkable</span> <span class="o">=</span> <span class="o">(</span><span class="n">Linkable</span><span class="o">)</span><span class="n">node</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">linkableID</span><span class="o">);</span>
+</pre></div>
+<p>使用静态类peersim.config.FastConfig我们可以取得为正在执行的协议而配置的linkable协议的protocol ID。</p>
+<p>如果本地的配额是0，代表着这个节点已经使用完网络流量，所以直接return。</p>
+<p>为了取得与本地节点距离最远的节点，我们循环遍历所有邻居节点的负载值；邻居节点的数量等于节点的度（这可以通过linkable接口来访问），通过linkable接口来取得节点的代码如下：</p>
+<div class="highlight"><pre><span class="n">Node</span> <span class="n">peer</span> <span class="o">=</span> <span class="n">linkable</span><span class="o">.</span><span class="na">getNeighbout</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</pre></div>
+<p>而从这个节点就可以取得BasicBanlance协议：</p>
+<div class="highlight"><pre><span class="n">BasicBalance</span> <span class="n">n</span> <span class="o">=</span> <span class="o">(</span><span class="n">BasicBalance</span><span class="o">)</span><span class="n">peer</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+</pre></div>
+<p>当协议寻找到一个合适的邻居节点后，调用doTransfer()方法来进行负载均衡。</p>
+<div class="highlight"><pre><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doTransfer</span><span class="o">(</span><span class="n">BasicBalance</span> <span class="n">neighbor</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">a1</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+        <span class="kt">double</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">neighbor</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+        <span class="kt">double</span> <span class="n">maxTrans</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">((</span><span class="n">a1</span> <span class="o">-</span> <span class="n">a2</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+        <span class="kt">double</span> <span class="n">trans</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">maxTrans</span><span class="o">,</span> <span class="n">quota</span><span class="o">);</span>
+        <span class="n">trans</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">trans</span><span class="o">,</span> <span class="n">neighbor</span><span class="o">.</span><span class="na">quota</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">a1</span> <span class="o">&lt;=</span> <span class="n">a2</span><span class="o">)</span>  <span class="o">{</span><span class="c1">// PULL phase</span>
+                <span class="n">a1</span> <span class="o">+=</span> <span class="n">trans</span><span class="o">;</span>
+                <span class="n">a2</span> <span class="o">-=</span> <span class="n">trans</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span><span class="o">{</span>  <span class="c1">// PUSH phase</span>
+                <span class="n">a1</span> <span class="o">-=</span> <span class="n">trans</span><span class="o">;</span>
+                <span class="n">a2</span> <span class="o">+=</span> <span class="n">trans</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">a1</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">quota</span> <span class="o">-=</span> <span class="n">trans</span><span class="o">;</span>
+        <span class="n">neighbor</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">a2</span><span class="o">;</span>
+        <span class="n">neighbor</span><span class="o">.</span><span class="na">quota</span> <span class="o">-=</span> <span class="n">trans</span>
+<span class="o">}</span>
+</pre></div>
+<p>doTransfer()方法将会在当前节点和由参数指定的邻居节点间进行实际的负载交换，它决定了在负载均衡时是用pull还是push方法：在Push的情况下，本地值增加而其它节点的值减少，在push情况下则反之。maxTrans变量是两个涉及的节点需要达到平衡而传输的负载的绝对值；由于配额(quota)是每个周期中传输的上限，这个算法将会选择quota和maxTrans中的最小值，最后两个节点都会减去相同数量的负载值。</p>
+<p><strong>1.3 负载均衡的Control类代码</strong></p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">example</span><span class="o">.</span><span class="na">loadbalance</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.config.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.core.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResetQuota</span> <span class="kd">implements</span> <span class="n">Control</span> <span class="o">{</span>
+        <span class="c1">//参数</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">PAR_PROT</span> <span class="o">=</span> <span class="s">&quot;protocol&quot;</span><span class="o">;</span>
+
+        <span class="c1">// Value obtained from config property {@link #PAR_PROT}.</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">protocolID</span><span class="o">;</span>
+
+        <span class="c1">// 初始化</span>
+        <span class="kd">public</span> <span class="nf">ResetQuota</span><span class="o">(</span><span class="n">String</span> <span class="n">prefix</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">protocolID</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="na">getPid</span><span class="o">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span> <span class="o">+</span> <span class="n">PAR_PROT</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Network</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="o">((</span><span class="n">BasicBalance</span><span class="o">)</span> <span class="n">Network</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">)).</span><span class="na">resetQuota</span><span class="o">();</span>
+                <span class="o">}</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>这段代码很简洁，部份原因是Control接口本身是很简单的，它只有一个execute方法。
+构造方法利用配置文件来进行初始化。execute方法会在所有的协议上调用resetQuota方法，它通过Network类来访问协议，Network是一个只拥有静态数据域的静态类，你可将它视为是一个节点的数组。</p>
+<p><strong>2.扩展协议</strong></p>
+<p>这是对前面的协议的扩展。核心部份是相同的，但是算法在决定将要发送或接收多少负载时，使用了全局的负载平均而不是根据距离最远的邻居节点的负载值。
+为了计算全局的负载平均值，这里有一个小技巧，虽然本来可以通过聚集来求取平均数，但我们可以通过运行一个拥有全局信息的静态方法来仿真aggregation协议，这个方法为所有节点初始化了一个全局变量，这样我们就能提升性能的同时又不损失太多的真实性。</p>
+<p>这个协议也是为了利用newscast协议：当一个节点到达了全局负载值（平均），它将会将它的fail-state转变为DOWN，然后这个节点会从覆盖网退出，因为newscast协议会删除它。这样的影响是有多少节点达到平均负载则会减少多少个节点。</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">example</span><span class="o">.</span><span class="na">loadbalance</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">peersim.core.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.config.FastConfig</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AvgBalance</span> <span class="kd">extends</span> <span class="n">BasicBalance</span> <span class="o">{</span>
+
+        <span class="c1">// The overall system average load. It is computed once by {@link #calculateAVG(int)} method.</span>
+
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">double</span> <span class="n">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">;</span>
+
+        <span class="c1">// This flag indicates if the average value computation has been performed</span>
+        <span class="c1">// or not. Default is NO.</span>
+
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">avg_done</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="c1">// 初始化</span>
+        <span class="kd">public</span> <span class="nf">AvgBalance</span><span class="o">(</span><span class="n">String</span> <span class="n">prefix</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kd">super</span><span class="o">(</span><span class="n">prefix</span><span class="o">);</span> <span class="c1">// calls the BasicBalance constructor.</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Calculates the system average load. It is run once by the first node scheduled.</span>
+
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">calculateAVG</span><span class="o">(</span><span class="kt">int</span> <span class="n">protocolID</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">Network</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+                <span class="kt">double</span> <span class="n">sum</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                        <span class="n">AvgBalance</span> <span class="n">protocol</span> <span class="o">=</span> <span class="o">(</span><span class="n">AvgBalance</span><span class="o">)</span> <span class="n">Network</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+                        <span class="kt">double</span> <span class="n">value</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+                        <span class="n">sum</span> <span class="o">+=</span> <span class="n">value</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="n">average</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">/</span> <span class="n">len</span><span class="o">;</span>
+                <span class="n">avg_done</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+</pre></div>
+<p>第一部份是很简单的，定义了两个全局变量，average和avg_done，其中avg_done是个用来确定不进行超过一次计算的标志。注意，虽然看起来在构造方法中定义一个计算平均值的方法是一个更优雅的方案，但这种方案是错误的！因为在构造方法运行时，并不能保证负载的分布已经定义了：那样的话全局的平均数是未定义的。</p>
+<div class="highlight"><pre><span class="kd">protected</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">suspend</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">setFailState</span><span class="o">(</span><span class="n">Fallible</span><span class="o">.</span><span class="na">DOWN</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+<p>这个功能函数用于让节点从覆盖网中退出，这里只是简单地在Fallible接口中设置节点的状态。</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">nextCycle</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="kt">int</span> <span class="n">protocolID</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">//  只运行一次:</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">avg_done</span> <span class="o">==</span> <span class="kc">false</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">calculateAVG</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;AVG only once &quot;</span> <span class="o">+</span> <span class="n">average</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">average</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">AvgBalance</span><span class="o">.</span><span class="na">suspend</span><span class="o">(</span><span class="n">node</span><span class="o">);</span> <span class="c1">// switch off node</span>
+                <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">quota</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+                <span class="k">return</span><span class="o">;</span> <span class="c1">// skip this node if it has no quota</span>
+        <span class="n">Node</span> <span class="n">n</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">average</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">getOverloadedPeer</span><span class="o">(</span><span class="n">node</span><span class="o">,</span> <span class="n">protocolID</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">doTransfer</span><span class="o">((</span><span class="n">AvgBalance</span><span class="o">)</span> <span class="n">n</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">));</span>
+                <span class="o">}</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">getUnderloadedPeer</span><span class="o">(</span><span class="n">node</span><span class="o">,</span> <span class="n">protocolID</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">doTransfer</span><span class="o">((</span><span class="n">AvgBalance</span><span class="o">)</span> <span class="n">n</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">));</span>
+                <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">average</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span>
+                <span class="n">AvgBalance</span><span class="o">.</span><span class="na">suspend</span><span class="o">(</span><span class="n">node</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(((</span><span class="n">AvgBalance</span><span class="o">)</span> <span class="n">n</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">)).</span><span class="na">value</span><span class="o">-</span> <span class="n">average</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span>
+                        <span class="n">AvgBalance</span><span class="o">.</span><span class="na">suspend</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>nextCycle方法是核心的协议算法，它首先检查平均数，如果标志没有设置就会进行计算。
+如果当前负载和平均负载的差别小于1（每个周期中固定的配额值），那么节点将会根据newcast协议从覆盖网退出；进一步地，如果配额已经使用完，将会直接return。然后，协议会检查本地的负载值是小于还是大小平均值，并分别查找负载最大和最小的邻居，最后进行交换。</p>
+<div class="highlight"><pre><span class="kd">private</span> <span class="n">Node</span> <span class="nf">getOverloadedPeer</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="kt">int</span> <span class="n">protocolID</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">linkableID</span> <span class="o">=</span> <span class="n">FastConfig</span><span class="o">.</span><span class="na">getLinkable</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+        <span class="n">Linkable</span> <span class="n">linkable</span> <span class="o">=</span> <span class="o">(</span><span class="n">Linkable</span><span class="o">)</span> <span class="n">node</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">linkableID</span><span class="o">);</span>
+        <span class="n">Node</span> <span class="n">neighborNode</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kt">double</span> <span class="n">maxdiff</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">;</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">linkable</span><span class="o">.</span><span class="na">degree</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">peer</span> <span class="o">=</span> <span class="n">linkable</span><span class="o">.</span><span class="na">getNeighbor</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+
+                <span class="k">if</span> <span class="o">(!</span><span class="n">peer</span><span class="o">.</span><span class="na">isUp</span><span class="o">())</span> <span class="c1">// only if the neighbor is active</span>
+            <span class="k">continue</span><span class="o">;</span>
+
+    <span class="n">AvgBalance</span> <span class="n">n</span> <span class="o">=</span> <span class="o">(</span><span class="n">AvgBalance</span><span class="o">)</span>
+                <span class="n">peer</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">quota</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+                        <span class="k">continue</span><span class="o">;</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="n">average</span> <span class="o">&amp;&amp;</span> <span class="n">n</span><span class="o">.</span><span class="na">value</span> <span class="o">&gt;=</span> <span class="n">average</span><span class="o">)</span>
+                        <span class="k">continue</span><span class="o">;</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="n">average</span> <span class="o">&amp;&amp;</span> <span class="n">n</span><span class="o">.</span><span class="na">value</span> <span class="o">&lt;=</span> <span class="n">average</span><span class="o">)</span>
+                        <span class="k">continue</span><span class="o">;</span>
+
+                <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">n</span><span class="o">.</span><span class="na">value</span><span class="o">);</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="n">maxdiff</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">neighborNode</span> <span class="o">=</span> <span class="n">peer</span><span class="o">;</span>
+                        <span class="n">maxdiff</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
+                <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">neighborNode</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">Node</span> <span class="nf">getUnderloadedPeer</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">,</span> <span class="kt">int</span> <span class="n">protocolID</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">linkableID</span> <span class="o">=</span> <span class="n">FastConfig</span><span class="o">.</span><span class="na">getLinkable</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+        <span class="n">Linkable</span> <span class="n">linkable</span> <span class="o">=</span> <span class="o">(</span><span class="n">Linkable</span><span class="o">)</span> <span class="n">node</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">linkableID</span><span class="o">);</span>
+        <span class="n">Node</span> <span class="n">neighborNode</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kt">double</span> <span class="n">maxdiff</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">;</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">linkable</span><span class="o">.</span><span class="na">degree</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">peer</span> <span class="o">=</span> <span class="n">linkable</span><span class="o">.</span><span class="na">getNeighbor</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+
+                <span class="k">if</span> <span class="o">(!</span><span class="n">peer</span><span class="o">.</span><span class="na">isUp</span><span class="o">())</span> <span class="c1">// only if the neighbor is active</span>
+                        <span class="k">continue</span><span class="o">;</span>
+                <span class="n">AvgBalance</span> <span class="n">n</span> <span class="o">=</span> <span class="o">(</span><span class="n">AvgBalance</span><span class="o">)</span> <span class="n">peer</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">protocolID</span><span class="o">);</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">quota</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+                        <span class="k">continue</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="n">average</span> <span class="o">&amp;&amp;</span> <span class="n">n</span><span class="o">.</span><span class="na">value</span> <span class="o">&gt;=</span> <span class="n">average</span><span class="o">)</span>
+                        <span class="k">continue</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="n">average</span> <span class="o">&amp;&amp;</span> <span class="n">n</span><span class="o">.</span><span class="na">value</span> <span class="o">&lt;=</span> <span class="n">average</span><span class="o">)</span>
+                        <span class="k">continue</span><span class="o">;</span>
+
+                <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">n</span><span class="o">.</span><span class="na">value</span><span class="o">);</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">maxdiff</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">neighborNode</span> <span class="o">=</span> <span class="n">peer</span><span class="o">;</span>
+                        <span class="n">maxdiff</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
+                <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">neighborNode</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+<p>查找最大和最小负载的邻居节点的代码是很相似的，在这里都展示是出于完整性的缘故。</p>
+<p><strong>3.协议的评估</strong></p>
+<p>负载均衡协议是为了减少负载的变化 ，而变化可以使用aggregation.AverageObserver或者loadbalance.LBObserver(它们是非常相似的)来进行分析，出于这个标准，两个协议几乎拥有相同的性能，并独立于最初使用的分布。然而，AVGBalance协议相对BasicBalance来说提升了整体的负载传输，AVGBalance传输了一个可证明是最小的负载。</p>
+<p>我们可以实现一个control来观察正被传输的负载：</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">example</span><span class="o">.</span><span class="na">loadbalance</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">peersim.config.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.core.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">peersim.util.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuotaObserver</span> <span class="kd">implements</span> <span class="n">Control</span> <span class="o">{</span>
+
+        <span class="c1">// The protocol to operate on.</span>
+
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">PAR_PROT</span> <span class="o">=</span> <span class="s">&quot;protocol&quot;</span><span class="o">;</span>
+
+        <span class="c1">// The name of this observer in the configuration file.</span>
+
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+        <span class="cm">/** Protocol identifier*/</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">pid</span><span class="o">;</span>
+
+        <span class="c1">// 构造方法</span>
+        <span class="kd">public</span> <span class="nf">QuotaObserver</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+                <span class="n">pid</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="na">getPid</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span> <span class="o">+</span> <span class="n">PAR_PROT</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">IncrementalStats</span> <span class="n">stats</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IncrementalStats</span><span class="o">();</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Network</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                        <span class="n">BasicBalance</span> <span class="n">protocol</span> <span class="o">=</span> <span class="o">(</span><span class="n">BasicBalance</span><span class="o">)</span> <span class="n">Network</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">pid</span><span class="o">);</span>
+                        <span class="n">stats</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">protocol</span><span class="o">.</span><span class="na">quota</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="cm">/* 打印统计量*/</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="n">stats</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>原理是很简单的，在每一个仿真周期中，它收集剩余的quota并在终端上打印统计数据，从这些统计数据和配额的初始值就可以计算出已经被传输的负载。</p>
+</div>
+		<div>
+			<h2>Comments</h2>
+		 	
+			<div id="disqus_thread"></div>
+			
+		<div>
+	</div>	
+
+		<footer>
+		  <p> Powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>, theme based on <a href="http://twitter.github.com/bootstrap/">Bootstrap, from Twitter</a>.</p>
+		  <p>&copy; hyhx2008 2011</p>
+		</footer>
+	  </div>
+   
+	</div>
+</body>
+</html>

@@ -118,6 +118,36 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 
 <div class='article'>
+	<h2>trace-cmd与kernelshark使用总结</h2>
+	<div class="well small">Permalink: <a class="more" href="./trace-cmdyu-kernelsharkshi-yong-zong-jie.html">2012-07-22 22:00:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
+in <a href="./category/intern.html">intern</a>
+tags: <a href="./tag/trace-cmd.html">trace-cmd</a> <a href="./tag/kernelshark.html">kernelshark</a> </div>
+	<div class="summary"><p><strong>1.trace-cmd</strong></p>
+<p>trace-cmd是对ftrace的封装，是一个可以用来跟踪linux内核中事件(event)发生的时间、次数等的工具。</p>
+<p>首先需要安装trace-cmd:</p>
+<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install trace-cmd
+</pre></div>
+<p>使用也非常简单:</p>
+<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch
+</pre></div>
+<p>-e 参数指出需要跟踪的事件，这里的sched_switch指的是进程切换，还可以是hrtimer、irq等，例如:</p>
+<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch -e hrtimer*
+</pre></div>
+<p>命令输完回车后，trace-cmd就开始记录内核中事件的发生了，ctrl+C 停止跟踪，此时会生成一个trace.dat文件，相当于一个log吧。</p>
+<p>trace.dat里的内容不易读，trace-cmd提供分析trace.dat的功能:</p>
+<div class="highlight"><pre><span class="gp">$</span>trace-cmd report
+</pre></div>
+<p>就可以看到所跟踪的事件发生的情况了，和下图差不多。</p>
+<div class="figure">
+<img alt="../statics/pics/trace_cmd_kernelshark1.png" src="statics/pics/trace_cmd_kernelshark1.png" />
+</div>
+<p>也可以重定向到一个文本文件中再做分析，比如:</p>
+<div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href="./trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>Linux内核编译步骤</h2>
 	<div class="well small">Permalink: <a class="more" href="./linuxnei-he-bian-yi-bu-zou.html">2012-07-18 22:00:00</a>
 by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>

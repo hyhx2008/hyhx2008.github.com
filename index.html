@@ -118,6 +118,27 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 
 <div class='article'>
+	<h2>PeerSim使用教程(3)-编写一个新协议</h2>
+	<div class="well small">Permalink: <a class="more" href="./peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">2013-03-24 19:35:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
+in <a href="./category/peersim.html">peersim</a>
+tags: <a href="./tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p><strong>1.编写一个新协议</strong></p>
+<p>我们将要实现的协议是在PeerSim中基于Cycle-based模型的一个简单的负载均衡算法。节点的状态有两种值：本地负载(local load)和配额(quota)，其中配额是指节点在每个周期中允许传输的“负载”的大小。配额是必要的，是一个时间单元中能传输的负载上限。每个节点与和它距离最远的邻居节点交换配额值，这里“距离最远”是指与当前节点的负载差异最大。经过对比距离，协议将在负载均衡时选用push或pull的方式。</p>
+<p>在每个周期之后，配额值将会被存储。协议并不关心拓扑管理，它依赖于其它组件来访问邻居节点(例如，Newscast，或者由IdleProtocol实现的静态拓扑)。</p>
+<p><strong>1.1 必要的组件</strong></p>
+<p>一般来说只编写一个协议类是不足够的，还需要一些附加的组件。例如，为了在每个周期结束时为每个节点存储配额值，需要一个特定的Control对象。基本上来说，PeerSim是一个可替换的组件集合，所以在开发时需要注意模块化以让代码尽可能重用，出于这样的目的，我们这样设计下面的类：</p>
+<p><em>protocol</em></p>
+<blockquote>
+它基于peersim.vector.SimpleValueHolder，这是一个简单的基类，用于访问一个浮点变量。Aggreation协议也使用了同样的基类。</blockquote>
+<p><em>ResetQuota</em></p>
+<blockquote>
+用于在每个周期结束时存储每个节点配额的Control。</blockquote>
+<p><em>QuotaObserver ...</em></p> <a class="btn primary xsmall" href="./peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>PeerSim使用教程(2)-解析Cycle-based模式仿真</h2>
 	<div class="well small">Permalink: <a class="more" href="./peersimshi-yong-jiao-cheng-2-jie-xi-cycle-basedmo-shi-fang-zhen.html">2013-03-21 20:10:00</a>
 by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
@@ -341,36 +362,6 @@ tags: <a href="./tag/festival.html">festival</a> </div>
 <span class="n">festival_say_text</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">text</span><span class="p">);</span>
 </pre></div>
 <p>从函数名就可以看出这两个API的作用，第一个为初始化函数，需要在使用其他API之前调用 ...</p> <a class="btn primary xsmall" href="./festival-tts-shi-yong-zong-jie.html">more…</a>
-	</div>
-</div>	
-
-<div class='article'>
-	<h2>trace-cmd与kernelshark使用总结</h2>
-	<div class="well small">Permalink: <a class="more" href="./trace-cmdyu-kernelsharkshi-yong-zong-jie.html">2012-07-22 22:00:00</a>
-by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
-in <a href="./category/intern.html">intern</a>
-tags: <a href="./tag/trace-cmd.html">trace-cmd</a> <a href="./tag/kernelshark.html">kernelshark</a> </div>
-	<div class="summary"><p><strong>1.trace-cmd</strong></p>
-<p>trace-cmd是对ftrace的封装，是一个可以用来跟踪linux内核中事件(event)发生的时间、次数等的工具。</p>
-<p>首先需要安装trace-cmd:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install trace-cmd
-</pre></div>
-<p>使用也非常简单:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch
-</pre></div>
-<p>-e 参数指出需要跟踪的事件，这里的sched_switch指的是进程切换，还可以是hrtimer、irq等，例如:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch -e hrtimer*
-</pre></div>
-<p>命令输完回车后，trace-cmd就开始记录内核中事件的发生了，ctrl+C 停止跟踪，此时会生成一个trace.dat文件，相当于一个log吧。</p>
-<p>trace.dat里的内容不易读，trace-cmd提供分析trace.dat的功能:</p>
-<div class="highlight"><pre><span class="gp">$</span>trace-cmd report
-</pre></div>
-<p>就可以看到所跟踪的事件发生的情况了，和下图差不多。</p>
-<div class="figure">
-<img alt="../statics/pics/trace_cmd_kernelshark1.png" src="statics/pics/trace_cmd_kernelshark1.png" />
-</div>
-<p>也可以重定向到一个文本文件中再做分析，比如:</p>
-<div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href="./trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
 	</div>
 </div>	
 
