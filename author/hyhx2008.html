@@ -260,6 +260,27 @@ tags: <a href=".././tag/PeerSim.html">PeerSim</a> </div>
 </div>	
 
 <div class='article'>
+	<h2>PeerSim使用教程(4)-构建一个拓扑生成器</h2>
+	<div class="well small">Permalink: <a class="more" href=".././peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html">2013-04-04 21:45:00</a>
+by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
+in <a href=".././category/peersim.html">peersim</a>
+tags: <a href=".././tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p>本文描述了在PeerSim中如何构建一个新的拓扑生成器。</p>
+<p><strong>1.什么是拓扑？为什么它很重要？</strong></p>
+<p>在一个大型的动态P2P系统中，节点没有关于整个网络的信息，而所有的节点都可能拥有一些邻居节点，即节点能”感知”的peers，这种”感知”的关系就定义了一个覆盖网络，这是P2P系统中的一个基本概念。</p>
+<p>很多P2P协议都需要在多个不同的网络拓扑上进行实验。PeerSim中的peersim.dynamic.Wire*类已经包含了很多拓扑结构，可以直接用来对linkable协议进行初始化，本教程将展示如何构建一个自定义的拓扑生成器。</p>
+<p><strong>2.一个模拟Internet的简单模型</strong></p>
+<p>下面我们将编写一个拓扑生成器来构建类似于Internet的树状拓扑，整个构建过程基于一个特定的，与位置相关的preferential attachment方法，编写规则很简单，并且会考虑几何和网络的限制以更好地模拟真实的网络。
+Preferential attachment由参数a来调整，这个参数能扩大或减少几何位置所带来的影响。</p>
+<p>这个规则的策略如下：给定一个单位正方形，将x0置于中心，即x0 = (0.5,0.5)，这个节点被称为root，令W()为与root相隔的跳数(hops)，对于i=1 … n-1，随机在单位正方形中选择一个xi，然后选择使下面的表达式值最小的节点xj来连接它：</p>
+<div class="figure">
+<img alt="../statics/pics/peersim_tutorial_4_figure_1.png" src="../statics/pics/peersim_tutorial_4_figure_1.png" />
+</div>
+<p>在这里dist ...</p> <a class="btn primary xsmall" href=".././peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>让google和百度检索自己的网站</h2>
 	<div class="well small">Permalink: <a class="more" href=".././rang-googlehe-bai-du-jian-suo-zi-ji-de-wang-zhan.html">2012-11-18 23:58:00</a>
 by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
@@ -339,36 +360,6 @@ tags: <a href=".././tag/ocr Linux.html">ocr Linux</a> </div>
 <div class="highlight"><pre><span class="go">tesseract photo.tif 1.txt</span>
 </pre></div>
 <p>以上命令将从photo.tif中识别的文字存储在1 ...</p> <a class="btn primary xsmall" href=".././tesseract-ocrshi-yong-fang-fa-zong-jie.html">more…</a>
-	</div>
-</div>	
-
-<div class='article'>
-	<h2>trace-cmd与kernelshark使用总结</h2>
-	<div class="well small">Permalink: <a class="more" href=".././trace-cmdyu-kernelsharkshi-yong-zong-jie.html">2012-07-22 22:00:00</a>
-by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
-in <a href=".././category/intern.html">intern</a>
-tags: <a href=".././tag/trace-cmd.html">trace-cmd</a> <a href=".././tag/kernelshark.html">kernelshark</a> </div>
-	<div class="summary"><p><strong>1.trace-cmd</strong></p>
-<p>trace-cmd是对ftrace的封装，是一个可以用来跟踪linux内核中事件(event)发生的时间、次数等的工具。</p>
-<p>首先需要安装trace-cmd:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install trace-cmd
-</pre></div>
-<p>使用也非常简单:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch
-</pre></div>
-<p>-e 参数指出需要跟踪的事件，这里的sched_switch指的是进程切换，还可以是hrtimer、irq等，例如:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch -e hrtimer*
-</pre></div>
-<p>命令输完回车后，trace-cmd就开始记录内核中事件的发生了，ctrl+C 停止跟踪，此时会生成一个trace.dat文件，相当于一个log吧。</p>
-<p>trace.dat里的内容不易读，trace-cmd提供分析trace.dat的功能:</p>
-<div class="highlight"><pre><span class="gp">$</span>trace-cmd report
-</pre></div>
-<p>就可以看到所跟踪的事件发生的情况了，和下图差不多。</p>
-<div class="figure">
-<img alt="../statics/pics/trace_cmd_kernelshark1.png" src="../statics/pics/trace_cmd_kernelshark1.png" />
-</div>
-<p>也可以重定向到一个文本文件中再做分析，比如:</p>
-<div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href=".././trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
 	</div>
 </div>	
 

@@ -1,5 +1,363 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/peersim.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-03-24T19:35:00+09:00</updated><entry><title>PeerSim使用教程(3)-编写一个新协议</title><link href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html" rel="alternate"></link><updated>2013-03-24T19:35:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-03-24:peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;1.编写一个新协议&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/peersim.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-04-04T21:45:00+09:00</updated><entry><title>PeerSim使用教程(4)-构建一个拓扑生成器</title><link href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html" rel="alternate"></link><updated>2013-04-04T21:45:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-04:peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html</id><summary type="html">&lt;p&gt;本文描述了在PeerSim中如何构建一个新的拓扑生成器。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.什么是拓扑？为什么它很重要？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在一个大型的动态P2P系统中，节点没有关于整个网络的信息，而所有的节点都可能拥有一些邻居节点，即节点能”感知”的peers，这种”感知”的关系就定义了一个覆盖网络，这是P2P系统中的一个基本概念。&lt;/p&gt;
+&lt;p&gt;很多P2P协议都需要在多个不同的网络拓扑上进行实验。PeerSim中的peersim.dynamic.Wire*类已经包含了很多拓扑结构，可以直接用来对linkable协议进行初始化，本教程将展示如何构建一个自定义的拓扑生成器。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.一个模拟Internet的简单模型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面我们将编写一个拓扑生成器来构建类似于Internet的树状拓扑，整个构建过程基于一个特定的，与位置相关的preferential attachment方法，编写规则很简单，并且会考虑几何和网络的限制以更好地模拟真实的网络。
+Preferential attachment由参数a来调整，这个参数能扩大或减少几何位置所带来的影响。&lt;/p&gt;
+&lt;p&gt;这个规则的策略如下：给定一个单位正方形，将x0置于中心，即x0 = (0.5,0.5)，这个节点被称为root，令W()为与root相隔的跳数(hops)，对于i=1 … n-1，随机在单位正方形中选择一个xi，然后选择使下面的表达式值最小的节点xj来连接它：&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/peersim_tutorial_4_figure_1.png" src="../statics/pics/peersim_tutorial_4_figure_1.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;在这里dist()是欧几里德距离而a (alpha)是权重参数，显然，&lt;/p&gt;
+&lt;p&gt;W(xi) = W(xj) + 1&lt;/p&gt;
+&lt;p&gt;通过这个方案我们得到了一个x0以为根的树。这个拓扑中每个节点(除了root外)的出度都为1,如果想更深入地理解这个模型，可以参考下面的文章：&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Heuristically Optimized Trade-offs: A New Paradigm for Power Laws in the Internet&lt;/li&gt;
+&lt;li&gt;Degree distributions of the FKP network model&lt;/li&gt;
+&lt;li&gt;On Power-Law Relationships of the Internet Topology&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;3.需要编写的代码&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们的目标是编写一个可以根据 a(alpha) 参数生成所需拓扑的PeerSim组件，并且能对生成的拓扑进行分析。
+这个拓扑可以在仿真过程中逐步生成，也可以用一个步骤生成拓扑，在这里我们倾向后者。为了构建需要的拓扑结构，我们需要下面的组件(注意这只是其中一种方案)。&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;一个protocol 类，可以存储坐标，它不具备行为元素，只是一个普通的容器&lt;/li&gt;
+&lt;li&gt;一个initializer 类，可以为每个节点设置坐标值&lt;/li&gt;
+&lt;li&gt;一个control 类， 可在一个任意的linkable协议中根据坐标连接拓扑(在节点间添加link)&lt;/li&gt;
+&lt;li&gt;一个observer 类，将拓扑结构打印到一个文件中(例如用GnuPlot对图进行可视化)&lt;/li&gt;
+&lt;li&gt;一个observer 类，用来收集节点入度的分布的统计数据&lt;/li&gt;
+&lt;li&gt;一个observer 类，用来测试对随机节点失效的健壮性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在下节我们将看到，一些我们列出来的类是PeerSim中的基本组件，它们都实现了Linkable接口，Linkable以模块化的方式为用户提供了一个能处理任何拓扑结构的抽象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.代码编写&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;a.Protocol类&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Protocol&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;InetCoordinates&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;Protocol&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+        &lt;span class="cm"&gt;/** 2d coordinates components.*/&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="cm"&gt;/* Un-initialized coordinates defaults to -1.*/&lt;/span&gt;
+                &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="nf"&gt;clone&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;InetCoordinates&lt;/span&gt; &lt;span class="n"&gt;inp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;inp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;clone&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CloneNotSupportedException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// never happens&lt;/span&gt;
+
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;inp&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;getX&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;setX&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;getY&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;setY&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这个类只存储坐标，而links则会存储在其它任意实现了Linkable接口的协议中。&lt;/p&gt;
+&lt;p&gt;clone方法必须新定义并且捕捉和压制所有的异常（它们永远不会被抛出），因为这里只有基本类型，不需要深拷贝操作。&lt;/p&gt;
+&lt;p&gt;坐标组件并不是public的，但可以通过getter/setter方法来存取 ，这是很重要的，因为我们可以使用peersim.vector包以一个弹性化的方式来初始化坐标值，但在本文中我们并没有使用这个包。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;b.初始化类&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;hot&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.config.Configuration&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.CommonState&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Control&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Network&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Node&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;InetInitializer&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;PAR_PROT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;protocol&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="cm"&gt;/** Protocol identifier, obtained from config property*/&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;InetInitializer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPid&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;PAR_PROT&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt;        * Initialize the node coordinates. The first node in the Network&lt;/span&gt;
+&lt;span class="cm"&gt;        * is the root node by default and it is located in the middle&lt;/span&gt;
+&lt;span class="cm"&gt;        * (the center of the square) of the surface area.*/&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="nf"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="c1"&gt;// Set the root: the index 0 node by default.&lt;/span&gt;
+                &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Network&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;InetCoordinates&lt;/span&gt; &lt;span class="n"&gt;prot&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;prot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setX&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;prot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setY&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="c1"&gt;// Set coordinates x,y&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;Network&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Network&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="n"&gt;prot&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="n"&gt;prot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setX&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CommonState&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;nextDouble&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+                        &lt;span class="n"&gt;prot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setY&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CommonState&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;nextDouble&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;初始化类应当实现Control接口中唯一的execute方法，构造方法从配置文件中读取唯一的参数(protocol)，它声明了持有坐标的协议。&lt;/p&gt;
+&lt;p&gt;这个类是很简单的，它生成了一致的随机坐标(x和y),唯一的例外是root节点，默认情况下，它的下标是0，固定为(0.5,0.5)。&lt;/p&gt;
+&lt;p&gt;为了生成随机数，CommonState中的静态的数据域r必须总是使用，因为这样保证了实验的可重复性。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;c.Writing类&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这个类继承了peersim.dynamic.WireGraph，它实现了Control接口并提供了处理拓扑的通用功能，同时也提供了一个图的接口。
+wiring的逻辑应该放在由子类调用的wire方法中，并且在默认情况下将下标为0的节点视为root。&lt;/p&gt;
+&lt;p&gt;这个类需要从配置文件中读取 a(配置文件中的alpha)和坐标容器的protocol ID(配置文件中的coord_protocol)，这是由类的的构造方法来完成的，其它的参数，比如 protocol 是由父类继承的，它是一个实现了Linkable接口的协议。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;hot&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.config.Configuration&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Linkable&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Network&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Node&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.dynamics.WireGraph&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.graph.Graph&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WireInetTopology&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;WireGraph&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;PAR_ALPHA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;alpha&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;PAR_COORDINATES_PROT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;coord_protocol&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;// A parameter that affects the distance importance.&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;// Coordinate protocol pid.&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;WireInetTopology&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;alpha&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getDouble&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;PAR_ALPHA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;coordPid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPid&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;.&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;PAR_COORDINATES_PROT&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt;        * Performs the actual wiring.&lt;/span&gt;
+&lt;span class="cm"&gt;        * @param g&lt;/span&gt;
+&lt;span class="cm"&gt;        * a peersim.graph.Graph interface object to work on.*/&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;wire&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Graph&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// Contains the distance in hops from the root node&lt;/span&gt;
+                &lt;span class="c1"&gt;// for each node.&lt;/span&gt;
+
+                &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;hops&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Network&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;()];&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// connect all the nodes other than roots&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;Network&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getNode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="c1"&gt;// Look for a suitable parent node between those&lt;/span&gt;
+                        &lt;span class="c1"&gt;// allready part of the overlay topology: alias&lt;/span&gt;
+                        &lt;span class="c1"&gt;// FIND THE MINIMUM!&lt;/span&gt;
+                        &lt;span class="c1"&gt;// Node candidate = null;&lt;/span&gt;
+                        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;candidate_index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                        &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Double&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;POSITIVE_INFINITY&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+                        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                                &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getNode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;jHopDistance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hops&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
+                                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;jHopDistance&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                                        &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;alpha&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;distance&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+                                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                                &lt;span class="c1"&gt;// candidate = parent;&lt;/span&gt;
+                                &lt;span class="c1"&gt;// best parent node to connect to&lt;/span&gt;
+                                        &lt;span class="n"&gt;min&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                                        &lt;span class="n"&gt;candidate_index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                                &lt;span class="o"&gt;}&lt;/span&gt;
+                        &lt;span class="o"&gt;}&lt;/span&gt;
+                        &lt;span class="n"&gt;hops&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hops&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;candidate_index&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                        &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setEdge&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;candidate_index&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;distance&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;new_node&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;old_node&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;x1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;new_node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getX&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;x2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;old_node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getX&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;y1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;new_node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getY&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;y2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;old_node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getY&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x1&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;x2&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;y1&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;y2&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// NOTE: in release 1.0 the line above incorrectly&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// contains | -s instead of ||. Use latest CVS version,&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// or fix it by hand.&lt;/span&gt;
+                        &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;RuntimeException&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;
+                                &lt;span class="s"&gt;&amp;quot;Found un-initialized coordinate. Use e.g.,\&lt;/span&gt;
+&lt;span class="s"&gt;                                InetInitializer class in the config file.&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sqrt&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;x1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;x2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;x2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                        &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;y2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;y2&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;d.Observers&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;前面提到的observer有些已经由PeerSim提供了相应的实现。例如，为了计算节点度的分布，用户可以使用peersim.reports.DegreeStats；
+为了检验网络的健壮性，可以使用peersim.reports.RandRemoval：它打印生成的clusters的数目及大小，并作为随机删除的节点数量的函数。
+然而，为了将拓扑转换为可绘图的形式，需要自行编写observer：
+InetObserver实现了Control接口和对应的execute方法，我们继承了peersim.reports.GraphObserver，这个模板类能简化对图的观察。&lt;/p&gt;
+&lt;p&gt;构造方法根据配置文件进行初始化，其中参数protocol引用了Protocol ID，它拥有”who knows who”的关系（它必须是一个Linkable 协议），这是由超类继承而来。
+其它的参数，coord_protocol和file_base，分别是坐标容器的协议名和将要使用的文件名前缀。
+这样，最终由程序生成的文件名是：file_base + %08d + .dat，中间的8位数字是指周期数，
+因为作为一个control对象，observer可以在每个周期中运行，在这种情况下每次应该生成一个不同的文件。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;hot&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.FileOutputStream&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.IOException&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.PrintStream&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.config.Configuration&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.core.Node&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.graph.Graph&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.reports.GraphObserver&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;peersim.util.FileNameGenerator&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;InetObserver&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;GraphObserver&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;PAR_FILENAME_BASE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;file_base&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;PAR_COORDINATES_PROT&lt;/span&gt;
+                                        &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;coord_protocol&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;graph_filename&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;FileNameGenerator&lt;/span&gt; &lt;span class="n"&gt;fng&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;InetObserver&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;coordPid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPid&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;
+                                &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;PAR_COORDINATES_PROT&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;graph_filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;
+                                &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;PAR_FILENAME_BASE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;graph_dump&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;fng&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FileNameGenerator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;graph_filename&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;.dat&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="c1"&gt;// Control interface method.&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="nf"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;updateGraph&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;print&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="c1"&gt;// initialize output streams&lt;/span&gt;
+                        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;fname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fng&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;nextCounterName&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="n"&gt;FileOutputStream&lt;/span&gt; &lt;span class="n"&gt;fos&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FileOutputStream&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fname&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Writing to file &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;fname&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="n"&gt;PrintStream&lt;/span&gt; &lt;span class="n"&gt;pstr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;PrintStream&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fos&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="c1"&gt;// dump topology:&lt;/span&gt;
+                        &lt;span class="n"&gt;graphToFile&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pstr&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="n"&gt;fos&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;RuntimeException&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;graphToFile&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Graph&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PrintStream&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getNode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;x_to&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getX&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;y_to&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getY&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+                        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getNeighbours&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                                &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getNode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;x_from&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                        &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getX&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                                &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;y_from&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                        &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProtocol&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coordPid&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getY&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                                &lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x_from&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y_from&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                                &lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x_to&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y_to&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                                &lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在execute方法中我们必须调用 updateGraph方法(a GraphObserver protected method)以检验实际的图中是否发生了变化，
+这是为了在很多observer运行于同一个图中的时候节省构造图的时间。如果许多observers观察同一个图的无向版本，那节省时间的时间是很显著的。
+注意在execute方法中使用的IO库函数可能抛出一些异常，这里任意的异常都被捕获并重新作为运行时异常抛出，它们会导致仿真的终止。&lt;/p&gt;
+&lt;p&gt;静态的功能方法graphToFile将实际的拓扑结构写到磁盘中，对于每个节点n，收集其x和y坐标，而对于节点n的每个邻居节点i，其坐标将会是下面的格式：&lt;/p&gt;
+&lt;p&gt;1&amp;gt; n.neighbor(i).x n.neighbor(i).y newline&lt;/p&gt;
+&lt;p&gt;2&amp;gt; n.x n.y newline&lt;/p&gt;
+&lt;p&gt;3&amp;gt; newline}&lt;/p&gt;
+&lt;p&gt;这种格式很适合于用GnuPlot来绘图，请注意循环是从下标1而不是0开始的，这是因为节点0是root,它没有向外的连接。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5.运行实验&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面是本实验所对应的配置文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# Complex Network file:&lt;/span&gt;
+&lt;span class="cp"&gt;# random.seed 1234567890&lt;/span&gt;
+&lt;span class="n"&gt;simulation&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cycles&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;network&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="mi"&gt;10000&lt;/span&gt;
+&lt;span class="n"&gt;protocol&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="n"&gt;IdleProtocol&lt;/span&gt;
+&lt;span class="n"&gt;protocol&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;coord&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;InetCoordinates&lt;/span&gt;
+&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="mf"&gt;.0&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;InetInitializer&lt;/span&gt;
+&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="mf"&gt;.0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;coord&lt;/span&gt;
+&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="mf"&gt;.1&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WireInetTopology&lt;/span&gt;
+&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="mf"&gt;.1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;linkable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;wired&lt;/span&gt;
+&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="mf"&gt;.1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;coord_protocol&lt;/span&gt; &lt;span class="n"&gt;coord&lt;/span&gt;
+&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="mf"&gt;.1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alpha&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;InetObserver&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;link&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;coord_protocol&lt;/span&gt; &lt;span class="n"&gt;coord&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;file_base&lt;/span&gt; &lt;span class="n"&gt;graph&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;degree&lt;/span&gt; &lt;span class="n"&gt;DegreeStats&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;degree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;link&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;degree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;undir&lt;/span&gt;
+&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;degree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="n"&gt;freq&lt;/span&gt;
+&lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;control&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="n"&gt;degree&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/peersim_tutorial_4_figure_2.png" src="../statics/pics/peersim_tutorial_4_figure_2.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Figure 1: Topology and in-degree distribution with a 4&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/peersim_tutorial_4_figure_3.png" src="../statics/pics/peersim_tutorial_4_figure_3.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Figure 2: Topology and in-degree distribution with a 20&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/peersim_tutorial_4_figure_4.png" src="../statics/pics/peersim_tutorial_4_figure_4.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Figure 3: Topology and in-degree distribution with a 100&lt;/p&gt;
+&lt;p&gt;它根据init.0部分的参数生成了具有10000个节点的覆盖网络。下面的图展示了在a不同的情况下生成的拓扑。
+事实上，它影响了系统的聚类行为并且它与网络的大小紧密相关:
+如果，拓扑将变得越来越聚集，在a很小时，则拓扑会变成星形结构。 如果，拓扑将趋向于随机分布而不是聚集在一起。&lt;/p&gt;
+&lt;p&gt;DegreeStats可以用来收集节点度的统计信息，然而，应当慎重地使用它。
+因为在PeerSim的默认情况下，“度”是指“出度”，然而我们感兴趣的是“入度”，那怎么样才能观察入度呢？
+首先我们将图视为无向图（通过undir参数）,然后我们进行频率统计（freq参数）来绘图，observer会输出类似于下面的数据：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;1 9838&lt;/span&gt;
+&lt;span class="go"&gt;2 38&lt;/span&gt;
+&lt;span class="go"&gt;3 19&lt;/span&gt;
+&lt;span class="go"&gt;4 14&lt;/span&gt;
+&lt;span class="go"&gt;5 7&lt;/span&gt;
+&lt;span class="go"&gt;6 7&lt;/span&gt;
+&lt;span class="go"&gt;7 7&lt;/span&gt;
+&lt;span class="go"&gt;8 4&lt;/span&gt;
+&lt;span class="go"&gt;9 3&lt;/span&gt;
+&lt;span class="go"&gt;10 3&lt;/span&gt;
+&lt;span class="go"&gt;11 1&lt;/span&gt;
+&lt;span class="go"&gt;12 5&lt;/span&gt;
+&lt;span class="go"&gt;...&lt;/span&gt;
+&lt;span class="go"&gt;...&lt;/span&gt;
+&lt;span class="go"&gt;543 1&lt;/span&gt;
+&lt;span class="go"&gt;566 1&lt;/span&gt;
+&lt;span class="go"&gt;620 1&lt;/span&gt;
+&lt;span class="go"&gt;653 1&lt;/span&gt;
+&lt;span class="go"&gt;2153 1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;第一列对应于度数，而第二列是指拥有相应度数的节点数量，我们可以肯定除了root以外，其它每个节点都只有一个out-link，同时所有的link都是严格单向的，因而为了取得入度我们只需要从第一列简单地减去1即可。&lt;/p&gt;
+</summary><category term="PeerSim"></category></entry><entry><title>PeerSim使用教程(3)-编写一个新协议</title><link href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html" rel="alternate"></link><updated>2013-03-24T19:35:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-03-24:peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;1.编写一个新协议&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;我们将要实现的协议是在PeerSim中基于Cycle-based模型的一个简单的负载均衡算法。节点的状态有两种值：本地负载(local load)和配额(quota)，其中配额是指节点在每个周期中允许传输的“负载”的大小。配额是必要的，是一个时间单元中能传输的负载上限。每个节点与和它距离最远的邻居节点交换配额值，这里“距离最远”是指与当前节点的负载差异最大。经过对比距离，协议将在负载均衡时选用push或pull的方式。&lt;/p&gt;
 &lt;p&gt;在每个周期之后，配额值将会被存储。协议并不关心拓扑管理，它依赖于其它组件来访问邻居节点(例如，Newscast，或者由IdleProtocol实现的静态拓扑)。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;1.1 必要的组件&lt;/strong&gt;&lt;/p&gt;

@@ -118,6 +118,38 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 
 <div class='article'>
+	<h2>Festival tts 使用总结</h2>
+	<div class="well small">Permalink: <a class="more" href="./festival-tts-shi-yong-zong-jie.html">2012-08-24 22:00:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
+in <a href="./category/intern.html">intern</a>
+tags: <a href="./tag/festival.html">festival</a> </div>
+	<div class="summary"><p><a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/">Festival-tts</a>
+是一个免费的tts (text to speech) 工具，可以将字符串转为声音播放出来或者存为声音文件。</p>
+<p>首先安装:</p>
+<div class="highlight"><pre><span class="gp">$</span>sodu aptitude install festival
+<span class="gp">$</span>sudo aptitude install festival-dev
+</pre></div>
+<p>可以用下面的命令测试一下:</p>
+<div class="highlight"><pre><span class="gp">$</span><span class="nb">echo </span>hellow world | festival --tts
+</pre></div>
+<p>此时可以听到喇叭中念出hello world，如果没有声音可能是声卡驱动的问题。</p>
+<p>如果想在自己的程序中使用festival tts的功能，则需要用到festival提供的API，可以参考festiva的文档:
+<a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/manual/festival_28.html#SEC126">festival:API</a>
+。</p>
+<p>这里以C++的API为例，介绍两个常用的函数。</p>
+<p>首先程序需要include一个头文件:</p>
+<div class="highlight"><pre><span class="cp">#include &lt;festival.h&gt;</span>
+</pre></div>
+<p>两个常用API为:</p>
+<div class="highlight"><pre><span class="n">festival_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">load_init_files</span><span class="p">,</span><span class="kt">int</span> <span class="n">heap_size</span><span class="p">);</span>
+
+<span class="n">festival_say_text</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">text</span><span class="p">);</span>
+</pre></div>
+<p>从函数名就可以看出这两个API的作用，第一个为初始化函数，需要在使用其他API之前调用 ...</p> <a class="btn primary xsmall" href="./festival-tts-shi-yong-zong-jie.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>trace-cmd与kernelshark使用总结</h2>
 	<div class="well small">Permalink: <a class="more" href="./trace-cmdyu-kernelsharkshi-yong-zong-jie.html">2012-07-22 22:00:00</a>
 by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>

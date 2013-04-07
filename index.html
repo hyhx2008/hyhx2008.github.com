@@ -118,6 +118,27 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 
 <div class='article'>
+	<h2>PeerSim使用教程(4)-构建一个拓扑生成器</h2>
+	<div class="well small">Permalink: <a class="more" href="./peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html">2013-04-04 21:45:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
+in <a href="./category/peersim.html">peersim</a>
+tags: <a href="./tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p>本文描述了在PeerSim中如何构建一个新的拓扑生成器。</p>
+<p><strong>1.什么是拓扑？为什么它很重要？</strong></p>
+<p>在一个大型的动态P2P系统中，节点没有关于整个网络的信息，而所有的节点都可能拥有一些邻居节点，即节点能”感知”的peers，这种”感知”的关系就定义了一个覆盖网络，这是P2P系统中的一个基本概念。</p>
+<p>很多P2P协议都需要在多个不同的网络拓扑上进行实验。PeerSim中的peersim.dynamic.Wire*类已经包含了很多拓扑结构，可以直接用来对linkable协议进行初始化，本教程将展示如何构建一个自定义的拓扑生成器。</p>
+<p><strong>2.一个模拟Internet的简单模型</strong></p>
+<p>下面我们将编写一个拓扑生成器来构建类似于Internet的树状拓扑，整个构建过程基于一个特定的，与位置相关的preferential attachment方法，编写规则很简单，并且会考虑几何和网络的限制以更好地模拟真实的网络。
+Preferential attachment由参数a来调整，这个参数能扩大或减少几何位置所带来的影响。</p>
+<p>这个规则的策略如下：给定一个单位正方形，将x0置于中心，即x0 = (0.5,0.5)，这个节点被称为root，令W()为与root相隔的跳数(hops)，对于i=1 … n-1，随机在单位正方形中选择一个xi，然后选择使下面的表达式值最小的节点xj来连接它：</p>
+<div class="figure">
+<img alt="../statics/pics/peersim_tutorial_4_figure_1.png" src="statics/pics/peersim_tutorial_4_figure_1.png" />
+</div>
+<p>在这里dist ...</p> <a class="btn primary xsmall" href="./peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>PeerSim使用教程(3)-编写一个新协议</h2>
 	<div class="well small">Permalink: <a class="more" href="./peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">2013-03-24 19:35:00</a>
 by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
@@ -330,38 +351,6 @@ tags: <a href="./tag/GitHub.html">GitHub</a> </div>
 <p>说是博客，其实估计也没人看，就当做记笔记写总结到好地方了。</p>
 <p>以前都是用evernote写笔记的，但是在粘代码的时候不能语法高亮，所以听了马星的推荐在github上写博客，也算是赶个时髦吧～</p>
  <a class="btn primary xsmall" href="./hello-world.html">more…</a>
-	</div>
-</div>	
-
-<div class='article'>
-	<h2>Festival tts 使用总结</h2>
-	<div class="well small">Permalink: <a class="more" href="./festival-tts-shi-yong-zong-jie.html">2012-08-24 22:00:00</a>
-by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>
-in <a href="./category/intern.html">intern</a>
-tags: <a href="./tag/festival.html">festival</a> </div>
-	<div class="summary"><p><a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/">Festival-tts</a>
-是一个免费的tts (text to speech) 工具，可以将字符串转为声音播放出来或者存为声音文件。</p>
-<p>首先安装:</p>
-<div class="highlight"><pre><span class="gp">$</span>sodu aptitude install festival
-<span class="gp">$</span>sudo aptitude install festival-dev
-</pre></div>
-<p>可以用下面的命令测试一下:</p>
-<div class="highlight"><pre><span class="gp">$</span><span class="nb">echo </span>hellow world | festival --tts
-</pre></div>
-<p>此时可以听到喇叭中念出hello world，如果没有声音可能是声卡驱动的问题。</p>
-<p>如果想在自己的程序中使用festival tts的功能，则需要用到festival提供的API，可以参考festiva的文档:
-<a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/manual/festival_28.html#SEC126">festival:API</a>
-。</p>
-<p>这里以C++的API为例，介绍两个常用的函数。</p>
-<p>首先程序需要include一个头文件:</p>
-<div class="highlight"><pre><span class="cp">#include &lt;festival.h&gt;</span>
-</pre></div>
-<p>两个常用API为:</p>
-<div class="highlight"><pre><span class="n">festival_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">load_init_files</span><span class="p">,</span><span class="kt">int</span> <span class="n">heap_size</span><span class="p">);</span>
-
-<span class="n">festival_say_text</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">text</span><span class="p">);</span>
-</pre></div>
-<p>从函数名就可以看出这两个API的作用，第一个为初始化函数，需要在使用其他API之前调用 ...</p> <a class="btn primary xsmall" href="./festival-tts-shi-yong-zong-jie.html">more…</a>
 	</div>
 </div>	
 
