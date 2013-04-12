@@ -246,7 +246,7 @@ Preferential attachment由参数a来调整，这个参数能扩大或减少几�
 <p>初始化类应当实现Control接口中唯一的execute方法，构造方法从配置文件中读取唯一的参数(protocol)，它声明了持有坐标的协议。</p>
 <p>这个类是很简单的，它生成了一致的随机坐标(x和y),唯一的例外是root节点，默认情况下，它的下标是0，固定为(0.5,0.5)。</p>
 <p>为了生成随机数，CommonState中的静态的数据域r必须总是使用，因为这样保证了实验的可重复性。</p>
-<p><strong>c.Writing类</strong></p>
+<p><strong>c.Wiring类</strong></p>
 <p>这个类继承了peersim.dynamic.WireGraph，它实现了Control接口并提供了处理拓扑的通用功能，同时也提供了一个图的接口。
 wiring的逻辑应该放在由子类调用的wire方法中，并且在默认情况下将下标为0的节点视为root。</p>
 <p>这个类需要从配置文件中读取 a(配置文件中的alpha)和坐标容器的protocol ID(配置文件中的coord_protocol)，这是由类的的构造方法来完成的，其它的参数，比如 protocol 是由父类继承的，它是一个实现了Linkable接口的协议。</p>

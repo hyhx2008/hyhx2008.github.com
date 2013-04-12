@@ -281,6 +281,25 @@ Preferential attachment由参数a来调整，这个参数能扩大或减少几�
 </div>	
 
 <div class='article'>
+	<h2>PeerSim使用教程(5)-Event-drive(事件驱动)模型</h2>
+	<div class="well small">Permalink: <a class="more" href=".././peersimshi-yong-jiao-cheng-5-event-driveshi-jian-qu-dong-mo-xing.html">2013-04-12 17:46:00</a>
+by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
+in <a href=".././category/peersim.html">peersim</a>
+tags: <a href=".././tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p><strong>1.简介</strong></p>
+<p>本教程使用Event-driven模型来演示一个简单的例子，仍然使用的是gossip-based平均数协议，对消息的发送将进行更细节的建模；通过与cycle-based模型的对比，可以发现本协议存在的问题。</p>
+<p>在Event-based模型中，除了时间管理和control传递给protocols的方式以外，其它与cycle-based模型相同。
+不可执行的Protocols(只用于存储数据，比如只存储邻居节点的linkable协议，或存储数值的vectors)可以以同样的方式应用和初始化，在peersim.cdsim包之外的controls也都可以使用。
+在默认情况下，在cycle-based模型中，controls会的每个周期中调用 ，但在event-based模型中，它们需要进行明确的调度，因为事件驱动模型并不存在周期的概念。</p>
+<p>显然，我们可以编写专用于Event-based模型的controls，即可以给协议发送事件(消息)。在很多情况下，这是必要的，因为系统经常完全或部分地由外部事件如用户的查询来驱动，这能很好地用由生成这些事件，并且驱动仿真执行的controls进行建模。</p>
+<p>有些组件是不可用的。例如依赖于静态类peersim.cdsim.CDState(它提供了读取cycle相关的全局状态的接口)的所有组件。
+我们的经验是，很多依赖于这个状态的cycle-based 组件可以经过简单的修改并删除这个依赖。</p>
+<p>然而，可能有些令人吃惊的是，实现了cycle-based接口的peersim.cdsim.CDProtocol也可以使用于event-based模型，但是必须指出，在大部份的情况下这样做没有什么意义。
+然而，这个特性的有用之处在于 ...</p> <a class="btn primary xsmall" href=".././peersimshi-yong-jiao-cheng-5-event-driveshi-jian-qu-dong-mo-xing.html">more…</a>
+	</div>
+</div>	
+
+<div class='article'>
 	<h2>让google和百度检索自己的网站</h2>
 	<div class="well small">Permalink: <a class="more" href=".././rang-googlehe-bai-du-jian-suo-zi-ji-de-wang-zhan.html">2012-11-18 23:58:00</a>
 by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
@@ -332,34 +351,6 @@ tags: <a href=".././tag/GitHub.html">GitHub</a> <a href=".././tag/pelican.html">
 <p>github上说可以用https方法提交工程，但是没有成功过，所以还是需要利用ssh。这里需要生成ssh keys，
 具体步骤参考
 <a class="reference external" href="https://help.github.com/articles/generating-ssh-keys#platform-linux">github:help ...</a></p> <a class="btn primary xsmall" href=".././shi-yong-pelicansheng-cheng-githubbo-ke.html">more…</a>
-	</div>
-</div>	
-
-<div class='article'>
-	<h2>tesseract-ocr使用方法总结</h2>
-	<div class="well small">Permalink: <a class="more" href=".././tesseract-ocrshi-yong-fang-fa-zong-jie.html">2012-12-01 16:34:00</a>
-by <a class="url fn" href=".././author/hyhx2008.html">hyhx2008</a>
-in <a href=".././category/intern.html">intern</a>
-tags: <a href=".././tag/ocr Linux.html">ocr Linux</a> </div>
-	<div class="summary"><p>实习的时候接触到了一个挺不错的OCR(光学字符识别)工具tesseract，这里总结一下linux下tesseract的简单用法。</p>
-<p>tesseract-ocr是由google维护的一个开源ocr库，可以识别多种格式图片中的文字，可以直接作为一个工具使用，也可以利用tesseract提供的api在自己的程序中使用ocr功能。</p>
-<p><a class="reference external" href="http://code.google.com/p/tesseract-ocr/">项目主页</a></p>
-<p><strong>1.tesseract-ocr安装</strong></p>
-<p>ubuntu和debian下tesseract的安装非常简单，但是需要安装的包比较多:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install tesseract-ocr tesseract-ocr-dev tesseract-ocr-eng
-</pre></div>
-<p>tesseract-ocr即为ocr库，tesseract-ocr-dev是使用api时需要用到的头文件。</p>
-<p>tesseract-ocr-eng是语言包，这里安装的是英文，如果要识别其他语言，需要安装其他语言包。</p>
-<p>（语言包安装的位置在/usr/share/tesseract-ocr/tessdata/，该位置将作为初始化api的一个参数）</p>
-<p>为了识别tiff格式的图片，最好再安装以下两个库:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install leptonica libtiff
-</pre></div>
-<p>这样tesseract-ocr和一些相关的包就安装完成了。</p>
-<p><strong>2.tesseract-ocr使用</strong></p>
-<p>作为一个命令行程序，tesseract可以用以下命令识别一张图片中的文字:</p>
-<div class="highlight"><pre><span class="go">tesseract photo.tif 1.txt</span>
-</pre></div>
-<p>以上命令将从photo.tif中识别的文字存储在1 ...</p> <a class="btn primary xsmall" href=".././tesseract-ocrshi-yong-fang-fa-zong-jie.html">more…</a>
 	</div>
 </div>	
 

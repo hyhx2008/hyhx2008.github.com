@@ -146,7 +146,7 @@ clone方法必须新定义并且捕捉和压制所有的异常（它们永远不
 
 为了生成随机数，CommonState中的静态的数据域r必须总是使用，因为这样保证了实验的可重复性。
 
-**c.Writing类**
+**c.Wiring类**
 
 这个类继承了peersim.dynamic.WireGraph，它实现了Control接口并提供了处理拓扑的通用功能，同时也提供了一个图的接口。
 wiring的逻辑应该放在由子类调用的wire方法中，并且在默认情况下将下标为0的节点视为root。
