@@ -38,7 +38,7 @@ Ubuntu下Java的安装与配置
 
 .. code-block:: console
 
-    export JAVA_HOME=/usr/java/jdk_1.7.0_17
+    export JAVA_HOME=/usr/java/jdk1.7.0_17
     export JRE_HOME=${JAVA_HOME}/jre
     export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
     export PATH=${JAVA_HOME}/bin:$PATH

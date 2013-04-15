@@ -44,7 +44,7 @@ ifconfig eth0 up&lt;/blockquote&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;vim ~/.bashrc&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;添加以下内容：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;export JAVA_HOME=/usr/java/jdk_1.7.0_17&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;export JAVA_HOME=/usr/java/jdk1.7.0_17&lt;/span&gt;
 &lt;span class="go"&gt;export JRE_HOME=${JAVA_HOME}/jre&lt;/span&gt;
 &lt;span class="go"&gt;export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib&lt;/span&gt;
 &lt;span class="go"&gt;export PATH=${JAVA_HOME}/bin:$PATH&lt;/span&gt;
