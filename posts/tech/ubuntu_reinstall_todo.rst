@@ -58,5 +58,13 @@ ubuntu下好像这样做后还是不能使用su命令切换到root，百度解�
 
 暂时想到这么多。。。。
 
+6.ubuntu 12.04安装gnome
 
+突然发现ubuntu10.10的包不能更新了，只好被迫升级到12.04。但是这个桌面也太不能让人适应了，所以想换回经典的gnome桌面，下面的命令可以做到：
+
+.. code-block:: console
+
+	$sudo aptitude install gnome-session-fallback
+
+安装完成后log out一下，然后重新log in的时候点击登入对话框右上角的ubuntu图标，选择gnome即可。
 
