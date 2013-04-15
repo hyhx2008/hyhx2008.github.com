@@ -1532,12 +1532,17 @@ order.observer myClass conn 1
 &lt;p&gt;5.安装中文输入法&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install ibus ibus-pinyin ibus-gtk ibus-qt4
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;暂时想到这么多。。。。&lt;/p&gt;
 &lt;p&gt;6.ubuntu 12.04安装gnome&lt;/p&gt;
 &lt;p&gt;突然发现ubuntu10.10的包不能更新了，只好被迫升级到12.04。但是这个桌面也太不能让人适应了，所以想换回经典的gnome桌面，下面的命令可以做到：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install gnome-session-fallback
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;安装完成后log out一下，然后重新log in的时候点击登入对话框右上角的ubuntu图标，选择gnome即可。&lt;/p&gt;
+&lt;p&gt;7.vim配置&lt;/p&gt;
+&lt;p&gt;vim需要经过配置才会好用，ubuntu下vim的配置文件在/etc/vim/vimrc。修改vimrc即可完成配置。&lt;/p&gt;
+&lt;p&gt;这里推荐网上的一个配置作为参考：&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.cnblogs.com/witcxc/archive/2011/12/28/2304704.html"&gt;Vim配置详解&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;。&lt;/p&gt;
+&lt;p&gt;未完待续。。。&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 11 Nov 2012 21:44:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-11-11:ubuntu_reinstall_todo-zh.html</guid><category>ubuntu</category></item><item><title>Hello World!</title><link>http://hyhx2008.github.com/hello-world.html</link><description>&lt;p&gt;终于建立起了我的github博客~!&lt;/p&gt;
 &lt;p&gt;感谢马星手把手一步一步教我如何在github上写博客。&lt;/p&gt;
 &lt;p&gt;说是博客，其实估计也没人看，就当做记笔记写总结到好地方了。&lt;/p&gt;

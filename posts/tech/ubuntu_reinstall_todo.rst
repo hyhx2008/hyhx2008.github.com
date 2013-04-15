@@ -56,8 +56,6 @@ ubuntu下好像这样做后还是不能使用su命令切换到root，百度解�
 
 	$sudo aptitude install ibus ibus-pinyin ibus-gtk ibus-qt4
 
-暂时想到这么多。。。。
-
 6.ubuntu 12.04安装gnome
 
 突然发现ubuntu10.10的包不能更新了，只好被迫升级到12.04。但是这个桌面也太不能让人适应了，所以想换回经典的gnome桌面，下面的命令可以做到：
@@ -68,3 +66,14 @@ ubuntu下好像这样做后还是不能使用su命令切换到root，百度解�
 
 安装完成后log out一下，然后重新log in的时候点击登入对话框右上角的ubuntu图标，选择gnome即可。
 
+7.vim配置
+
+vim需要经过配置才会好用，ubuntu下vim的配置文件在/etc/vim/vimrc。修改vimrc即可完成配置。
+
+这里推荐网上的一个配置作为参考：
+
+`Vim配置详解 <http://www.cnblogs.com/witcxc/archive/2011/12/28/2304704.html>`_
+
+。
+
+未完待续。。。
