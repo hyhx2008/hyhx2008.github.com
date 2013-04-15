@@ -1142,7 +1142,7 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 37
 38
 39
-40&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="cp"&gt;# PEERSIM EXAMPLE 2&lt;/span&gt;
+40&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;PEERSIM&lt;/span&gt; &lt;span class="n"&gt;EXAMPLE&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
 
     &lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;seed&lt;/span&gt; &lt;span class="mi"&gt;1234567890&lt;/span&gt;
 
@@ -1171,7 +1171,7 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
     &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ld&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
     &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ld&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
 
-    &lt;span class="cp"&gt;# you can change this to include the linear initializer instead&lt;/span&gt;
+    &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;can&lt;/span&gt; &lt;span class="n"&gt;change&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;linear&lt;/span&gt; &lt;span class="n"&gt;initializer&lt;/span&gt; &lt;span class="n"&gt;instead&lt;/span&gt;
     &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt; &lt;span class="n"&gt;rnd&lt;/span&gt; &lt;span class="n"&gt;pk&lt;/span&gt;
 
     &lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ao&lt;/span&gt; &lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;aggregation&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AverageObserver&lt;/span&gt;
@@ -1179,7 +1179,7 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 
     &lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dnet&lt;/span&gt; &lt;span class="n"&gt;DynamicNetwork&lt;/span&gt;
     &lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dnet&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;
-    &lt;span class="cp"&gt;#control.dnet.minsize 4000&lt;/span&gt;
+    &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dnet&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;minsize&lt;/span&gt; &lt;span class="mi"&gt;4000&lt;/span&gt;
     &lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dnet&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
     &lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dnet&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;until&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;

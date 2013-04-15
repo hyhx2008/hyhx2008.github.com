@@ -152,4 +152,9 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install ibus ibus-pinyin ibus-gtk ibus-qt4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;暂时想到这么多。。。。&lt;/p&gt;
+&lt;p&gt;6.ubuntu 12.04安装gnome&lt;/p&gt;
+&lt;p&gt;突然发现ubuntu10.10的包不能更新了，只好被迫升级到12.04。但是这个桌面也太不能让人适应了，所以想换回经典的gnome桌面，下面的命令可以做到：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install gnome-session-fallback
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;安装完成后log out一下，然后重新log in的时候点击登入对话框右上角的ubuntu图标，选择gnome即可。&lt;/p&gt;
 </summary><category term="ubuntu"></category></entry></feed>
