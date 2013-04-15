@@ -41,6 +41,9 @@ github上说可以用https方法提交工程，但是没有成功过，所以还
 
 然后就可以进行git clone 和 git push等操作了。
 
+(后来在实验室的电脑上实验了一下，https居然成功了，嫌ssh麻烦的同学可以参考
+`github:help:HTTPS method <https://help.github.com/articles/set-up-git>`_
+)
 
 **2.生成github page**
 

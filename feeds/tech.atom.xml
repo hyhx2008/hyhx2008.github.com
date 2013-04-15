@@ -46,6 +46,9 @@
 &lt;a class="reference external" href="https://help.github.com/articles/generating-ssh-keys#platform-linux"&gt;github:help:generating ssh keys&lt;/a&gt;
 。&lt;/p&gt;
 &lt;p&gt;然后就可以进行git clone 和 git push等操作了。&lt;/p&gt;
+&lt;p&gt;(后来在实验室的电脑上实验了一下，https居然成功了，嫌ssh麻烦的同学可以参考
+&lt;a class="reference external" href="https://help.github.com/articles/set-up-git"&gt;github:help:HTTPS method&lt;/a&gt;
+)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;2.生成github page&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;需要在github上新建一个仓库(repository)，这个仓库的名称必须为
 &lt;strong&gt;your_id.github.com&lt;/strong&gt;
