@@ -129,40 +129,4 @@
 。&lt;/p&gt;
 &lt;p&gt;在linux环境下可以使用具有实时预览功能的ReText编辑器编辑reST文件，但是后来发现vim中支持reST文件的语法高亮，写起来也挺方便的。&lt;/p&gt;
 &lt;p&gt;The End!&lt;/p&gt;
-</summary><category term="GitHub"></category><category term="pelican"></category></entry><entry><title>重新安装ubuntu后的todo list</title><link href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html" rel="alternate"></link><updated>2012-11-11T21:44:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-11:ubuntu_reinstall_todo-zh.html</id><summary type="html">&lt;p&gt;经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。&lt;/p&gt;
-&lt;p&gt;写在这里做个提醒吧，以后再慢慢添加。&lt;/p&gt;
-&lt;p&gt;1.安装aptitude&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo apt-get install aptitude
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;2.安装vim&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install vim
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;并修改/usr/share/vim/vimrc 。&lt;/p&gt;
-&lt;p&gt;3.添加sudoers&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo visudo
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;加入 hy ALL = （ALL）ALL。&lt;/p&gt;
-&lt;p&gt;ubuntu下好像这样做后还是不能使用su命令切换到root，百度解决办法:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo passwd
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;修改一下密码就好了。&lt;/p&gt;
-&lt;p&gt;4.安装openssh&lt;/p&gt;
-&lt;p&gt;为了能让secureCRT连上虚拟机里的ubuntu，需要安装openssh。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install openssh-server openssh-client
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;再用ifconfig查一下ip，填到secureCRT里就好了。&lt;/p&gt;
-&lt;p&gt;5.安装中文输入法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install ibus ibus-pinyin ibus-gtk ibus-qt4
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;6.ubuntu 12.04安装gnome&lt;/p&gt;
-&lt;p&gt;突然发现ubuntu10.10的包不能更新了，只好被迫升级到12.04。但是这个桌面也太不能让人适应了，所以想换回经典的gnome桌面，下面的命令可以做到：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install gnome-session-fallback
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;安装完成后log out一下，然后重新log in的时候点击登入对话框右上角的ubuntu图标，选择gnome即可。&lt;/p&gt;
-&lt;p&gt;7.vim配置&lt;/p&gt;
-&lt;p&gt;vim需要经过配置才会好用，ubuntu下vim的配置文件在/etc/vim/vimrc。修改vimrc即可完成配置。&lt;/p&gt;
-&lt;p&gt;这里推荐网上的一个配置作为参考：
-&lt;a class="reference external" href="http://www.cnblogs.com/witcxc/archive/2011/12/28/2304704.html"&gt;Vim配置详解&lt;/a&gt;
-。&lt;/p&gt;
-&lt;p&gt;未完待续。。。&lt;/p&gt;
-</summary><category term="ubuntu"></category></entry></feed>
+</summary><category term="GitHub"></category><category term="pelican"></category></entry></feed>

@@ -17,7 +17,7 @@
 	<link href="./theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
 	<script type="text/javascript">
-	var disqus_identifier = "vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html";
+	var disqus_identifier = "ubuntuxia-javade-an-zhuang-yu-pei-zhi.html";
 	(function() {
 		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 		dsq.src = 'http://hysblog.disqus.com/embed.js';
@@ -37,8 +37,8 @@
 																										<li ><a href="./category/intern.html">intern</a></li>
 									<li ><a href="./category/my.html">my</a></li>
 									<li ><a href="./category/peersim.html">peersim</a></li>
-									<li class="active"><a href="./category/tech.html">tech</a></li>
-									<li ><a href="./category/ubuntu.html">ubuntu</a></li>
+									<li ><a href="./category/tech.html">tech</a></li>
+									<li class="active"><a href="./category/ubuntu.html">ubuntu</a></li>
 							</ul>
 			<p class="pull-right"><a href="./archives.html">[archives]</a> <a href="./tags.html">[tags]</a></p>
 		</div>
@@ -98,19 +98,56 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  </div>
 	  <div class="content">
 							<div class='article'>
-		<div class="page-header"><h1>VMware虚拟机启动时总提示cann't connect to floopy0的问题</h1></div>
-		<div class="well small">Permalink: <a class="more" href="./vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
-by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/tech.html">tech</a>
-tags: <a href="./tag/ubuntu.html">ubuntu</a> <a href="./tag/VMware.html">VMware</a> </div>
-		<div><p>在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。</p>
-<p>百度了一下解决办法: 修改虚拟机的.vmx文件。</p>
-<p>1.将floppy0.autodetect这项改为FALSE:</p>
-<div class="highlight"><pre><span class="go">floppy0.autodetect = &quot;FALSE&quot;</span>
+		<div class="page-header"><h1>Ubuntu下Java的安装与配置</h1></div>
+		<div class="well small">Permalink: <a class="more" href="./ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/ubuntu.html">ubuntu</a>
+tags: <a href="./tag/ubuntu.html">ubuntu</a> <a href="./tag/linux.html">linux</a> <a href="./tag/java.html">java</a> </div>
+		<div><p>第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。</p>
+<p><strong>1.下载</strong></p>
+<p>首先在Oracle官网上下载jdk，这里给一个链接：
+<a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">jdk7-downloads</a></p>
+<p>选择合适的jdk版本下载，这里我下载的是jdk-7u17-linux-i566.tar.gz。</p>
+<p><strong>2.安装</strong></p>
+<p>在任意文件夹下解压这个压缩包，例如在/usr/java下：</p>
+<div class="highlight"><pre><span class="go">sudo mkdir /usr/java</span>
+<span class="go">sudo cp ~/Downloads/jdk-7u17-linux-i586.tar.gz /usr/java/</span>
+<span class="go">cd /usr/java</span>
+<span class="go">sudo tar -xvf jdk-7u17-linux-i585.tar.gz</span>
 </pre></div>
-<p>2.添加一句:</p>
-<div class="highlight"><pre><span class="go">floppy0.startConnected = &quot;FALSE&quot;</span>
+<p>这样jdk就安装在/usr/java/jdk1.7.0_17目录下。</p>
+<p><strong>3.修改环境变量</strong></p>
+<p>修改~/.bashrc文件：</p>
+<div class="highlight"><pre><span class="go">vim ~/.bashrc</span>
 </pre></div>
-<p>The End!!</p>
+<p>添加以下内容：</p>
+<div class="highlight"><pre><span class="go">export JAVA_HOME=/usr/java/jdk_1.7.0_17</span>
+<span class="go">export JRE_HOME=${JAVA_HOME}/jre</span>
+<span class="go">export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib</span>
+<span class="go">export PATH=${JAVA_HOME}/bin:$PATH</span>
+</pre></div>
+<p><strong>4修改系统默认的jdk</strong></p>
+<div class="highlight"><pre><span class="gp">$</span> sudo update-alternatives --install /usr/bin/java java /usr/java/jdk1.7.0_17/bin/java 300
+<span class="gp">$</span> sudo update-alternatives --install /usr/bin/javac javac /usr/java/jdk1.7.0_17/bin/javac 300
+
+<span class="gp">$</span> sudo update-alternatives --config java
+<span class="gp">$</span> sudo update-alternatives --config javac
+</pre></div>
+<p><strong>5.测试</strong></p>
+<p>可以先在终端输入 java -version，若能看到java的版本信息，则说明修改成功。</p>
+<p>也可也写一个简单的java程序测试一下，例如helloworld.java：</p>
+<div class="highlight"><pre><span class="n">publci</span> <span class="kd">class</span> <span class="nc">helloworld</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello World!!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>然后编译并运行：</p>
+<div class="highlight"><pre><span class="go">javac helloworld.java</span>
+<span class="go">java helloworld</span>
+</pre></div>
+<p>若能看到输出结果，证明java安装成功。</p>
 </div>
 		<div>
 			<h2>Comments</h2>

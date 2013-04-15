@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-04-15T21:35:00+09:00</updated><entry><title>Ubuntu网络设置</title><link href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html" rel="alternate"></link><updated>2013-04-15T21:35:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-15:ubuntuwang-luo-she-zhi.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;1.配置ip&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ubuntu的网络配置信息放在 /etc/network/interfaces 中;&lt;/p&gt;
+&lt;p&gt;如果配置动态获取ip，则在上述文件中加入以下内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;auto eth0&lt;/span&gt;
+&lt;span class="go"&gt;iface eth0 inet dhcp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果配置静态ip，则添加如下内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;auto eth0&lt;/span&gt;
+&lt;span class="go"&gt;iface eth0 inet static&lt;/span&gt;
+&lt;span class="go"&gt;address 192.168.1.155&lt;/span&gt;
+&lt;span class="go"&gt;netmask 255.255.255.0&lt;/span&gt;
+&lt;span class="go"&gt;gateway 192.168.1.1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;要是配置生效，需要重启网卡：
+.. code-block:: console&lt;/p&gt;
+&lt;blockquote&gt;
+ifconfig eth0 down
+ifconfig eth0 up&lt;/blockquote&gt;
+&lt;p&gt;接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;/etc/init.d/networking restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;2.配置dns服务器&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;有时候需要手动配置dns，则可以参考如下步骤：&lt;/p&gt;
+&lt;p&gt;ubuntu 的dns服务器信息，放在 /etc/resolv.conf中。&lt;/p&gt;
+&lt;p&gt;要添加dns服务器地址，如202.112.125.53，则在上述文件中加入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;nameserver  202.112.125.53&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</summary><category term="ubuntu"></category><category term="linux"></category><category term="network"></category></entry><entry><title>Ubuntu下Java的安装与配置</title><link href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html" rel="alternate"></link><updated>2013-04-15T21:03:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-15:ubuntuxia-javade-an-zhuang-yu-pei-zhi.html</id><summary type="html">&lt;p&gt;第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.下载&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先在Oracle官网上下载jdk，这里给一个链接：
+&lt;a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html"&gt;jdk7-downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;选择合适的jdk版本下载，这里我下载的是jdk-7u17-linux-i566.tar.gz。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.安装&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在任意文件夹下解压这个压缩包，例如在/usr/java下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo mkdir /usr/java&lt;/span&gt;
+&lt;span class="go"&gt;sudo cp ~/Downloads/jdk-7u17-linux-i586.tar.gz /usr/java/&lt;/span&gt;
+&lt;span class="go"&gt;cd /usr/java&lt;/span&gt;
+&lt;span class="go"&gt;sudo tar -xvf jdk-7u17-linux-i585.tar.gz&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样jdk就安装在/usr/java/jdk1.7.0_17目录下。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.修改环境变量&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;修改~/.bashrc文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;vim ~/.bashrc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;添加以下内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;export JAVA_HOME=/usr/java/jdk_1.7.0_17&lt;/span&gt;
+&lt;span class="go"&gt;export JRE_HOME=${JAVA_HOME}/jre&lt;/span&gt;
+&lt;span class="go"&gt;export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib&lt;/span&gt;
+&lt;span class="go"&gt;export PATH=${JAVA_HOME}/bin:$PATH&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;4修改系统默认的jdk&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --install /usr/bin/java java /usr/java/jdk1.7.0_17/bin/java 300
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --install /usr/bin/javac javac /usr/java/jdk1.7.0_17/bin/javac 300
+
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --config java
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --config javac
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;5.测试&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以先在终端输入 java -version，若能看到java的版本信息，则说明修改成功。&lt;/p&gt;
+&lt;p&gt;也可也写一个简单的java程序测试一下，例如helloworld.java：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;publci&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;helloworld&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello World!!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后编译并运行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;javac helloworld.java&lt;/span&gt;
+&lt;span class="go"&gt;java helloworld&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;若能看到输出结果，证明java安装成功。&lt;/p&gt;
+</summary><category term="ubuntu"></category><category term="linux"></category><category term="java"></category></entry><entry><title>重新安装ubuntu后的todo list</title><link href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html" rel="alternate"></link><updated>2012-11-11T21:44:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-11:ubuntu_reinstall_todo-zh.html</id><summary type="html">&lt;p&gt;经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。&lt;/p&gt;
+&lt;p&gt;写在这里做个提醒吧，以后再慢慢添加。&lt;/p&gt;
+&lt;p&gt;1.安装aptitude&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo apt-get install aptitude
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2.安装vim&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install vim
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;并修改/usr/share/vim/vimrc 。&lt;/p&gt;
+&lt;p&gt;3.添加sudoers&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo visudo
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;加入 hy ALL = （ALL）ALL。&lt;/p&gt;
+&lt;p&gt;ubuntu下好像这样做后还是不能使用su命令切换到root，百度解决办法:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo passwd
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;修改一下密码就好了。&lt;/p&gt;
+&lt;p&gt;4.安装openssh&lt;/p&gt;
+&lt;p&gt;为了能让secureCRT连上虚拟机里的ubuntu，需要安装openssh。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install openssh-server openssh-client
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;再用ifconfig查一下ip，填到secureCRT里就好了。&lt;/p&gt;
+&lt;p&gt;5.安装中文输入法&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install ibus ibus-pinyin ibus-gtk ibus-qt4
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;6.ubuntu 12.04安装gnome&lt;/p&gt;
+&lt;p&gt;突然发现ubuntu10.10的包不能更新了，只好被迫升级到12.04。但是这个桌面也太不能让人适应了，所以想换回经典的gnome桌面，下面的命令可以做到：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;sudo aptitude install gnome-session-fallback
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;安装完成后log out一下，然后重新log in的时候点击登入对话框右上角的ubuntu图标，选择gnome即可。&lt;/p&gt;
+&lt;p&gt;7.vim配置&lt;/p&gt;
+&lt;p&gt;vim需要经过配置才会好用，ubuntu下vim的配置文件在/etc/vim/vimrc。修改vimrc即可完成配置。&lt;/p&gt;
+&lt;p&gt;这里推荐网上的一个配置作为参考：
+&lt;a class="reference external" href="http://www.cnblogs.com/witcxc/archive/2011/12/28/2304704.html"&gt;Vim配置详解&lt;/a&gt;
+。&lt;/p&gt;
+&lt;p&gt;未完待续。。。&lt;/p&gt;
+</summary><category term="ubuntu"></category></entry></feed>

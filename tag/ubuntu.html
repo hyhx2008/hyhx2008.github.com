@@ -30,6 +30,7 @@
 									<li ><a href="../category/my.html">my</a></li>
 									<li ><a href="../category/peersim.html">peersim</a></li>
 									<li ><a href="../category/tech.html">tech</a></li>
+									<li ><a href="../category/ubuntu.html">ubuntu</a></li>
 							</ul>
 			<p class="pull-right"><a href="../archives.html">[archives]</a> <a href="../tags.html">[tags]</a></p>
 		</div>
@@ -90,6 +91,55 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  <div class="content">
 			<div class="page-header"><h1>H.y's Blog <small>ubuntu</small></h1></div>			
 <div class='article'>
+	<h2>Ubuntu网络设置</h2>
+	<div class="well small">Permalink: <a class="more" href="../ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
+by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
+tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux</a> <a href="../tag/network.html">network</a> </div>
+	<div class="summary"><p><strong>1.配置ip</strong></p>
+<p>ubuntu的网络配置信息放在 /etc/network/interfaces 中;</p>
+<p>如果配置动态获取ip，则在上述文件中加入以下内容：</p>
+<div class="highlight"><pre><span class="go">auto eth0</span>
+<span class="go">iface eth0 inet dhcp</span>
+</pre></div>
+<p>如果配置静态ip，则添加如下内容：</p>
+<div class="highlight"><pre><span class="go">auto eth0</span>
+<span class="go">iface eth0 inet static</span>
+<span class="go">address 192.168.1.155</span>
+<span class="go">netmask 255.255.255.0</span>
+<span class="go">gateway 192.168.1.1</span>
+</pre></div>
+<p>要是配置生效，需要重启网卡：
+.. code-block:: console</p>
+<blockquote>
+ifconfig eth0 down
+ifconfig eth0 up</blockquote>
+<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功 ...</p> <a class="btn primary xsmall" href="../ubuntuwang-luo-she-zhi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>Ubuntu下Java的安装与配置</h2>
+	<div class="well small">Permalink: <a class="more" href="../ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
+by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
+tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux</a> <a href="../tag/java.html">java</a> </div>
+	<div class="summary"><p>第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。</p>
+<p><strong>1.下载</strong></p>
+<p>首先在Oracle官网上下载jdk，这里给一个链接：
+<a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">jdk7-downloads</a></p>
+<p>选择合适的jdk版本下载，这里我下载的是jdk-7u17-linux-i566.tar.gz。</p>
+<p><strong>2.安装</strong></p>
+<p>在任意文件夹下解压这个压缩包，例如在/usr/java下：</p>
+<div class="highlight"><pre><span class="go">sudo mkdir /usr/java</span>
+<span class="go">sudo cp ~/Downloads/jdk-7u17-linux-i586.tar.gz /usr/java/</span>
+<span class="go">cd /usr/java</span>
+<span class="go">sudo tar -xvf jdk-7u17-linux-i585.tar.gz</span>
+</pre></div>
+<p>这样jdk就安装在/usr/java/jdk1.7.0_17目录下。</p>
+<p><strong>3.修改环境变量</strong></p>
+<p>修改~/.bashrc文件：</p>
+<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="../ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
 	<h2>VMware虚拟机启动时总提示cann't connect to floopy0的问题</h2>
 	<div class="well small">Permalink: <a class="more" href="../vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
 by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/tech.html">tech</a>
@@ -109,7 +159,7 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/VMware.html">VMwar
 <div class='article'>
 	<h2>重新安装ubuntu后的todo list</h2>
 	<div class="well small">Permalink: <a class="more" href="../ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/tech.html">tech</a>
+by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
 tags: <a href="../tag/ubuntu.html">ubuntu</a> </div>
 	<div class="summary"><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
 <p>写在这里做个提醒吧，以后再慢慢添加。</p>

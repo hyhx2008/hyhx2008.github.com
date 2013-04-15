@@ -17,7 +17,7 @@
 	<link href="./theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
 	<script type="text/javascript">
-	var disqus_identifier = "vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html";
+	var disqus_identifier = "ubuntuwang-luo-she-zhi.html";
 	(function() {
 		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 		dsq.src = 'http://hysblog.disqus.com/embed.js';
@@ -37,8 +37,8 @@
 																										<li ><a href="./category/intern.html">intern</a></li>
 									<li ><a href="./category/my.html">my</a></li>
 									<li ><a href="./category/peersim.html">peersim</a></li>
-									<li class="active"><a href="./category/tech.html">tech</a></li>
-									<li ><a href="./category/ubuntu.html">ubuntu</a></li>
+									<li ><a href="./category/tech.html">tech</a></li>
+									<li class="active"><a href="./category/ubuntu.html">ubuntu</a></li>
 							</ul>
 			<p class="pull-right"><a href="./archives.html">[archives]</a> <a href="./tags.html">[tags]</a></p>
 		</div>
@@ -98,19 +98,37 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  </div>
 	  <div class="content">
 							<div class='article'>
-		<div class="page-header"><h1>VMware虚拟机启动时总提示cann't connect to floopy0的问题</h1></div>
-		<div class="well small">Permalink: <a class="more" href="./vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
-by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/tech.html">tech</a>
-tags: <a href="./tag/ubuntu.html">ubuntu</a> <a href="./tag/VMware.html">VMware</a> </div>
-		<div><p>在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。</p>
-<p>百度了一下解决办法: 修改虚拟机的.vmx文件。</p>
-<p>1.将floppy0.autodetect这项改为FALSE:</p>
-<div class="highlight"><pre><span class="go">floppy0.autodetect = &quot;FALSE&quot;</span>
+		<div class="page-header"><h1>Ubuntu网络设置</h1></div>
+		<div class="well small">Permalink: <a class="more" href="./ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/ubuntu.html">ubuntu</a>
+tags: <a href="./tag/ubuntu.html">ubuntu</a> <a href="./tag/linux.html">linux</a> <a href="./tag/network.html">network</a> </div>
+		<div><p><strong>1.配置ip</strong></p>
+<p>ubuntu的网络配置信息放在 /etc/network/interfaces 中;</p>
+<p>如果配置动态获取ip，则在上述文件中加入以下内容：</p>
+<div class="highlight"><pre><span class="go">auto eth0</span>
+<span class="go">iface eth0 inet dhcp</span>
 </pre></div>
-<p>2.添加一句:</p>
-<div class="highlight"><pre><span class="go">floppy0.startConnected = &quot;FALSE&quot;</span>
+<p>如果配置静态ip，则添加如下内容：</p>
+<div class="highlight"><pre><span class="go">auto eth0</span>
+<span class="go">iface eth0 inet static</span>
+<span class="go">address 192.168.1.155</span>
+<span class="go">netmask 255.255.255.0</span>
+<span class="go">gateway 192.168.1.1</span>
 </pre></div>
-<p>The End!!</p>
+<p>要是配置生效，需要重启网卡：
+.. code-block:: console</p>
+<blockquote>
+ifconfig eth0 down
+ifconfig eth0 up</blockquote>
+<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务</p>
+<div class="highlight"><pre><span class="go">/etc/init.d/networking restart</span>
+</pre></div>
+<p><strong>2.配置dns服务器</strong></p>
+<p>有时候需要手动配置dns，则可以参考如下步骤：</p>
+<p>ubuntu 的dns服务器信息，放在 /etc/resolv.conf中。</p>
+<p>要添加dns服务器地址，如202.112.125.53，则在上述文件中加入</p>
+<div class="highlight"><pre><span class="go">nameserver  202.112.125.53</span>
+</pre></div>
 </div>
 		<div>
 			<h2>Comments</h2>

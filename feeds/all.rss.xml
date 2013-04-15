@@ -1,5 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 12 Apr 2013 17:46:00 +0900</lastBuildDate><item><title>PeerSim使用教程(5)-Event-drive(事件驱动)模型</title><link>http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-5-event-driveshi-jian-qu-dong-mo-xing.html</link><description>&lt;p&gt;&lt;strong&gt;1.简介&lt;/strong&gt;&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 15 Apr 2013 21:35:00 +0900</lastBuildDate><item><title>Ubuntu网络设置</title><link>http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html</link><description>&lt;p&gt;&lt;strong&gt;1.配置ip&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ubuntu的网络配置信息放在 /etc/network/interfaces 中;&lt;/p&gt;
+&lt;p&gt;如果配置动态获取ip，则在上述文件中加入以下内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;auto eth0&lt;/span&gt;
+&lt;span class="go"&gt;iface eth0 inet dhcp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果配置静态ip，则添加如下内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;auto eth0&lt;/span&gt;
+&lt;span class="go"&gt;iface eth0 inet static&lt;/span&gt;
+&lt;span class="go"&gt;address 192.168.1.155&lt;/span&gt;
+&lt;span class="go"&gt;netmask 255.255.255.0&lt;/span&gt;
+&lt;span class="go"&gt;gateway 192.168.1.1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;要是配置生效，需要重启网卡：
+.. code-block:: console&lt;/p&gt;
+&lt;blockquote&gt;
+ifconfig eth0 down
+ifconfig eth0 up&lt;/blockquote&gt;
+&lt;p&gt;接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;/etc/init.d/networking restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;2.配置dns服务器&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;有时候需要手动配置dns，则可以参考如下步骤：&lt;/p&gt;
+&lt;p&gt;ubuntu 的dns服务器信息，放在 /etc/resolv.conf中。&lt;/p&gt;
+&lt;p&gt;要添加dns服务器地址，如202.112.125.53，则在上述文件中加入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;nameserver  202.112.125.53&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Mon, 15 Apr 2013 21:35:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-15:ubuntuwang-luo-she-zhi.html</guid><category>ubuntu</category><category>linux</category><category>network</category></item><item><title>Ubuntu下Java的安装与配置</title><link>http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html</link><description>&lt;p&gt;第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.下载&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先在Oracle官网上下载jdk，这里给一个链接：
+&lt;a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html"&gt;jdk7-downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;选择合适的jdk版本下载，这里我下载的是jdk-7u17-linux-i566.tar.gz。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.安装&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在任意文件夹下解压这个压缩包，例如在/usr/java下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo mkdir /usr/java&lt;/span&gt;
+&lt;span class="go"&gt;sudo cp ~/Downloads/jdk-7u17-linux-i586.tar.gz /usr/java/&lt;/span&gt;
+&lt;span class="go"&gt;cd /usr/java&lt;/span&gt;
+&lt;span class="go"&gt;sudo tar -xvf jdk-7u17-linux-i585.tar.gz&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样jdk就安装在/usr/java/jdk1.7.0_17目录下。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.修改环境变量&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;修改~/.bashrc文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;vim ~/.bashrc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;添加以下内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;export JAVA_HOME=/usr/java/jdk_1.7.0_17&lt;/span&gt;
+&lt;span class="go"&gt;export JRE_HOME=${JAVA_HOME}/jre&lt;/span&gt;
+&lt;span class="go"&gt;export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib&lt;/span&gt;
+&lt;span class="go"&gt;export PATH=${JAVA_HOME}/bin:$PATH&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;4修改系统默认的jdk&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --install /usr/bin/java java /usr/java/jdk1.7.0_17/bin/java 300
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --install /usr/bin/javac javac /usr/java/jdk1.7.0_17/bin/javac 300
+
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --config java
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo update-alternatives --config javac
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;5.测试&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以先在终端输入 java -version，若能看到java的版本信息，则说明修改成功。&lt;/p&gt;
+&lt;p&gt;也可也写一个简单的java程序测试一下，例如helloworld.java：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;publci&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;helloworld&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello World!!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后编译并运行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;javac helloworld.java&lt;/span&gt;
+&lt;span class="go"&gt;java helloworld&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;若能看到输出结果，证明java安装成功。&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Mon, 15 Apr 2013 21:03:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-15:ubuntuxia-javade-an-zhuang-yu-pei-zhi.html</guid><category>ubuntu</category><category>linux</category><category>java</category></item><item><title>PeerSim使用教程(5)-Event-drive(事件驱动)模型</title><link>http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-5-event-driveshi-jian-qu-dong-mo-xing.html</link><description>&lt;p&gt;&lt;strong&gt;1.简介&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;本教程使用Event-driven模型来演示一个简单的例子，仍然使用的是gossip-based平均数协议，对消息的发送将进行更细节的建模；通过与cycle-based模型的对比，可以发现本协议存在的问题。&lt;/p&gt;
 &lt;p&gt;在Event-based模型中，除了时间管理和control传递给protocols的方式以外，其它与cycle-based模型相同。
 不可执行的Protocols(只用于存储数据，比如只存储邻居节点的linkable协议，或存储数值的vectors)可以以同样的方式应用和初始化，在peersim.cdsim包之外的controls也都可以使用。

@@ -30,6 +30,7 @@
 									<li ><a href="../category/my.html">my</a></li>
 									<li ><a href="../category/peersim.html">peersim</a></li>
 									<li class="active"><a href="../category/tech.html">tech</a></li>
+									<li ><a href="../category/ubuntu.html">ubuntu</a></li>
 							</ul>
 			<p class="pull-right"><a href="../archives.html">[archives]</a> <a href="../tags.html">[tags]</a></p>
 		</div>
@@ -155,37 +156,6 @@ tags: <a href="../tag/GitHub.html">GitHub</a> <a href="../tag/pelican.html">peli
 <p>github上说可以用https方法提交工程，但是没有成功过，所以还是需要利用ssh。这里需要生成ssh keys，
 具体步骤参考
 <a class="reference external" href="https://help.github.com/articles/generating-ssh-keys#platform-linux">github:help ...</a></p> <a class="btn primary xsmall" href="../shi-yong-pelicansheng-cheng-githubbo-ke.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>重新安装ubuntu后的todo list</h2>
-	<div class="well small">Permalink: <a class="more" href="../ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/tech.html">tech</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> </div>
-	<div class="summary"><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
-<p>写在这里做个提醒吧，以后再慢慢添加。</p>
-<p>1.安装aptitude</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo apt-get install aptitude
-</pre></div>
-<p>2.安装vim</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install vim
-</pre></div>
-<p>并修改/usr/share/vim/vimrc 。</p>
-<p>3.添加sudoers</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo visudo
-</pre></div>
-<p>加入 hy ALL = （ALL）ALL。</p>
-<p>ubuntu下好像这样做后还是不能使用su命令切换到root，百度解决办法:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo passwd
-</pre></div>
-<p>修改一下密码就好了。</p>
-<p>4.安装openssh</p>
-<p>为了能让secureCRT连上虚拟机里的ubuntu，需要安装openssh。</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install openssh-server openssh-client
-</pre></div>
-<p>再用ifconfig查一下ip，填到secureCRT里就好了。</p>
-<p>5.安装中文输入法</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="../ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
 
