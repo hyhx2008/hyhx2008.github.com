@@ -71,9 +71,7 @@ ubuntu下好像这样做后还是不能使用su命令切换到root，百度解�
 vim需要经过配置才会好用，ubuntu下vim的配置文件在/etc/vim/vimrc。修改vimrc即可完成配置。
 
 这里推荐网上的一个配置作为参考：
-
 `Vim配置详解 <http://www.cnblogs.com/witcxc/archive/2011/12/28/2304704.html>`_
-
 。
 
 未完待续。。。
