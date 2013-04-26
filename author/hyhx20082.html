@@ -8,32 +8,32 @@
 
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]>
-		<script src="../theme/html5.js"></script>
+		<script src="http://hyhx2008.github.com/theme/html5.js"></script>
 	<![endif]-->
 
 	<!-- Le styles -->
-	<link href="../theme/bootstrap.min.css" rel="stylesheet">
-	<link href="../theme/local.css" rel="stylesheet">
-	<link href="../theme/pygments.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/bootstrap.min.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/local.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
 			
-	<link rel="shortcut icon" href="../theme/images/icons/icon1.png">
+	<link rel="shortcut icon" href="http://hyhx2008.github.com/theme/images/icons/icon1.png">
 </head>
 <body>
 		<a href="https://github.com/hyhx2008"><img style="position: absolute; top: 39px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
 	<div class="topbar">
 	  <div class="topbar-inner">
 		<div class="container-fluid">
-		  <a class="brand" href="../index.html">H.y's Blog</a>
+		  <a class="brand" href="http://hyhx2008.github.com/index.html">H.y's Blog</a>
 			<ul class="nav">
-																										<li ><a href="../category/ItA.html">ItA</a></li>
-									<li ><a href="../category/intern.html">intern</a></li>
-									<li ><a href="../category/my.html">my</a></li>
-									<li ><a href="../category/peersim.html">peersim</a></li>
-									<li ><a href="../category/tech.html">tech</a></li>
-									<li ><a href="../category/ubuntu.html">ubuntu</a></li>
+																										<li ><a href="http://hyhx2008.github.com/category/ItA.html">ItA</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
 							</ul>
-			<p class="pull-right"><a href="../archives.html">[archives]</a> <a href="../tags.html">[tags]</a></p>
+			<p class="pull-right"><a href="http://hyhx2008.github.com/archives.html">[archives]</a> <a href="http://hyhx2008.github.com/tags.html">[tags]</a></p>
 		</div>
 	  </div>
 	</div>
@@ -93,11 +93,11 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<div class="page-header"><h1>H.y's Blog <small>hyhx2008</small></h1></div>			
 <div class='article'>
 	<h2>算法导论第二章习题解答</h2>
-	<div class="well small">Permalink: <a class="more" href="../suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">2013-04-18 17:00:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ItA.html">ItA</a>
-tags: <a href="../tag/算法导论.html">算法导论</a> <a href="../tag/算法.html">算法</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">2013-04-18 17:00:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ItA.html">ItA</a>
+tags: <a href="http://hyhx2008.github.com/tag/算法导论.html">算法导论</a> <a href="http://hyhx2008.github.com/tag/算法.html">算法</a> </div>
 	<div class="summary"><p><strong>2.3-7</strong></p>
-<p>Q:请给出一个运行时间为θ(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。</p>
+<p>Q:请给出一个运行时间为O(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。</p>
 <p>A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:</p>
 <div class="highlight"><pre><span class="n">checkSums</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1">//s为存放n个整数的集合</span>
 <span class="p">{</span>
@@ -111,14 +111,15 @@ tags: <a href="../tag/算法导论.html">算法导论</a> <a href="../tag/算法
 <span class="p">}</span>
 </pre></div>
 <p>排序的复杂度为nlgn，二分查找的复杂度为lgn，执行n次就是nlgn，所以该算法的复杂度为O(nlgn)。</p>
- <a class="btn primary xsmall" href="../suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">more…</a>
+<p><strong>2-4 逆序对</strong></p>
+<p>Q:设A[1..n]是一个包含n个不同数的数组 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>tesseract-ocr使用方法总结</h2>
-	<div class="well small">Permalink: <a class="more" href="../tesseract-ocrshi-yong-fang-fa-zong-jie.html">2012-12-01 16:34:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/intern.html">intern</a>
-tags: <a href="../tag/ocr Linux.html">ocr Linux</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/tesseract-ocrshi-yong-fang-fa-zong-jie.html">2012-12-01 16:34:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
+tags: <a href="http://hyhx2008.github.com/tag/ocr Linux.html">ocr Linux</a> </div>
 	<div class="summary"><p>实习的时候接触到了一个挺不错的OCR(光学字符识别)工具tesseract，这里总结一下linux下tesseract的简单用法。</p>
 <p>tesseract-ocr是由google维护的一个开源ocr库，可以识别多种格式图片中的文字，可以直接作为一个工具使用，也可以利用tesseract提供的api在自己的程序中使用ocr功能。</p>
 <p><a class="reference external" href="http://code.google.com/p/tesseract-ocr/">项目主页</a></p>
@@ -137,14 +138,14 @@ tags: <a href="../tag/ocr Linux.html">ocr Linux</a> </div>
 <p>作为一个命令行程序，tesseract可以用以下命令识别一张图片中的文字:</p>
 <div class="highlight"><pre><span class="go">tesseract photo.tif 1.txt</span>
 </pre></div>
-<p>以上命令将从photo.tif中识别的文字存储在1 ...</p> <a class="btn primary xsmall" href="../tesseract-ocrshi-yong-fang-fa-zong-jie.html">more…</a>
+<p>以上命令将从photo.tif中识别的文字存储在1 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/tesseract-ocrshi-yong-fang-fa-zong-jie.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>trace-cmd与kernelshark使用总结</h2>
-	<div class="well small">Permalink: <a class="more" href="../trace-cmdyu-kernelsharkshi-yong-zong-jie.html">2012-07-22 22:00:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/intern.html">intern</a>
-tags: <a href="../tag/trace-cmd.html">trace-cmd</a> <a href="../tag/kernelshark.html">kernelshark</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html">2012-07-22 22:00:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
+tags: <a href="http://hyhx2008.github.com/tag/trace-cmd.html">trace-cmd</a> <a href="http://hyhx2008.github.com/tag/kernelshark.html">kernelshark</a> </div>
 	<div class="summary"><p><strong>1.trace-cmd</strong></p>
 <p>trace-cmd是对ftrace的封装，是一个可以用来跟踪linux内核中事件(event)发生的时间、次数等的工具。</p>
 <p>首先需要安装trace-cmd:</p>
@@ -165,14 +166,14 @@ tags: <a href="../tag/trace-cmd.html">trace-cmd</a> <a href="../tag/kernelshark.
 <img alt="../statics/pics/trace_cmd_kernelshark1.png" src="../statics/pics/trace_cmd_kernelshark1.png" />
 </div>
 <p>也可以重定向到一个文本文件中再做分析，比如:</p>
-<div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href="../trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
+<div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>重新安装ubuntu后的todo list</h2>
-	<div class="well small">Permalink: <a class="more" href="../ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> </div>
 	<div class="summary"><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
 <p>写在这里做个提醒吧，以后再慢慢添加。</p>
 <p>1.安装aptitude</p>
@@ -196,14 +197,14 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> </div>
 </pre></div>
 <p>再用ifconfig查一下ip，填到secureCRT里就好了。</p>
 <p>5.安装中文输入法</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="../ubuntu_reinstall_todo-zh.html">more…</a>
+<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>Ubuntu网络设置</h2>
-	<div class="well small">Permalink: <a class="more" href="../ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux</a> <a href="../tag/network.html">network</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/network.html">network</a> </div>
 	<div class="summary"><p><strong>1.配置ip</strong></p>
 <p>ubuntu的网络配置信息放在 /etc/network/interfaces 中;</p>
 <p>如果配置动态获取ip，则在上述文件中加入以下内容：</p>
@@ -217,19 +218,19 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux<
 <span class="go">netmask 255.255.255.0</span>
 <span class="go">gateway 192.168.1.1</span>
 </pre></div>
-<p>要是配置生效，需要重启网卡：
-.. code-block:: console</p>
-<blockquote>
-ifconfig eth0 down
-ifconfig eth0 up</blockquote>
-<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功 ...</p> <a class="btn primary xsmall" href="../ubuntuwang-luo-she-zhi.html">more…</a>
+<p>要是配置生效，需要重启网卡：</p>
+<div class="highlight"><pre><span class="go">ifconfig eth0 down</span>
+<span class="go">ifconfig eth0 up</span>
+</pre></div>
+<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务</p>
+<div class="highlight"><pre><span class="go">/etc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>Ubuntu下Java的安装与配置</h2>
-	<div class="well small">Permalink: <a class="more" href="../ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux</a> <a href="../tag/java.html">java</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/java.html">java</a> </div>
 	<div class="summary"><p>第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。</p>
 <p><strong>1.下载</strong></p>
 <p>首先在Oracle官网上下载jdk，这里给一个链接：
@@ -245,14 +246,14 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux<
 <p>这样jdk就安装在/usr/java/jdk1.7.0_17目录下。</p>
 <p><strong>3.修改环境变量</strong></p>
 <p>修改~/.bashrc文件：</p>
-<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="../ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
+<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>VMware虚拟机启动时总提示cann't connect to floopy0的问题</h2>
-	<div class="well small">Permalink: <a class="more" href="../vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/tech.html">tech</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/VMware.html">VMware</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/tech.html">tech</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/VMware.html">VMware</a> </div>
 	<div class="summary"><p>在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。</p>
 <p>百度了一下解决办法: 修改虚拟机的.vmx文件。</p>
 <p>1.将floppy0.autodetect这项改为FALSE:</p>
@@ -262,15 +263,15 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/VMware.html">VMwar
 <div class="highlight"><pre><span class="go">floppy0.startConnected = &quot;FALSE&quot;</span>
 </pre></div>
 <p>The End!!</p>
- <a class="btn primary xsmall" href="../vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">more…</a>
+ <a class="btn primary xsmall" href="http://hyhx2008.github.com/vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">more…</a>
 	</div>
 </div>	
 
 <div class="pagination">
 <ul>
-					<li class="prev"><a href="../author/hyhx2008.html">&larr; Previous</a></li>
-				<li class=""><a href="../author/hyhx2008.html">1</a></li>
-			<li class="active"><a href="../author/hyhx20082.html">2</a></li>
+					<li class="prev"><a href="http://hyhx2008.github.com/author/hyhx2008.html">&larr; Previous</a></li>
+				<li class=""><a href="http://hyhx2008.github.com/author/hyhx2008.html">1</a></li>
+			<li class="active"><a href="http://hyhx2008.github.com/author/hyhx20082.html">2</a></li>
 				<li class="next disabled"><a href="#">&rarr; Next</a></li>
 	</ul>
 </div>

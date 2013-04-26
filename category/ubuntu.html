@@ -8,32 +8,32 @@
 
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]>
-		<script src="../theme/html5.js"></script>
+		<script src="http://hyhx2008.github.com/theme/html5.js"></script>
 	<![endif]-->
 
 	<!-- Le styles -->
-	<link href="../theme/bootstrap.min.css" rel="stylesheet">
-	<link href="../theme/local.css" rel="stylesheet">
-	<link href="../theme/pygments.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/bootstrap.min.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/local.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
 			
-	<link rel="shortcut icon" href="../theme/images/icons/icon1.png">
+	<link rel="shortcut icon" href="http://hyhx2008.github.com/theme/images/icons/icon1.png">
 </head>
 <body>
 		<a href="https://github.com/hyhx2008"><img style="position: absolute; top: 39px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
 	<div class="topbar">
 	  <div class="topbar-inner">
 		<div class="container-fluid">
-		  <a class="brand" href="../index.html">H.y's Blog</a>
+		  <a class="brand" href="http://hyhx2008.github.com/index.html">H.y's Blog</a>
 			<ul class="nav">
-																										<li ><a href="../category/ItA.html">ItA</a></li>
-									<li ><a href="../category/intern.html">intern</a></li>
-									<li ><a href="../category/my.html">my</a></li>
-									<li ><a href="../category/peersim.html">peersim</a></li>
-									<li ><a href="../category/tech.html">tech</a></li>
-									<li class="active"><a href="../category/ubuntu.html">ubuntu</a></li>
+																										<li ><a href="http://hyhx2008.github.com/category/ItA.html">ItA</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
+									<li class="active"><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
 							</ul>
-			<p class="pull-right"><a href="../archives.html">[archives]</a> <a href="../tags.html">[tags]</a></p>
+			<p class="pull-right"><a href="http://hyhx2008.github.com/archives.html">[archives]</a> <a href="http://hyhx2008.github.com/tags.html">[tags]</a></p>
 		</div>
 	  </div>
 	</div>
@@ -93,9 +93,9 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<div class="page-header"><h1>H.y's Blog <small>ubuntu</small></h1></div>			
 <div class='article'>
 	<h2>Ubuntu网络设置</h2>
-	<div class="well small">Permalink: <a class="more" href="../ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux</a> <a href="../tag/network.html">network</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/network.html">network</a> </div>
 	<div class="summary"><p><strong>1.配置ip</strong></p>
 <p>ubuntu的网络配置信息放在 /etc/network/interfaces 中;</p>
 <p>如果配置动态获取ip，则在上述文件中加入以下内容：</p>
@@ -109,19 +109,19 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux<
 <span class="go">netmask 255.255.255.0</span>
 <span class="go">gateway 192.168.1.1</span>
 </pre></div>
-<p>要是配置生效，需要重启网卡：
-.. code-block:: console</p>
-<blockquote>
-ifconfig eth0 down
-ifconfig eth0 up</blockquote>
-<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功 ...</p> <a class="btn primary xsmall" href="../ubuntuwang-luo-she-zhi.html">more…</a>
+<p>要是配置生效，需要重启网卡：</p>
+<div class="highlight"><pre><span class="go">ifconfig eth0 down</span>
+<span class="go">ifconfig eth0 up</span>
+</pre></div>
+<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务</p>
+<div class="highlight"><pre><span class="go">/etc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>Ubuntu下Java的安装与配置</h2>
-	<div class="well small">Permalink: <a class="more" href="../ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux</a> <a href="../tag/java.html">java</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/java.html">java</a> </div>
 	<div class="summary"><p>第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。</p>
 <p><strong>1.下载</strong></p>
 <p>首先在Oracle官网上下载jdk，这里给一个链接：
@@ -137,14 +137,14 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> <a href="../tag/linux.html">linux<
 <p>这样jdk就安装在/usr/java/jdk1.7.0_17目录下。</p>
 <p><strong>3.修改环境变量</strong></p>
 <p>修改~/.bashrc文件：</p>
-<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="../ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
+<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
 	<h2>重新安装ubuntu后的todo list</h2>
-	<div class="well small">Permalink: <a class="more" href="../ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ubuntu.html">ubuntu</a>
-tags: <a href="../tag/ubuntu.html">ubuntu</a> </div>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> </div>
 	<div class="summary"><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
 <p>写在这里做个提醒吧，以后再慢慢添加。</p>
 <p>1.安装aptitude</p>
@@ -168,7 +168,7 @@ tags: <a href="../tag/ubuntu.html">ubuntu</a> </div>
 </pre></div>
 <p>再用ifconfig查一下ip，填到secureCRT里就好了。</p>
 <p>5.安装中文输入法</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="../ubuntu_reinstall_todo-zh.html">more…</a>
+<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
 

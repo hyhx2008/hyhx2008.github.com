@@ -12,11 +12,10 @@
 &lt;span class="go"&gt;netmask 255.255.255.0&lt;/span&gt;
 &lt;span class="go"&gt;gateway 192.168.1.1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;要是配置生效，需要重启网卡：
-.. code-block:: console&lt;/p&gt;
-&lt;blockquote&gt;
-ifconfig eth0 down
-ifconfig eth0 up&lt;/blockquote&gt;
+&lt;p&gt;要是配置生效，需要重启网卡：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;ifconfig eth0 down&lt;/span&gt;
+&lt;span class="go"&gt;ifconfig eth0 up&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;/etc/init.d/networking restart&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;

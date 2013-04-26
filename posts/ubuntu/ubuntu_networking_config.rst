@@ -26,6 +26,7 @@ ubuntu的网络配置信息放在 /etc/network/interfaces 中;
     gateway 192.168.1.1
                                  
 要是配置生效，需要重启网卡：
+
 .. code-block:: console
 
     ifconfig eth0 down
