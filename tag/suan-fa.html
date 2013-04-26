@@ -90,35 +90,28 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 	  </div>
 	  <div class="content">
-			<div class="page-header"><h1>H.y's Blog <small>festival</small></h1></div>			
+			<div class="page-header"><h1>H.y's Blog <small>算法</small></h1></div>			
 <div class='article'>
-	<h2>Festival tts 使用总结</h2>
-	<div class="well small">Permalink: <a class="more" href="../festival-tts-shi-yong-zong-jie.html">2012-08-24 22:00:00</a>
-by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/intern.html">intern</a>
-tags: <a href="../tag/festival.html">festival</a> </div>
-	<div class="summary"><p><a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/">Festival-tts</a>
-是一个免费的tts (text to speech) 工具，可以将字符串转为声音播放出来或者存为声音文件。</p>
-<p>首先安装:</p>
-<div class="highlight"><pre><span class="gp">$</span>sodu aptitude install festival
-<span class="gp">$</span>sudo aptitude install festival-dev
-</pre></div>
-<p>可以用下面的命令测试一下:</p>
-<div class="highlight"><pre><span class="gp">$</span><span class="nb">echo </span>hellow world | festival --tts
-</pre></div>
-<p>此时可以听到喇叭中念出hello world，如果没有声音可能是声卡驱动的问题。</p>
-<p>如果想在自己的程序中使用festival tts的功能，则需要用到festival提供的API，可以参考festiva的文档:
-<a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/manual/festival_28.html#SEC126">festival:API</a>
-。</p>
-<p>这里以C++的API为例，介绍两个常用的函数。</p>
-<p>首先程序需要include一个头文件:</p>
-<div class="highlight"><pre><span class="cp">#include &lt;festival.h&gt;</span>
-</pre></div>
-<p>两个常用API为:</p>
-<div class="highlight"><pre><span class="n">festival_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">load_init_files</span><span class="p">,</span><span class="kt">int</span> <span class="n">heap_size</span><span class="p">);</span>
+	<h2>算法导论第二章习题解答</h2>
+	<div class="well small">Permalink: <a class="more" href="../suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">2013-04-18 17:00:00</a>
+by <a class="url fn" href="../author/hyhx2008.html">hyhx2008</a>in <a href="../category/ItA.html">ItA</a>
+tags: <a href="../tag/算法导论.html">算法导论</a> <a href="../tag/算法.html">算法</a> </div>
+	<div class="summary"><p><strong>2.3-7</strong></p>
+<p>Q:请给出一个运行时间为θ(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。</p>
+<p>A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:</p>
+<div class="highlight"><pre><span class="n">checkSums</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1">//s为存放n个整数的集合</span>
+<span class="p">{</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>    <span class="c1">//排序</span>
 
-<span class="n">festival_say_text</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">text</span><span class="p">);</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">n</span> <span class="k">do</span>
+        <span class="k">if</span> <span class="n">binarySearch</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="o">-</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">then</span>  <span class="c1">//二分查找</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
-<p>从函数名就可以看出这两个API的作用，第一个为初始化函数，需要在使用其他API之前调用 ...</p> <a class="btn primary xsmall" href="../festival-tts-shi-yong-zong-jie.html">more…</a>
+<p>排序的复杂度为nlgn，二分查找的复杂度为lgn，执行n次就是nlgn，所以该算法的复杂度为O(nlgn)。</p>
+ <a class="btn primary xsmall" href="../suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">more…</a>
 	</div>
 </div>	
 

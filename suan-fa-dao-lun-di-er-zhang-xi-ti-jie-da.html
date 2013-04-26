@@ -17,7 +17,7 @@
 	<link href="./theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
 	<script type="text/javascript">
-	var disqus_identifier = "ubuntuwang-luo-she-zhi.html";
+	var disqus_identifier = "suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html";
 	(function() {
 		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 		dsq.src = 'http://hysblog.disqus.com/embed.js';
@@ -34,12 +34,12 @@
 		<div class="container-fluid">
 		  <a class="brand" href="./index.html">H.y's Blog</a>
 			<ul class="nav">
-																										<li ><a href="./category/ItA.html">ItA</a></li>
+																										<li class="active"><a href="./category/ItA.html">ItA</a></li>
 									<li ><a href="./category/intern.html">intern</a></li>
 									<li ><a href="./category/my.html">my</a></li>
 									<li ><a href="./category/peersim.html">peersim</a></li>
 									<li ><a href="./category/tech.html">tech</a></li>
-									<li class="active"><a href="./category/ubuntu.html">ubuntu</a></li>
+									<li ><a href="./category/ubuntu.html">ubuntu</a></li>
 							</ul>
 			<p class="pull-right"><a href="./archives.html">[archives]</a> <a href="./tags.html">[tags]</a></p>
 		</div>
@@ -99,37 +99,25 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  </div>
 	  <div class="content">
 							<div class='article'>
-		<div class="page-header"><h1>Ubuntu网络设置</h1></div>
-		<div class="well small">Permalink: <a class="more" href="./ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
-by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/ubuntu.html">ubuntu</a>
-tags: <a href="./tag/ubuntu.html">ubuntu</a> <a href="./tag/linux.html">linux</a> <a href="./tag/network.html">network</a> </div>
-		<div><p><strong>1.配置ip</strong></p>
-<p>ubuntu的网络配置信息放在 /etc/network/interfaces 中;</p>
-<p>如果配置动态获取ip，则在上述文件中加入以下内容：</p>
-<div class="highlight"><pre><span class="go">auto eth0</span>
-<span class="go">iface eth0 inet dhcp</span>
+		<div class="page-header"><h1>算法导论第二章习题解答</h1></div>
+		<div class="well small">Permalink: <a class="more" href="./suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">2013-04-18 17:00:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/ItA.html">ItA</a>
+tags: <a href="./tag/算法导论.html">算法导论</a> <a href="./tag/算法.html">算法</a> </div>
+		<div><p><strong>2.3-7</strong></p>
+<p>Q:请给出一个运行时间为θ(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。</p>
+<p>A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:</p>
+<div class="highlight"><pre><span class="n">checkSums</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1">//s为存放n个整数的集合</span>
+<span class="p">{</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>    <span class="c1">//排序</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">n</span> <span class="k">do</span>
+        <span class="k">if</span> <span class="n">binarySearch</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="o">-</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">then</span>  <span class="c1">//二分查找</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
-<p>如果配置静态ip，则添加如下内容：</p>
-<div class="highlight"><pre><span class="go">auto eth0</span>
-<span class="go">iface eth0 inet static</span>
-<span class="go">address 192.168.1.155</span>
-<span class="go">netmask 255.255.255.0</span>
-<span class="go">gateway 192.168.1.1</span>
-</pre></div>
-<p>要是配置生效，需要重启网卡：
-.. code-block:: console</p>
-<blockquote>
-ifconfig eth0 down
-ifconfig eth0 up</blockquote>
-<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务</p>
-<div class="highlight"><pre><span class="go">/etc/init.d/networking restart</span>
-</pre></div>
-<p><strong>2.配置dns服务器</strong></p>
-<p>有时候需要手动配置dns，则可以参考如下步骤：</p>
-<p>ubuntu 的dns服务器信息，放在 /etc/resolv.conf中。</p>
-<p>要添加dns服务器地址，如202.112.125.53，则在上述文件中加入</p>
-<div class="highlight"><pre><span class="go">nameserver  202.112.125.53</span>
-</pre></div>
+<p>排序的复杂度为nlgn，二分查找的复杂度为lgn，执行n次就是nlgn，所以该算法的复杂度为O(nlgn)。</p>
 </div>
 		<div>
 			<h2>Comments</h2>

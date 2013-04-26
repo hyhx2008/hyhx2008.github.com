@@ -26,7 +26,8 @@
 		<div class="container-fluid">
 		  <a class="brand" href="./index.html">H.y's Blog</a>
 			<ul class="nav">
-																										<li ><a href="./category/intern.html">intern</a></li>
+																										<li ><a href="./category/ItA.html">ItA</a></li>
+									<li ><a href="./category/intern.html">intern</a></li>
 									<li ><a href="./category/my.html">my</a></li>
 									<li ><a href="./category/peersim.html">peersim</a></li>
 									<li ><a href="./category/tech.html">tech</a></li>
@@ -90,6 +91,29 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  </div>
 	  <div class="content">
 			<div class="page-header"><h1> H.y's Blog </h1></div>			
+<div class='article'>
+	<h2>算法导论第二章习题解答</h2>
+	<div class="well small">Permalink: <a class="more" href="./suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">2013-04-18 17:00:00</a>
+by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/ItA.html">ItA</a>
+tags: <a href="./tag/算法导论.html">算法导论</a> <a href="./tag/算法.html">算法</a> </div>
+	<div class="summary"><p><strong>2.3-7</strong></p>
+<p>Q:请给出一个运行时间为θ(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。</p>
+<p>A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:</p>
+<div class="highlight"><pre><span class="n">checkSums</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1">//s为存放n个整数的集合</span>
+<span class="p">{</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>    <span class="c1">//排序</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">n</span> <span class="k">do</span>
+        <span class="k">if</span> <span class="n">binarySearch</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="o">-</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">then</span>  <span class="c1">//二分查找</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>排序的复杂度为nlgn，二分查找的复杂度为lgn，执行n次就是nlgn，所以该算法的复杂度为O(nlgn)。</p>
+ <a class="btn primary xsmall" href="./suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">more…</a>
+	</div>
+</div>	
 <div class='article'>
 	<h2>Ubuntu网络设置</h2>
 	<div class="well small">Permalink: <a class="more" href="./ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
@@ -282,23 +306,6 @@ tags: <a href="./tag/google.html">google</a> <a href="./tag/baidu.html">baidu</a
 <p>我瞎折腾了一会儿，也在左边添加了个畸形的自定义搜索框。。。</p>
 <p>The End！！</p>
  <a class="btn primary xsmall" href="./rang-googlehe-bai-du-jian-suo-zi-ji-de-wang-zhan.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>VMware虚拟机启动时总提示cann't connect to floopy0的问题</h2>
-	<div class="well small">Permalink: <a class="more" href="./vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
-by <a class="url fn" href="./author/hyhx2008.html">hyhx2008</a>in <a href="./category/tech.html">tech</a>
-tags: <a href="./tag/ubuntu.html">ubuntu</a> <a href="./tag/VMware.html">VMware</a> </div>
-	<div class="summary"><p>在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。</p>
-<p>百度了一下解决办法: 修改虚拟机的.vmx文件。</p>
-<p>1.将floppy0.autodetect这项改为FALSE:</p>
-<div class="highlight"><pre><span class="go">floppy0.autodetect = &quot;FALSE&quot;</span>
-</pre></div>
-<p>2.添加一句:</p>
-<div class="highlight"><pre><span class="go">floppy0.startConnected = &quot;FALSE&quot;</span>
-</pre></div>
-<p>The End!!</p>
- <a class="btn primary xsmall" href="./vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">more…</a>
 	</div>
 </div>	
 
