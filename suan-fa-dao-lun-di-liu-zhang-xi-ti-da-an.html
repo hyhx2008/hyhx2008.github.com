@@ -16,7 +16,15 @@
 	<link href="http://hyhx2008.github.com/theme/local.css" rel="stylesheet">
 	<link href="http://hyhx2008.github.com/theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
-			
+	<script type="text/javascript">
+	var disqus_identifier = "suan-fa-dao-lun-di-liu-zhang-xi-ti-da-an.html";
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://hysblog.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+		
 	<link rel="shortcut icon" href="http://hyhx2008.github.com/theme/images/icons/icon1.png">
 </head>
 <body>
@@ -90,13 +98,12 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 	  </div>
 	  <div class="content">
-			<div class="page-header"><h1>H.y's Blog <small>ItA</small></h1></div>			
-<div class='article'>
-	<h2>算法导论第六章习题答案</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-liu-zhang-xi-ti-da-an.html">2013-04-19 17:20:00</a>
+							<div class='article'>
+		<div class="page-header"><h1>算法导论第六章习题答案</h1></div>
+		<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-liu-zhang-xi-ti-da-an.html">2013-04-19 17:20:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ItA.html">ItA</a>
 tags: <a href="http://hyhx2008.github.com/tag/算法导论.html">算法导论</a> <a href="http://hyhx2008.github.com/tag/算法.html">算法</a> </div>
-	<div class="summary"><p><strong>6.5-6</strong></p>
+		<div><p><strong>6.5-6</strong></p>
 <p>Q:说明如何使用优先级队列来实现一个先进先出队列，另说明如何用优先级队列来实现栈。</p>
 <p>A:队列的性质是先进先出，所以维护一个最小优先级队列，给先进队的元素赋一个小的优先级，每插入一个新的元素优先级加1。
 出队时取优先级最小的元素并维护优先级队列即可。栈的实现同理。</p>
@@ -108,35 +115,44 @@ tags: <a href="http://hyhx2008.github.com/tag/算法导论.html">算法导论</a
     <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">heap</span><span class="o">-</span><span class="n">size</span><span class="p">[</span><span class="n">A</span><span class="p">]];</span>
     <span class="n">heap</span><span class="o">-</span><span class="n">size</span><span class="p">[</span><span class="n">A</span><span class="p">]</span> <span class="o">=</span> <span class="n">heap</span><span class="o">-</span><span class="n">size</span><span class="p">[</span><span class="n">A</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-    <span class="k">if</span> <span class="n">key ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-liu-zhang-xi-ti-da-an.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>算法导论第二章习题解答</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">2013-04-18 17:00:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ItA.html">ItA</a>
-tags: <a href="http://hyhx2008.github.com/tag/算法导论.html">算法导论</a> <a href="http://hyhx2008.github.com/tag/算法.html">算法</a> </div>
-	<div class="summary"><p><strong>2.3-7</strong></p>
-<p>Q:请给出一个运行时间为O(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。</p>
-<p>A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:</p>
-<div class="highlight"><pre><span class="n">checkSums</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>  <span class="c1">//s为存放n个整数的集合</span>
-<span class="p">{</span>
-    <span class="n">sort</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>    <span class="c1">//排序</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">n</span> <span class="k">do</span>
-        <span class="k">if</span> <span class="n">binarySearch</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="o">-</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">then</span>  <span class="c1">//二分查找</span>
-            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-
-    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">&lt;=</span> <span class="n">A</span><span class="p">[</span><span class="n">PARENT</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="n">then</span>         <span class="c1">//放在i位置的新元素应该在堆更下面的位置</span>
+        <span class="n">MAX</span><span class="o">-</span><span class="n">HEAPIFY</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">else</span>                                <span class="c1">//放在i位置的新元素应该在堆更上面的位置</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">1</span> <span class="n">and</span> <span class="n">A</span><span class="p">[</span><span class="n">PARENT</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">&lt;</span> <span class="n">key</span> <span class="k">do</span>
+        <span class="p">{</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">PARENT</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">PARENT</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-<p>排序的复杂度为nlgn，二分查找的复杂度为lgn，执行n次就是nlgn，所以该算法的复杂度为O(nlgn)。</p>
-<p><strong>2-4 逆序对</strong></p>
-<p>Q:设A[1..n]是一个包含n个不同数的数组 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html">more…</a>
-	</div>
-</div>	
+<p><strong>6-3 Young氏矩阵</strong></p>
+<p>Q:一个 m x n 的Young氏矩阵(Young tableau)是一个 m x n 的矩阵，其中每一行的数据都从左到右排序，每一列的数据都从上到下排序。
+Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素。所以，Young氏矩阵可以用来存放 r &lt;= mn个有限的数。请给出一个运行时间为O(m+n)的算法，
+来决定一个给定的数是否存在于一个给定的 m x n 的Young氏矩阵内。</p>
+<p>A:我们可以用给定的数和Young氏矩阵中最右上角的那个数比，如果给定的数比较大，则该数不可能存在于最上面那行；如果给定的数比较下，那么该数不可能存在于最右边那列。
+这样每次比较就可以排除一行或者一列。重复此过程，直到找到给定的数或者所有的行和列都被排除了为止。伪代码:</p>
+<div class="highlight"><pre><span class="n">Search</span><span class="o">-</span><span class="n">Young</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
 
+    <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="n">then</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="n">then</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="n">then</span> <span class="k">return</span> <span class="n">Search</span><span class="o">-</span><span class="n">Young</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+        <span class="k">else</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="n">then</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="n">then</span> <span class="k">return</span> <span class="n">Search</span><span class="o">-</span><span class="n">Young</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+        <span class="k">else</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
 
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Search</span><span class="o">-</span><span class="n">Young</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+		<div>
+			<h2>Comments</h2>
+		 				<div id="disqus_thread"></div>					<div>
+	</div>	
 		<footer>
 		  <p> Powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>, theme based on <a href="http://twitter.github.com/bootstrap/">Bootstrap, from Twitter</a>.</p>
 		  <p>&copy; hyhx2008 2011</p>
