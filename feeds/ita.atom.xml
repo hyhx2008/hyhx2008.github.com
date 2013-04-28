@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/ita.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-04-19T17:20:00+09:00</updated><entry><title>算法导论第六章习题答案</title><link href="http://hyhx2008.github.com/suan-fa-dao-lun-di-liu-zhang-xi-ti-da-an.html" rel="alternate"></link><updated>2013-04-19T17:20:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-19:suan-fa-dao-lun-di-liu-zhang-xi-ti-da-an.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;6.5-6&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/ita.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-04-19T17:20:00+09:00</updated><entry><title>算法导论第6,7,8,9章习题答案</title><link href="http://hyhx2008.github.com/suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html" rel="alternate"></link><updated>2013-04-19T17:20:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-19:suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;6.5-6&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:说明如何使用优先级队列来实现一个先进先出队列，另说明如何用优先级队列来实现栈。&lt;/p&gt;
 &lt;p&gt;A:队列的性质是先进先出，所以维护一个最小优先级队列，给先进队的元素赋一个小的优先级，每插入一个新的元素优先级加1。
 出队时取优先级最小的元素并维护优先级队列即可。栈的实现同理。&lt;/p&gt;
@@ -44,6 +44,71 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
     &lt;span class="n"&gt;Search&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Young&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;7-6 对区间的模糊排序&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:考虑这样一种排序问题,即无法准确的知道等排序的各个数字到底是多少。对于其中的每个数字,我们只知道它落在实轴上的某个区间内。
+亦即，给定的n个形如[ai, bi]的闭区间，其中ai ≤ bi。算法的目标是对这些区间进行模糊排序(fuzzy-sort)，亦即，
+产生各区间的一个排序 &amp;lt;i1, i2, i3, i4,…in &amp;gt;，使得存在一个 cj ∈[ai, bi]，满足c1≤c2≤…≤cn。&lt;/p&gt;
+&lt;p&gt;为n个区间的模糊排序设计一个算法，你的算法应该具有算法的一般结构，它可以快速排序左部端点(即各ai)，
+也要能充分利用重叠区间来改善运行时间。(随着各区间重叠得越来越多，对各区间的排序的问题会变得越来越容易，你的算法应该能充分利用这种重叠。)&lt;/p&gt;
+&lt;p&gt;A:算法的思想是仿照快速排序对各个区间进行排序，不同的地方，也是本题的关键在于如何利用重叠区间来改善运行时间。&lt;/p&gt;
+&lt;p&gt;很容易可以想到，如果两个区间有重叠，那么它们之间的顺序可以是任意的，即可以将这两个区间视作相等。对于区间[ai,bi]，[aj,bj]，有下列三种情况:&lt;/p&gt;
+&lt;p&gt;1&amp;gt; if (bi&amp;lt;aj) then [ai,bi]&amp;lt;[aj,bj]&lt;/p&gt;
+&lt;p&gt;2&amp;gt; else if (ai&amp;gt;bj) then [ai,bi]&amp;gt;[aj,bj]&lt;/p&gt;
+&lt;p&gt;3&amp;gt; else [ai,bi] = [aj,bj]&lt;/p&gt;
+&lt;p&gt;算法与快速排序稍有不同，由于可能存在许多相等的区间，我们改为三路快速排序，即每次partition进行划分时，
+将区间分为三类，左边部分是小于pivot的，中间一部分是等于pivot的，右边部分是大于pivot的。
+由于中间的那一部分里的所有区间相等，则它们必须存在同一段公共的重叠部分，所以pivot的选取要特别注意。&lt;/p&gt;
+&lt;p&gt;我们首先选取一个区间作为pivot，然后在划分时，如果有某个区间和pivot有重叠，则将其加入中间的那一部分，然后提取重叠区域作为新的pivot继续划分。伪代码:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;fuzzy&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;beg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;beg&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;partition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;beg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;   &lt;span class="c1"&gt;//p,q为将区间数组分割为三部分的两个分界&lt;/span&gt;
+        &lt;span class="n"&gt;fuzzy&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;beg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;fuzzy&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;partition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;beg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;pivot&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;beg&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;beg&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;        &lt;span class="c1"&gt;//当前区间小于pivot&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+            &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;  &lt;span class="c1"&gt;//当前区间大于pivot&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;                                   &lt;span class="c1"&gt;//当前区间等于pivto，需要更新pivot的范围值&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Intervals&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;8.2-4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:请给出一个算法，使之对于给定的介于0到k之间的n个整数进行预处理，并能在O(1)时间内，回答出输入的整数中有多少个落在区间[a..b]内。你给出的算法的预处理时间应该是O(n+k)。&lt;/p&gt;
+&lt;p&gt;A:同计数排序的预处理一样，用一个数组C，C[i]保存小于等于i的整数的个数，那么在[a..b]范围内的整数个数就为C[b]-C[a] + (等于a的整数的个数)。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;8.4-4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:在单位圆内有n个点，pi=(xi, yi)，使得0&amp;lt;xi^2 + yi^2 ≤1, i = 1,2,....,n。
+假设所有点是均匀分布的，亦即，某点落在圆的任一区域中的概率与该区域的面积成正比。
+请设计一个Θ(n)期望的算法，来根据点到原点的距离di=sqrt(xi^2 + yi^2)对n个点排序。&lt;/p&gt;
+&lt;p&gt;A:题目给的提示是在桶排序算法中，设计适当的桶尺寸，以反映各个点在单位元中的均匀分布。
+那么我们只需要把单位圆划分成n个面积相等的同心圆(环)即可。&lt;/p&gt;
+&lt;p&gt;把一个圆化为n个面积相等的同心圆(环)，则每个圆(环)的面积为1/n。很容易得出各个圆环的半径Rk=sqrt(k/npi)。&lt;/p&gt;
 </summary><category term="算法导论"></category><category term="算法"></category></entry><entry><title>算法导论第二章习题解答</title><link href="http://hyhx2008.github.com/suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html" rel="alternate"></link><updated>2013-04-18T17:00:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-18:suan-fa-dao-lun-di-er-zhang-xi-ti-jie-da.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;2.3-7&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:请给出一个运行时间为O(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。&lt;/p&gt;
 &lt;p&gt;A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:&lt;/p&gt;

@@ -1,0 +1,153 @@
+算法导论第6,7,8,9章习题答案
+============================
+
+:date: 2013-04-19 17:20:00
+:tags: 算法导论, 算法
+
+**6.5-6**
+
+Q:说明如何使用优先级队列来实现一个先进先出队列，另说明如何用优先级队列来实现栈。
+
+A:队列的性质是先进先出，所以维护一个最小优先级队列，给先进队的元素赋一个小的优先级，每插入一个新的元素优先级加1。
+出队时取优先级最小的元素并维护优先级队列即可。栈的实现同理。
+
+
+**6.5-7**
+
+Q:HEAP-DELETE(A,i)操作将结点i中的项从堆A中删去。对含n个元素的最大堆，请给出时间为O(lgn)的HEAP-DELETE的实现。
+
+A:类似于堆排序时做的操作，将要删除的结点和堆的最后一个结点交换，将其删除后维护堆的性质。伪代码:
+
+.. code-block:: c
+
+    HEAP-DELETE(A,i)
+    {
+        A[i] = A[heap-size[A]];
+        heap-size[A] = heap-size[A] - 1;
+        key = A[i];
+        if key <= A[PARENT[i]] then         //放在i位置的新元素应该在堆更下面的位置
+            MAX-HEAPIFY(A,i);
+        else                                //放在i位置的新元素应该在堆更上面的位置
+            while i>1 and A[PARENT(i)] < key do
+            {
+                A[i] = A[PARENT[i]];
+                i = PARENT(i);
+            }
+    }
+
+
+**6-3 Young氏矩阵**
+
+Q:一个 m x n 的Young氏矩阵(Young tableau)是一个 m x n 的矩阵，其中每一行的数据都从左到右排序，每一列的数据都从上到下排序。
+Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素。所以，Young氏矩阵可以用来存放 r <= mn个有限的数。请给出一个运行时间为O(m+n)的算法，
+来决定一个给定的数是否存在于一个给定的 m x n 的Young氏矩阵内。
+
+A:我们可以用给定的数和Young氏矩阵中最右上角的那个数比，如果给定的数比较大，则该数不可能存在于最上面那行；如果给定的数比较下，那么该数不可能存在于最右边那列。
+这样每次比较就可以排除一行或者一列。重复此过程，直到找到给定的数或者所有的行和列都被排除了为止。伪代码:
+
+.. code-block:: c
+
+    Search-Young(A,i,j,x)
+    {
+        
+        if x = A[i,j] then return true;
+        if x > A[i,j] then
+            if i < m then return Search-Young(A,i+1,j,x);
+            else return false;
+        if x < A[i,j] then
+            if j > 1 then return Search-Young(A,i,j-1,x);
+            else return false;
+    }
+
+    main()
+    {
+        Search-Young(A,1,n,x);
+    }
+
+
+**7-6 对区间的模糊排序**
+
+Q:考虑这样一种排序问题,即无法准确的知道等排序的各个数字到底是多少。对于其中的每个数字,我们只知道它落在实轴上的某个区间内。
+亦即，给定的n个形如[ai, bi]的闭区间，其中ai ≤ bi。算法的目标是对这些区间进行模糊排序(fuzzy-sort)，亦即，
+产生各区间的一个排序 <i1, i2, i3, i4,…in >，使得存在一个 cj ∈[ai, bi]，满足c1≤c2≤…≤cn。
+
+为n个区间的模糊排序设计一个算法，你的算法应该具有算法的一般结构，它可以快速排序左部端点(即各ai)，
+也要能充分利用重叠区间来改善运行时间。(随着各区间重叠得越来越多，对各区间的排序的问题会变得越来越容易，你的算法应该能充分利用这种重叠。)
+
+A:算法的思想是仿照快速排序对各个区间进行排序，不同的地方，也是本题的关键在于如何利用重叠区间来改善运行时间。
+
+很容易可以想到，如果两个区间有重叠，那么它们之间的顺序可以是任意的，即可以将这两个区间视作相等。对于区间[ai,bi]，[aj,bj]，有下列三种情况:
+
+1> if (bi<aj) then [ai,bi]<[aj,bj]
+
+2> else if (ai>bj) then [ai,bi]>[aj,bj]
+
+3> else [ai,bi] = [aj,bj]
+
+算法与快速排序稍有不同，由于可能存在许多相等的区间，我们改为三路快速排序，即每次partition进行划分时，
+将区间分为三类，左边部分是小于pivot的，中间一部分是等于pivot的，右边部分是大于pivot的。
+由于中间的那一部分里的所有区间相等，则它们必须存在同一段公共的重叠部分，所以pivot的选取要特别注意。
+
+我们首先选取一个区间作为pivot，然后在划分时，如果有某个区间和pivot有重叠，则将其加入中间的那一部分，然后提取重叠区域作为新的pivot继续划分。伪代码:
+
+.. code-block:: c
+
+    fuzzy-sort(Intervals,beg,end)
+    {
+        if beg < end then
+        {
+            (p,q) = partition(Intervals,beg,end);   //p,q为将区间数组分割为三部分的两个分界
+            fuzzy-sort(Intervals,beg,p-1);
+            fuzzy-sort(Intervals,q+1,end);
+        }
+    }
+
+    partition(Intervals,beg,end)
+    {
+        pivot = Intervals[end];
+        p = beg-1;
+        q = end+1;
+
+        i = beg;
+        while (i<q) do
+        {
+            if Intervals[i].b < pivot.a then        //当前区间小于pivot
+            {
+                p = p+1;
+                exchange(Intervals[p],Intervals[i]);
+                i = i+1;
+            }else if Intervals[i].a > pivot.b then  //当前区间大于pivot
+            {
+                q = q-1;
+                exchange(Intervals[q],Intervals[i]);
+            }else                                   //当前区间等于pivto，需要更新pivot的范围值
+            {
+                pivot.a = max(pivot.a,Intervals[i].a);
+                pivot.b = max(pivot.b,Intervals[i].b);
+                i = i + 1;
+            }
+        }
+
+        return (p,q);
+        
+    }
+
+
+**8.2-4**
+
+Q:请给出一个算法，使之对于给定的介于0到k之间的n个整数进行预处理，并能在O(1)时间内，回答出输入的整数中有多少个落在区间[a..b]内。你给出的算法的预处理时间应该是O(n+k)。
+
+A:同计数排序的预处理一样，用一个数组C，C[i]保存小于等于i的整数的个数，那么在[a..b]范围内的整数个数就为C[b]-C[a] + (等于a的整数的个数)。
+
+
+**8.4-4**
+
+Q:在单位圆内有n个点，pi=(xi, yi)，使得0<xi^2 + yi^2 ≤1, i = 1,2,....,n。
+假设所有点是均匀分布的，亦即，某点落在圆的任一区域中的概率与该区域的面积成正比。
+请设计一个Θ(n)期望的算法，来根据点到原点的距离di=sqrt(xi^2 + yi^2)对n个点排序。
+
+A:题目给的提示是在桶排序算法中，设计适当的桶尺寸，以反映各个点在单位元中的均匀分布。
+那么我们只需要把单位圆划分成n个面积相等的同心圆(环)即可。
+
+把一个圆化为n个面积相等的同心圆(环)，则每个圆(环)的面积为1/n。很容易得出各个圆环的半径Rk=sqrt(k/npi)。
+
