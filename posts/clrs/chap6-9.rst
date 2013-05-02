@@ -2,7 +2,7 @@
 ============================
 
 :date: 2013-04-19 17:20:00
-:tags: 算法导论, 算法
+:tags: clrs, algorithm
 
 **6.5-6**
 
@@ -199,3 +199,107 @@ A:a)容易证明，一个n元素的数组是k排序的，当且仅当对所有i=
 b)在a中对k个分组用一个k元素的最小堆进行k路合并，每次提取最小值和增加一个新元素的时间复杂为O(lgk)。
 总共需要n次提取最小值和增加新元素的操作，则对应的时间复杂度为O(nlgk)。
 
+
+**9.1-1**
+
+Q:利用 n+lgn-2 次比较，找到n个元素中的第2小元素。
+
+A:这道题的方法略难想，看了别人的解法，自己解释不清楚。这里付一个参考的链接。
+
+`算法导论 9.1-1 求第二小元素 <http://blog.csdn.net/mishifangxiangdefeng/article/details/7983809>`_
+
+
+**9.3-5**
+
+Q:假设已经有了一个用于求解中位数的“黑箱”子程序，它在最坏情况下需要线性运行时间。
+写出一个能解决任意顺序统计量的选择问题的线性时间算法。
+
+A:算法类似于快速排序的partition，只是每次pivot的选择可以用“黑箱”程序求出的中位数。
+假设“黑箱”程序为median(A,p,q)，伪代码:
+
+.. code-block:: c
+
+    Select(A,p,q,i)
+    {
+        pivot = median(A,p,q);
+        if i == (p+q)/2 - p + 1 return pivot;
+
+        Partition A[p..q] around pivot;
+        if i < (p+q)/2 then 
+            return Slelct(A,p,(p+q)/2,i);
+        else
+            return Select(A,(p+q)/2,q,i-(p+q)/2);
+    }
+
+
+**9.3-6**
+
+Q:对一个含有n个元素的集合来说，所谓k分位数(the kth quantile)，就是能把已排序的集合分成k个大小相等的集合的k-1个顺序统计量。
+给出一个能列出某一集合的k分位数的O(nlgk)时间的算法。
+
+A:将n个元素划分为k个大小相等的集合，那么每个集合的元素个数为t=n/k，则题目要求的就是这n个元素中第t，2t，...，(k-1)t大的数。
+
+如果按顺序依次求这k-1个数需要的时间为(k-1)*n。我们可以理由二分法来改进，首先查找第(k/2)个分位数，
+然后以这个分位数为pivot将n个元素分为两段，分别对这两段用同样的方法来找其他分位数。可以将时间降为O(nlgk)。
+
+
+**9.3-7**
+
+Q:给出一个O(n)时间的算法，在给定一个有n个不同数字的集合S以及一个正整数 k<=n 后，它能确定出S中最接近其中位数的k个数。
+
+A:首先找到S中的中位数，然后计算S中每个数与中位数差的绝对值，存于另一个数组A中；求出A中第k小的数x，
+最后通过找出S中与中位数的差的绝对值小于x的数即为所求。
+
+
+**9.3-8**
+
+Q:设X[1..n]和Y[1..n]为两个数组，每个都包含n个已排好序的数。给出一个求数组X和Y中所有2n个元素的中位数的、O(lgn)时间的算法。
+
+A:我们先假设所求的中位数在X里，为X[k]。在数组X中，X[k]比X[1..k-1]这k-1个数大，比X[k+1..n]这n-k个数小。
+那么如果X[k]两个数组共同的中位数，那么X[k]必须必Y中的n-k个数大、比k-1个数小，即 Y[n-k] <= X[k] <= Y[n-k+1]。
+我们可以用这个方法检查X[k]是否就是所求的中位数。
+
+如果X[k]比Y[n-k+1]还大，那么说明在X中比X[k]大的数X[k+1..n]都不符合条件；如果X[k]比Y[n-k]还小，那么说明X中比X[k]小的数X[1..k-1]都不符合条件。
+利用二分法，每次可以排除一半的数。如果在X中找不到，那么再反过来在Y中以同样的方法查找。伪代码:
+
+.. code-block:: c
+
+    TWo-ARRAY-MeDIAN(X,Y)
+    {
+        median = Find-Median(X,Y,n,1,n);
+        if median = NOT_FOUND then 
+            median = Find-Median(Y,X,n,1,n);
+        retrun median;
+    }
+
+    Find-Median(X,Y,n,low,high)
+    {
+        if low > high then 
+            return NOT_FOUND;
+        else
+        {
+            k = (low+high)/2;
+            if k=n and X[n]<=Y[1] then
+             return X[n];
+            else
+            {
+                if k<n and Y[n-k]<=X[k]<=Y[n-k+1] then
+                    return X[k];
+                if X[k] > Y[n-k+1] then
+                    return Find-Median(X,Y,n,low,k-1);
+                if X[k] < Y[n-k] then
+                    return Find-Median(X,Y,n,k+1,high);
+            }
+        }
+    }
+
+在网上还看到一个更加巧妙的改进:
+
+递归求解该问题，解题规模不断减半，最后剩下4个元素时，得到问题的解。
+分别取两个数组的中值midA和midB进行比较。
+如果midA=midB，那么这个值就是结果。
+否则，小的那个所在的数组去掉前面一半，大的那个去掉后面一半。
+(对于两个数组的中值，共有n-1个元素，有n个元素比它大。但是对于min(minA,minB)，最多只有n-2个元素比它小，所以一定不是所求的结果，同理去掉大的一半)。
+然后对剩余的两个数组，用同的方法求它们的中值，直到两个数组一共剩下4个元素。
+
+.. figure:: ../statics/pics/chap6-9_2.png

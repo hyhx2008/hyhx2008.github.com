@@ -34,7 +34,7 @@
 		<div class="container-fluid">
 		  <a class="brand" href="http://hyhx2008.github.com/index.html">H.y's Blog</a>
 			<ul class="nav">
-																										<li class="active"><a href="http://hyhx2008.github.com/category/ItA.html">ItA</a></li>
+																										<li class="active"><a href="http://hyhx2008.github.com/category/clrs.html">clrs</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
@@ -101,8 +101,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 							<div class='article'>
 		<div class="page-header"><h1>算法导论第6,7,8,9章习题答案</h1></div>
 		<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html">2013-04-19 17:20:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ItA.html">ItA</a>
-tags: <a href="http://hyhx2008.github.com/tag/算法导论.html">算法导论</a> <a href="http://hyhx2008.github.com/tag/算法.html">算法</a> </div>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/clrs.html">clrs</a>
+tags: <a href="http://hyhx2008.github.com/tag/clrs.html">clrs</a> <a href="http://hyhx2008.github.com/tag/algorithm.html">algorithm</a> </div>
 		<div><p><strong>6.5-6</strong></p>
 <p>Q:说明如何使用优先级队列来实现一个先进先出队列，另说明如何用优先级队列来实现栈。</p>
 <p>A:队列的性质是先进先出，所以维护一个最小优先级队列，给先进队的元素赋一个小的优先级，每插入一个新的元素优先级加1。
@@ -244,6 +244,83 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 那么k个分组总的时间复杂度为k*O(n/k*lg(n/k)) =  O(nlg(n/k))。</p>
 <p>b)在a中对k个分组用一个k元素的最小堆进行k路合并，每次提取最小值和增加一个新元素的时间复杂为O(lgk)。
 总共需要n次提取最小值和增加新元素的操作，则对应的时间复杂度为O(nlgk)。</p>
+<p><strong>9.1-1</strong></p>
+<p>Q:利用 n+lgn-2 次比较，找到n个元素中的第2小元素。</p>
+<p>A:这道题的方法略难想，看了别人的解法，自己解释不清楚。这里付一个参考的链接。</p>
+<p><a class="reference external" href="http://blog.csdn.net/mishifangxiangdefeng/article/details/7983809">算法导论 9.1-1 求第二小元素</a></p>
+<p><strong>9.3-5</strong></p>
+<p>Q:假设已经有了一个用于求解中位数的“黑箱”子程序，它在最坏情况下需要线性运行时间。
+写出一个能解决任意顺序统计量的选择问题的线性时间算法。</p>
+<p>A:算法类似于快速排序的partition，只是每次pivot的选择可以用“黑箱”程序求出的中位数。
+假设“黑箱”程序为median(A,p,q)，伪代码:</p>
+<div class="highlight"><pre><span class="n">Select</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">pivot</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">);</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">return</span> <span class="n">pivot</span><span class="p">;</span>
+
+    <span class="n">Partition</span> <span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">..</span><span class="n">q</span><span class="p">]</span> <span class="n">around</span> <span class="n">pivot</span><span class="p">;</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="n">then</span>
+        <span class="k">return</span> <span class="n">Slelct</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">p</span><span class="p">,(</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="nf">Select</span><span class="p">(</span><span class="n">A</span><span class="p">,(</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="n">q</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>9.3-6</strong></p>
+<p>Q:对一个含有n个元素的集合来说，所谓k分位数(the kth quantile)，就是能把已排序的集合分成k个大小相等的集合的k-1个顺序统计量。
+给出一个能列出某一集合的k分位数的O(nlgk)时间的算法。</p>
+<p>A:将n个元素划分为k个大小相等的集合，那么每个集合的元素个数为t=n/k，则题目要求的就是这n个元素中第t，2t，...，(k-1)t大的数。</p>
+<p>如果按顺序依次求这k-1个数需要的时间为(k-1)*n。我们可以理由二分法来改进，首先查找第(k/2)个分位数，
+然后以这个分位数为pivot将n个元素分为两段，分别对这两段用同样的方法来找其他分位数。可以将时间降为O(nlgk)。</p>
+<p><strong>9.3-7</strong></p>
+<p>Q:给出一个O(n)时间的算法，在给定一个有n个不同数字的集合S以及一个正整数 k&lt;=n 后，它能确定出S中最接近其中位数的k个数。</p>
+<p>A:首先找到S中的中位数，然后计算S中每个数与中位数差的绝对值，存于另一个数组A中；求出A中第k小的数x，
+最后通过找出S中与中位数的差的绝对值小于x的数即为所求。</p>
+<p><strong>9.3-8</strong></p>
+<p>Q:设X[1..n]和Y[1..n]为两个数组，每个都包含n个已排好序的数。给出一个求数组X和Y中所有2n个元素的中位数的、O(lgn)时间的算法。</p>
+<p>A:我们先假设所求的中位数在X里，为X[k]。在数组X中，X[k]比X[1..k-1]这k-1个数大，比X[k+1..n]这n-k个数小。
+那么如果X[k]两个数组共同的中位数，那么X[k]必须必Y中的n-k个数大、比k-1个数小，即 Y[n-k] &lt;= X[k] &lt;= Y[n-k+1]。
+我们可以用这个方法检查X[k]是否就是所求的中位数。</p>
+<p>如果X[k]比Y[n-k+1]还大，那么说明在X中比X[k]大的数X[k+1..n]都不符合条件；如果X[k]比Y[n-k]还小，那么说明X中比X[k]小的数X[1..k-1]都不符合条件。
+利用二分法，每次可以排除一半的数。如果在X中找不到，那么再反过来在Y中以同样的方法查找。伪代码:</p>
+<div class="highlight"><pre><span class="n">TWo</span><span class="o">-</span><span class="n">ARRAY</span><span class="o">-</span><span class="n">MeDIAN</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">Find</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+    <span class="k">if</span> <span class="n">median</span> <span class="o">=</span> <span class="n">NOT_FOUND</span> <span class="n">then</span>
+        <span class="n">median</span> <span class="o">=</span> <span class="n">Find</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+    <span class="n">retrun</span> <span class="n">median</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Find</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="n">low</span> <span class="o">&gt;</span> <span class="n">high</span> <span class="n">then</span>
+        <span class="k">return</span> <span class="n">NOT_FOUND</span><span class="p">;</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span><span class="o">+</span><span class="n">high</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="n">k</span><span class="o">=</span><span class="n">n</span> <span class="n">and</span> <span class="n">X</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">&lt;=</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">then</span>
+         <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="n">k</span><span class="o">&lt;</span><span class="n">n</span> <span class="n">and</span> <span class="n">Y</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">]</span><span class="o">&lt;=</span><span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">&lt;=</span><span class="n">Y</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="n">then</span>
+                <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+            <span class="k">if</span> <span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">Y</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="n">then</span>
+                <span class="k">return</span> <span class="n">Find</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">low</span><span class="p">,</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+            <span class="k">if</span> <span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">Y</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">]</span> <span class="n">then</span>
+                <span class="k">return</span> <span class="n">Find</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">high</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>在网上还看到一个更加巧妙的改进:</p>
+<p>递归求解该问题，解题规模不断减半，最后剩下4个元素时，得到问题的解。
+分别取两个数组的中值midA和midB进行比较。
+如果midA=midB，那么这个值就是结果。
+否则，小的那个所在的数组去掉前面一半，大的那个去掉后面一半。
+(对于两个数组的中值，共有n-1个元素，有n个元素比它大。但是对于min(minA,minB)，最多只有n-2个元素比它小，所以一定不是所求的结果，同理去掉大的一半)。
+然后对剩余的两个数组，用同的方法求它们的中值，直到两个数组一共剩下4个元素。</p>
+<div class="figure">
+<img alt="../statics/pics/chap6-9_2.png" src="../statics/pics/chap6-9_2.png" />
+</div>
 </div>
 		<div>
 			<h2>Comments</h2>
