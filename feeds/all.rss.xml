@@ -142,7 +142,7 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 总共需要n次提取最小值和增加新元素的操作，则对应的时间复杂度为O(nlgk)。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;9.1-1&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:利用 n+lgn-2 次比较，找到n个元素中的第2小元素。&lt;/p&gt;
-&lt;p&gt;A:这道题的方法略难想，看了别人的解法，自己解释不清楚。这里付一个参考的链接。&lt;/p&gt;
+&lt;p&gt;A:这道题的方法略难想，看了别人的解法，自己解释不清楚。这里附一个参考的链接。&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://blog.csdn.net/mishifangxiangdefeng/article/details/7983809"&gt;算法导论 9.1-1 求第二小元素&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;9.3-5&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:假设已经有了一个用于求解中位数的“黑箱”子程序，它在最坏情况下需要线性运行时间。
@@ -214,9 +214,59 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 否则，小的那个所在的数组去掉前面一半，大的那个去掉后面一半。
 (对于两个数组的中值，共有n-1个元素，有n个元素比它大。但是对于min(minA,minB)，最多只有n-2个元素比它小，所以一定不是所求的结果，同理去掉大的一半)。
 然后对剩余的两个数组，用同的方法求它们的中值，直到两个数组一共剩下4个元素。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;9.3-9&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:Olay教授是一家石油公司的顾问，这家公司正在计划建造一条由东向西的大型管道，它穿过一个有n口油井的油田。
+从每口井中都有一条喷油管道沿最短路径与主管道直接连接(或南或北)，如下图所示。给定各口井的x坐标和y坐标，
+应如何选择主管道的最优位置(使得各喷管长度总和最小的位置)？&lt;/p&gt;
 &lt;div class="figure"&gt;
 &lt;img alt="../statics/pics/chap6-9_2.png" src="../statics/pics/chap6-9_2.png" /&gt;
 &lt;/div&gt;
+&lt;p&gt;A:第一感觉是求中位数，但是也不知道为什么。百度了一下，看到一个非常好的解释:&lt;/p&gt;
+&lt;p&gt;为了简化这道题，不考虑油井的x坐标，假设所有的油井都在一条与管道垂直的线上。
+假如有两个油井AB，分别在管道l的上下，那么不管这条管道在什么位置(只要在AB之间)，d[Al]+d[bl]=d[AB]。
+根据以上规律，把每两个油井分为一组，第i组中的油井是（y坐标第i大的油井和第i小的油井），只要管道在每组的两个油井之间，就能保证长度总和最小。&lt;/p&gt;
+&lt;p&gt;设所有油井的y坐标(较小的)中位数为yi，由以上推理得出答案：&lt;/p&gt;
+&lt;p&gt;1&amp;gt;如果油井的个数是奇数，让管道过yi位置。&lt;/p&gt;
+&lt;p&gt;2&amp;gt;如果点的个数是偶数，让管道位于yi和yi+1之间的任意位置(包括这两点)。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;9-1 已排序的i个最大数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:给定一个含n个元素的集合，我们希望能用一个基于比较的算法来找出按顺序排列的i个最大元素。
+请找出能实现下列每一种方法的、具有最佳的渐进最坏情况运行时间的算法，并分析各种方法的运行时间。&lt;/p&gt;
+&lt;p&gt;A:a)对输入数排序，并列出i个最大的数。   排序算法最优为O(nlgn)。&lt;/p&gt;
+&lt;p&gt;b)对输入数建立一个优先级队列，并调用EXTRACT-MAX过程i次。  建堆O(n) + i次EXTRACT-MAX 为 O(n+i*lgn)。&lt;/p&gt;
+&lt;p&gt;c)利用一个顺序统计量算法来找到第i个最大元素，然后换分输入数组，再对i个最大数排序。  划分O(n) + i个数排序O(ilgi) 为O(n+ilgi)。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;9-2 带权中位数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:求n个元素的带权中位数。&lt;/p&gt;
+&lt;p&gt;(因为不好打公式，这里我就大概解释一下什么是带权中位数。n个元素x1，x2，...，xn分别具有一个正的权重w1，w2，...，wn，且权重和为1。
+带权中位数xk要满足比xk小的元素的权重和小于1/2，并且比xk大的元素的权重小于等于0.5)&lt;/p&gt;
+&lt;p&gt;A:方法1，先对n个元素进行排序，然后从头开始依次对每个元素进行验证，同时累加权重，看其满足不满足带权中位数的条件。该算法的复杂度为排序的O(nlgn)+验证的O(n)。&lt;/p&gt;
+&lt;p&gt;方法2，类似于快速排序中的partition，用中位数进行分割，然后累加一边的权重和，看其满足带权中位数的条件否，不满足的话舍去一半继续递分割查找。伪代码:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Find&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Median&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;pivot&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Find&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Median&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;Partition&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;around&lt;/span&gt; &lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="n"&gt;mid&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="n"&gt;mid&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;pivot&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="nf"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="n"&gt;mid&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Find&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Median&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;mid&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Find&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Median&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;mid&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;sum&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="n"&gt;mid&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Find&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Median&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这道题后面还附了一个带权中位数的应用问题:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;邮局位置问题&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:邮局位置问题(post-office location problem)定义如下:已知n个点p1，p2，...，pn及与他们相联系的权重w1,w2，...，wn。
+我们希望找到一点p(不一定是输入点中的一个)，使sum(wi*d(p,pi)) (i=1...n) 最小，此处d(a,b)表示点a与b之间的距离。&lt;/p&gt;
+&lt;p&gt;a)证明带权中位数是一维邮局位置问题的最佳解决方案，d(a,b) = | a-b | 。&lt;/p&gt;
+&lt;p&gt;b)找出二维邮局问题的最佳解决方案，其中所有的点都是(x,y)坐标对，并且d(a,b) = | xa-xb | + | ya-yb | 。&lt;/p&gt;
+&lt;p&gt;A:a)严格的证明不太会，这里给出一种容易理解的说明。假设各个点的权重都是整数的比例关系(同时将权重扩大足够大的倍数即可看出)，
+那么通过将每个点复制其权重比例多个，一维邮局问题则变为9.3-9描述的输油管道问题。按照9.3-9中配对的想法，中位数一定是带权中位数复制后中的一个。&lt;/p&gt;
+&lt;p&gt;b)将x坐标和y坐标分别求一维邮局问题，得到的坐标对即为二维邮局问题的解。&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Fri, 19 Apr 2013 17:20:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-19:suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html</guid><category>clrs</category><category>algorithm</category></item><item><title>算法导论第2章习题解答</title><link>http://hyhx2008.github.com/suan-fa-dao-lun-di-2zhang-xi-ti-jie-da.html</link><description>&lt;p&gt;&lt;strong&gt;2.3-7&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:请给出一个运行时间为O(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。&lt;/p&gt;
 &lt;p&gt;A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:&lt;/p&gt;

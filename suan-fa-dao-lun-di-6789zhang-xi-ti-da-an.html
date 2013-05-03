@@ -246,7 +246,7 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 总共需要n次提取最小值和增加新元素的操作，则对应的时间复杂度为O(nlgk)。</p>
 <p><strong>9.1-1</strong></p>
 <p>Q:利用 n+lgn-2 次比较，找到n个元素中的第2小元素。</p>
-<p>A:这道题的方法略难想，看了别人的解法，自己解释不清楚。这里付一个参考的链接。</p>
+<p>A:这道题的方法略难想，看了别人的解法，自己解释不清楚。这里附一个参考的链接。</p>
 <p><a class="reference external" href="http://blog.csdn.net/mishifangxiangdefeng/article/details/7983809">算法导论 9.1-1 求第二小元素</a></p>
 <p><strong>9.3-5</strong></p>
 <p>Q:假设已经有了一个用于求解中位数的“黑箱”子程序，它在最坏情况下需要线性运行时间。
@@ -318,9 +318,59 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 否则，小的那个所在的数组去掉前面一半，大的那个去掉后面一半。
 (对于两个数组的中值，共有n-1个元素，有n个元素比它大。但是对于min(minA,minB)，最多只有n-2个元素比它小，所以一定不是所求的结果，同理去掉大的一半)。
 然后对剩余的两个数组，用同的方法求它们的中值，直到两个数组一共剩下4个元素。</p>
+<p><strong>9.3-9</strong></p>
+<p>Q:Olay教授是一家石油公司的顾问，这家公司正在计划建造一条由东向西的大型管道，它穿过一个有n口油井的油田。
+从每口井中都有一条喷油管道沿最短路径与主管道直接连接(或南或北)，如下图所示。给定各口井的x坐标和y坐标，
+应如何选择主管道的最优位置(使得各喷管长度总和最小的位置)？</p>
 <div class="figure">
 <img alt="../statics/pics/chap6-9_2.png" src="../statics/pics/chap6-9_2.png" />
 </div>
+<p>A:第一感觉是求中位数，但是也不知道为什么。百度了一下，看到一个非常好的解释:</p>
+<p>为了简化这道题，不考虑油井的x坐标，假设所有的油井都在一条与管道垂直的线上。
+假如有两个油井AB，分别在管道l的上下，那么不管这条管道在什么位置(只要在AB之间)，d[Al]+d[bl]=d[AB]。
+根据以上规律，把每两个油井分为一组，第i组中的油井是（y坐标第i大的油井和第i小的油井），只要管道在每组的两个油井之间，就能保证长度总和最小。</p>
+<p>设所有油井的y坐标(较小的)中位数为yi，由以上推理得出答案：</p>
+<p>1&gt;如果油井的个数是奇数，让管道过yi位置。</p>
+<p>2&gt;如果点的个数是偶数，让管道位于yi和yi+1之间的任意位置(包括这两点)。</p>
+<p><strong>9-1 已排序的i个最大数</strong></p>
+<p>Q:给定一个含n个元素的集合，我们希望能用一个基于比较的算法来找出按顺序排列的i个最大元素。
+请找出能实现下列每一种方法的、具有最佳的渐进最坏情况运行时间的算法，并分析各种方法的运行时间。</p>
+<p>A:a)对输入数排序，并列出i个最大的数。   排序算法最优为O(nlgn)。</p>
+<p>b)对输入数建立一个优先级队列，并调用EXTRACT-MAX过程i次。  建堆O(n) + i次EXTRACT-MAX 为 O(n+i*lgn)。</p>
+<p>c)利用一个顺序统计量算法来找到第i个最大元素，然后换分输入数组，再对i个最大数排序。  划分O(n) + i个数排序O(ilgi) 为O(n+ilgi)。</p>
+<p><strong>9-2 带权中位数</strong></p>
+<p>Q:求n个元素的带权中位数。</p>
+<p>(因为不好打公式，这里我就大概解释一下什么是带权中位数。n个元素x1，x2，...，xn分别具有一个正的权重w1，w2，...，wn，且权重和为1。
+带权中位数xk要满足比xk小的元素的权重和小于1/2，并且比xk大的元素的权重小于等于0.5)</p>
+<p>A:方法1，先对n个元素进行排序，然后从头开始依次对每个元素进行验证，同时累加权重，看其满足不满足带权中位数的条件。该算法的复杂度为排序的O(nlgn)+验证的O(n)。</p>
+<p>方法2，类似于快速排序中的partition，用中位数进行分割，然后累加一边的权重和，看其满足带权中位数的条件否，不满足的话舍去一半继续递分割查找。伪代码:</p>
+<div class="highlight"><pre><span class="n">Find</span><span class="o">-</span><span class="n">w</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">,</span><span class="n">w</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">pivot</span> <span class="o">=</span> <span class="n">Find</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">);</span>
+    <span class="n">Partition</span> <span class="n">X</span><span class="p">(</span><span class="n">from</span> <span class="n">start</span> <span class="n">to</span> <span class="n">end</span><span class="p">)</span> <span class="n">around</span> <span class="n">pivot</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sum</span> <span class="n">of</span> <span class="n">weight</span> <span class="n">start</span><span class="p">...</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="n">w</span><span class="p">)</span> <span class="n">and</span> <span class="p">(</span><span class="n">sum</span> <span class="n">of</span> <span class="n">weight</span> <span class="n">start</span><span class="p">...</span><span class="n">mid</span> <span class="o">&gt;=</span> <span class="n">w</span><span class="p">)</span> <span class="n">then</span>
+        <span class="k">return</span> <span class="n">pivot</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">sum</span> <span class="n">of</span> <span class="n">weight</span> <span class="n">start</span><span class="p">...</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span> <span class="o">&gt;=</span> <span class="n">w</span><span class="p">)</span> <span class="n">then</span>
+        <span class="k">return</span> <span class="n">Find</span><span class="o">-</span><span class="n">w</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">w</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">Find</span><span class="o">-</span><span class="n">w</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">end</span><span class="p">,</span><span class="n">w</span> <span class="o">-</span> <span class="n">sum</span> <span class="n">of</span> <span class="n">weight</span> <span class="n">start</span><span class="p">...</span><span class="n">mid</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">Find</span><span class="o">-</span><span class="n">w</span><span class="o">-</span><span class="n">Median</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>这道题后面还附了一个带权中位数的应用问题:</p>
+<p><strong>邮局位置问题</strong></p>
+<p>Q:邮局位置问题(post-office location problem)定义如下:已知n个点p1，p2，...，pn及与他们相联系的权重w1,w2，...，wn。
+我们希望找到一点p(不一定是输入点中的一个)，使sum(wi*d(p,pi)) (i=1...n) 最小，此处d(a,b)表示点a与b之间的距离。</p>
+<p>a)证明带权中位数是一维邮局位置问题的最佳解决方案，d(a,b) = | a-b | 。</p>
+<p>b)找出二维邮局问题的最佳解决方案，其中所有的点都是(x,y)坐标对，并且d(a,b) = | xa-xb | + | ya-yb | 。</p>
+<p>A:a)严格的证明不太会，这里给出一种容易理解的说明。假设各个点的权重都是整数的比例关系(同时将权重扩大足够大的倍数即可看出)，
+那么通过将每个点复制其权重比例多个，一维邮局问题则变为9.3-9描述的输油管道问题。按照9.3-9中配对的想法，中位数一定是带权中位数复制后中的一个。</p>
+<p>b)将x坐标和y坐标分别求一维邮局问题，得到的坐标对即为二维邮局问题的解。</p>
 </div>
 		<div>
 			<h2>Comments</h2>
