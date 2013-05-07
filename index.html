@@ -92,6 +92,22 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  <div class="content">
 			<div class="page-header"><h1> H.y's Blog </h1></div>			
 <div class='article'>
+	<h2>算法导论第15章习题答案</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-15zhang-xi-ti-da-an.html">2013-05-07 09:51:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/clrs.html">clrs</a>
+tags: <a href="http://hyhx2008.github.com/tag/clrs.html">clrs</a> <a href="http://hyhx2008.github.com/tag/algorithm.html">algorithm</a> </div>
+	<div class="summary"><p><strong>15.2-2</strong></p>
+<p>Q:请给出一个递归算法MATRIX-CHAIN-MULTIPLY(A,s,i,j)，使之在给出矩阵序列&lt;A1,A2,...,An&gt;，和由MATRIX-CHAIN-ORDER计算出的表s，
+以及下标i和j后，能得出一个最有的矩阵链乘法。(初始调用为MATRIX-CHAIN-MULTIPLY(A,s,1,n))。</p>
+<p>A:模仿PRINT-OPTIMAL-PARENS(s,i,j)即可。伪代码:</p>
+<div class="highlight"><pre><span class="n">MATRIX</span><span class="o">-</span><span class="n">CHAIN</span><span class="o">-</span><span class="n">MULTIPLY</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">=</span><span class="n">j</span> <span class="n">then</span> <span class="k">return</span> <span class="n">Ai</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">MATRIX</span><span class="o">-</span><span class="n">CHAIN</span><span class="o">-</span><span class="n">MULTIPLY</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">s</span><span class="p">[</span><span class="n">i ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-15zhang-xi-ti-da-an.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
 	<h2>算法导论第6,7,8,9章习题答案</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html">2013-04-19 17:20:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/clrs.html">clrs</a>
@@ -112,8 +128,8 @@ tags: <a href="http://hyhx2008.github.com/tag/clrs.html">clrs</a> <a href="http:
 	</div>
 </div>	
 <div class='article'>
-	<h2>算法导论第2章习题解答</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-2zhang-xi-ti-jie-da.html">2013-04-18 17:00:00</a>
+	<h2>算法导论第2章习题答案</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-2zhang-xi-ti-da-an.html">2013-04-18 17:00:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/clrs.html">clrs</a>
 tags: <a href="http://hyhx2008.github.com/tag/clrs.html">clrs</a> <a href="http://hyhx2008.github.com/tag/algorithm.html">algorithm</a> </div>
 	<div class="summary"><p><strong>2.3-7</strong></p>
@@ -132,7 +148,7 @@ tags: <a href="http://hyhx2008.github.com/tag/clrs.html">clrs</a> <a href="http:
 </pre></div>
 <p>排序的复杂度为nlgn，二分查找的复杂度为lgn，执行n次就是nlgn，所以该算法的复杂度为O(nlgn)。</p>
 <p><strong>2-4 逆序对</strong></p>
-<p>Q:设A[1..n]是一个包含n个不同数的数组 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-2zhang-xi-ti-jie-da.html">more…</a>
+<p>Q:设A[1..n]是一个包含n个不同数的数组 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-2zhang-xi-ti-da-an.html">more…</a>
 	</div>
 </div>	
 <div class='article'>
@@ -279,32 +295,6 @@ tags: <a href="http://hyhx2008.github.com/tag/PeerSim.html">PeerSim</a> <a href=
 <p>1&gt; 新建java工程，命名例如PeerSim_t。</p>
 <p>2&gt; 将peersim-1.0.5中的src文件夹内的全部内容(包括两个包，peersim和example)拖入工程的src文件夹下。</p>
 <p>3&gt; 将peersim-1 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-1-ru-men.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>tesseract-ocr使用方法总结</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/tesseract-ocrshi-yong-fang-fa-zong-jie.html">2012-12-01 16:34:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
-tags: <a href="http://hyhx2008.github.com/tag/ocr Linux.html">ocr Linux</a> </div>
-	<div class="summary"><p>实习的时候接触到了一个挺不错的OCR(光学字符识别)工具tesseract，这里总结一下linux下tesseract的简单用法。</p>
-<p>tesseract-ocr是由google维护的一个开源ocr库，可以识别多种格式图片中的文字，可以直接作为一个工具使用，也可以利用tesseract提供的api在自己的程序中使用ocr功能。</p>
-<p><a class="reference external" href="http://code.google.com/p/tesseract-ocr/">项目主页</a></p>
-<p><strong>1.tesseract-ocr安装</strong></p>
-<p>ubuntu和debian下tesseract的安装非常简单，但是需要安装的包比较多:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install tesseract-ocr tesseract-ocr-dev tesseract-ocr-eng
-</pre></div>
-<p>tesseract-ocr即为ocr库，tesseract-ocr-dev是使用api时需要用到的头文件。</p>
-<p>tesseract-ocr-eng是语言包，这里安装的是英文，如果要识别其他语言，需要安装其他语言包。</p>
-<p>（语言包安装的位置在/usr/share/tesseract-ocr/tessdata/，该位置将作为初始化api的一个参数）</p>
-<p>为了识别tiff格式的图片，最好再安装以下两个库:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install leptonica libtiff
-</pre></div>
-<p>这样tesseract-ocr和一些相关的包就安装完成了。</p>
-<p><strong>2.tesseract-ocr使用</strong></p>
-<p>作为一个命令行程序，tesseract可以用以下命令识别一张图片中的文字:</p>
-<div class="highlight"><pre><span class="go">tesseract photo.tif 1.txt</span>
-</pre></div>
-<p>以上命令将从photo.tif中识别的文字存储在1 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/tesseract-ocrshi-yong-fang-fa-zong-jie.html">more…</a>
 	</div>
 </div>	
 

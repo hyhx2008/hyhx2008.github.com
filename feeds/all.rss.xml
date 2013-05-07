@@ -1,5 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 19 Apr 2013 17:20:00 +0900</lastBuildDate><item><title>算法导论第6,7,8,9章习题答案</title><link>http://hyhx2008.github.com/suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html</link><description>&lt;p&gt;&lt;strong&gt;6.5-6&lt;/strong&gt;&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 07 May 2013 09:51:00 +0900</lastBuildDate><item><title>算法导论第15章习题答案</title><link>http://hyhx2008.github.com/suan-fa-dao-lun-di-15zhang-xi-ti-da-an.html</link><description>&lt;p&gt;&lt;strong&gt;15.2-2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:请给出一个递归算法MATRIX-CHAIN-MULTIPLY(A,s,i,j)，使之在给出矩阵序列&amp;lt;A1,A2,...,An&amp;gt;，和由MATRIX-CHAIN-ORDER计算出的表s，
+以及下标i和j后，能得出一个最有的矩阵链乘法。(初始调用为MATRIX-CHAIN-MULTIPLY(A,s,1,n))。&lt;/p&gt;
+&lt;p&gt;A:模仿PRINT-OPTIMAL-PARENS(s,i,j)即可。伪代码:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;MATRIX&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;CHAIN&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;MULTIPLY&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Ai&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;MATRIX&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;CHAIN&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;MULTIPLY&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;MATRIX&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;CHAIN&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;MULTIPLY&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;15.4-5&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:请给出一个O(n^2)时间的算法，使之能找出一个n个数的序列中最长的单调递增子序列。&lt;/p&gt;
+&lt;p&gt;A:这里给出两种算法。&lt;/p&gt;
+&lt;p&gt;方法1:假设这n个数存在数组X中，首先将这n个数按单调递增的顺序排序，将排好序的数组存于Y中。
+然后通过计算X和Y的最长公共子序列即可找到答案。&lt;/p&gt;
+&lt;p&gt;方法2:直接利用动态规划的思想。设f(i)为以第i个数结尾的最长单调递增子序列的长度，
+则f(i)=max(f(k)+1, 其中k&amp;lt;i且X[k]&amp;lt;X[i])，如果在1到i-1内找不到符合条件的k，那么f(i)就只能等于1了。
+为了方便最后构造最长子序列，还需要另一个数组pre[i]存储以第i个数结尾的最长递增子序列的倒数第2个数。
+伪代码:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;LIS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Length&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;max&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;max_i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;1.&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;1.&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
+            &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+                &lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
+            &lt;span class="n"&gt;max&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+            &lt;span class="n"&gt;max_i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;LIS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;LIS&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+    &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;15.4-6&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q:请给出一个O(nlgn)时间的算法，使之能找出一个n个数的序列中最长的单调递增子序列。
+(提示:观察长度为i的一个候选因子序列的最后一个元素，它至少与长度为i-1的一个候选子序列的最后一个元素一样大。通过把候选子序列与输入序列相连接来维护它们)。&lt;/p&gt;
+&lt;p&gt;A:这个提示看了好几遍也没有看懂说的是什么意思，大概是翻译的问题吧。总之需要将算法改进到O(nlgn)的复杂度。
+自己想不到好的办法，百度了一下，想法还是挺巧妙的，用一个数组D[len]记录len长的递增子序列的最小末尾元素。
+只需要从1到n一遍扫描中间加上二分查找，可以得到O(nlgn)的算法。这里不详细讨论，附上一个连接:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://blog.csdn.net/ssjhust123/article/details/7798737"&gt;最长递增子序列&lt;/a&gt;&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Tue, 07 May 2013 09:51:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-05-07:suan-fa-dao-lun-di-15zhang-xi-ti-da-an.html</guid><category>clrs</category><category>algorithm</category></item><item><title>算法导论第6,7,8,9章习题答案</title><link>http://hyhx2008.github.com/suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html</link><description>&lt;p&gt;&lt;strong&gt;6.5-6&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:说明如何使用优先级队列来实现一个先进先出队列，另说明如何用优先级队列来实现栈。&lt;/p&gt;
 &lt;p&gt;A:队列的性质是先进先出，所以维护一个最小优先级队列，给先进队的元素赋一个小的优先级，每插入一个新的元素优先级加1。
 出队时取优先级最小的元素并维护优先级队列即可。栈的实现同理。&lt;/p&gt;
@@ -267,7 +325,7 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 &lt;p&gt;A:a)严格的证明不太会，这里给出一种容易理解的说明。假设各个点的权重都是整数的比例关系(同时将权重扩大足够大的倍数即可看出)，
 那么通过将每个点复制其权重比例多个，一维邮局问题则变为9.3-9描述的输油管道问题。按照9.3-9中配对的想法，中位数一定是带权中位数复制后中的一个。&lt;/p&gt;
 &lt;p&gt;b)将x坐标和y坐标分别求一维邮局问题，得到的坐标对即为二维邮局问题的解。&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Fri, 19 Apr 2013 17:20:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-19:suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html</guid><category>clrs</category><category>algorithm</category></item><item><title>算法导论第2章习题解答</title><link>http://hyhx2008.github.com/suan-fa-dao-lun-di-2zhang-xi-ti-jie-da.html</link><description>&lt;p&gt;&lt;strong&gt;2.3-7&lt;/strong&gt;&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Fri, 19 Apr 2013 17:20:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-19:suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html</guid><category>clrs</category><category>algorithm</category></item><item><title>算法导论第2章习题答案</title><link>http://hyhx2008.github.com/suan-fa-dao-lun-di-2zhang-xi-ti-da-an.html</link><description>&lt;p&gt;&lt;strong&gt;2.3-7&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:请给出一个运行时间为O(nlgn)的算法，使之能在一个由n个整数构成的集合S和另一个整数X时，判断出S中是否存在有两个其和等于X的元素。&lt;/p&gt;
 &lt;p&gt;A:首先将这n个数进行排序，然后依次对每个数查找是否存在另一个数与其的和为x，查找使用二分查找法。伪代码:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;checkSums&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;//s为存放n个整数的集合&lt;/span&gt;
@@ -325,7 +383,7 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
         &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Thu, 18 Apr 2013 17:00:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-18:suan-fa-dao-lun-di-2zhang-xi-ti-jie-da.html</guid><category>clrs</category><category>algorithm</category></item><item><title>Ubuntu网络设置</title><link>http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html</link><description>&lt;p&gt;&lt;strong&gt;1.配置ip&lt;/strong&gt;&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Thu, 18 Apr 2013 17:00:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-18:suan-fa-dao-lun-di-2zhang-xi-ti-da-an.html</guid><category>clrs</category><category>algorithm</category></item><item><title>Ubuntu网络设置</title><link>http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html</link><description>&lt;p&gt;&lt;strong&gt;1.配置ip&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;ubuntu的网络配置信息放在 /etc/network/interfaces 中;&lt;/p&gt;
 &lt;p&gt;如果配置动态获取ip，则在上述文件中加入以下内容：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;auto eth0&lt;/span&gt;
