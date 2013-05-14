@@ -92,6 +92,24 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  <div class="content">
 			<div class="page-header"><h1>H.y's Blog <small>algorithm</small></h1></div>			
 <div class='article'>
+	<h2>算法导论第10-14章习题答案</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html">2013-05-11 15:12:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/clrs.html">clrs</a>
+tags: <a href="http://hyhx2008.github.com/tag/clrs.html">clrs</a> <a href="http://hyhx2008.github.com/tag/algorithm.html">algorithm</a> </div>
+	<div class="summary"><p><strong>10.1-6</strong></p>
+<p>Q:说明如何用两个栈来实现一个队列，并分析有关队列操作的运行时间。</p>
+<p>A:栈是先进后出，而队列是先进先出，一种自然的想法是，用一个栈来存储队列的元素，入队就和如栈一样；
+出队的时候先将这个栈的元素依次压出另一个栈内，然后将栈顶元素(即队首)弹出，然后再依次倒回原先的栈内。
+这样入队为O(1)，出队为O(n)。仔细想想，并不需要每次都将当前所有元素在两个栈内倒来倒去，
+只需要入队用一个栈，出队用另一个栈: 入队操作即在第一个栈上执行入栈；出队操作时，若第二个栈不为空，则在第二个栈上执行出栈，
+若第二个栈为空，则将第一个栈内的元素依次全部压入第二个栈内。这样入队出队操作都为O(1)的复杂度。</p>
+<p><strong>10.1-7</strong></p>
+<p>Q:说明如何用两个队列来实现一个栈，并分析有关栈操作的运行时间。</p>
+<p>A:一种自然的想法，类似于上一题，用一个队存储，另一个队列作为临时空间。入栈时就向第一个队列中插入元素；
+出栈时，先将第一个队列中除队尾(栈顶)的元素依次出队后进入第二个队列，然后将队尾(栈顶 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
 	<h2>算法导论第15章习题答案</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-15zhang-xi-ti-da-an.html">2013-05-07 09:51:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/clrs.html">clrs</a>

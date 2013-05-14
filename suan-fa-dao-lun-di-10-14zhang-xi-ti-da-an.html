@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>H.y's Blog</title>
+	<meta name="description" content="">
+	<meta name="author" content="hyhx2008">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://hyhx2008.github.com/theme/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="http://hyhx2008.github.com/theme/bootstrap.min.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/local.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/pygments.css" rel="stylesheet">
+	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+	<script type="text/javascript">
+	var disqus_identifier = "suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html";
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://hysblog.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+		
+	<link rel="shortcut icon" href="http://hyhx2008.github.com/theme/images/icons/icon1.png">
+</head>
+<body>
+		<a href="https://github.com/hyhx2008"><img style="position: absolute; top: 39px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+	<div class="topbar">
+	  <div class="topbar-inner">
+		<div class="container-fluid">
+		  <a class="brand" href="http://hyhx2008.github.com/index.html">H.y's Blog</a>
+			<ul class="nav">
+																										<li class="active"><a href="http://hyhx2008.github.com/category/clrs.html">clrs</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
+							</ul>
+			<p class="pull-right"><a href="http://hyhx2008.github.com/archives.html">[archives]</a> <a href="http://hyhx2008.github.com/tags.html">[tags]</a></p>
+		</div>
+	  </div>
+	</div>
+
+	<div class="container-fluid">	
+	  <div class="span5 sidebar">
+		<div class="well">
+			<h3>Blogroll</h3>
+			<ul>
+								<li><a href="http://x-wei.github.com">x-wei</a></li>
+								<li><a href="http://farseerfc.github.com/">farseerfc</a></li>
+							</ul>
+			<div class="social">
+			<h3>Social</h3>
+			<ul>
+								<li><a href="https://github.com/hyhx2008">github</a></li>
+							</ul>
+			</div>
+			
+		</div>
+		
+		<div class="well">
+			<div class="search_sidebar">
+				<li class="nav-header"><h4><i class="icon-search"></i>Google Search</h4></li>
+<!-- Put the following javascript before the closing </head> tag. -->
+<script>
+  (function() {
+    var cx = '007947589229995882978:padodsakamc';
+    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<!-- Place this tag where you want both of the search box and the search results to render -->
+<gcse:search></gcse:search>
+			</div>
+
+			<div class="google_ads">
+				<li class="nav-header"><h4><i class="icon-search"></i>Google Ads</h4></li>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-5617943900713834";
+/* HY&#39;s github blog */
+google_ad_slot = "7280262031";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+			</div>
+		</div>
+
+	  </div>
+	  <div class="content">
+							<div class='article'>
+		<div class="page-header"><h1>算法导论第10-14章习题答案</h1></div>
+		<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html">2013-05-11 15:12:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/clrs.html">clrs</a>
+tags: <a href="http://hyhx2008.github.com/tag/clrs.html">clrs</a> <a href="http://hyhx2008.github.com/tag/algorithm.html">algorithm</a> </div>
+		<div><p><strong>10.1-6</strong></p>
+<p>Q:说明如何用两个栈来实现一个队列，并分析有关队列操作的运行时间。</p>
+<p>A:栈是先进后出，而队列是先进先出，一种自然的想法是，用一个栈来存储队列的元素，入队就和如栈一样；
+出队的时候先将这个栈的元素依次压出另一个栈内，然后将栈顶元素(即队首)弹出，然后再依次倒回原先的栈内。
+这样入队为O(1)，出队为O(n)。仔细想想，并不需要每次都将当前所有元素在两个栈内倒来倒去，
+只需要入队用一个栈，出队用另一个栈: 入队操作即在第一个栈上执行入栈；出队操作时，若第二个栈不为空，则在第二个栈上执行出栈，
+若第二个栈为空，则将第一个栈内的元素依次全部压入第二个栈内。这样入队出队操作都为O(1)的复杂度。</p>
+<p><strong>10.1-7</strong></p>
+<p>Q:说明如何用两个队列来实现一个栈，并分析有关栈操作的运行时间。</p>
+<p>A:一种自然的想法，类似于上一题，用一个队存储，另一个队列作为临时空间。入栈时就向第一个队列中插入元素；
+出栈时，先将第一个队列中除队尾(栈顶)的元素依次出队后进入第二个队列，然后将队尾(栈顶)元素出队，
+再将第二个队列中的所有元素依次出队后进入第一个队列。这样做的话，入栈是O(1)，出栈是O(n)。
+其实出栈操作时完全不需要将第二个队列的元素复制回第一个队列，直接将第二个队列作为入栈时的队列即可。两个队列交替作为存储队列。</p>
+<p><strong>12-2 基数树</strong></p>
+<p>Q:设S为一组不同的二进串构成的集合，各串的长度之和为n。说明如何利用基数树，在O(n)时间内将S按字典序排序。(关于基数树的解释省略)</p>
+<p>A:首先利用S中的每个二进制串构造基数树，即遍历每个串，在遍历的过程中构造各个结点。
+在构建的过程中，结点没有对应的串设为空，然后前序输出基数树中的非空结点即可。</p>
+<p>这道题也可以利用
+<a class="reference external" href="http://hyhx2008.github.io/suan-fa-dao-lun-di-6789zhang-xi-ti-da-an.html">8-3 排序不同长度的数据项</a>
+中的方法来解答。</p>
+<p><strong>14.1-7</strong></p>
+<p>Q:说明如何在O(nlgn)的时间内，利用顺序同计数对大小为n的数组中的逆序对(见2-4)进行计数。</p>
+<p>A:顺序统计树即在红黑树的基础上，每个结点扩展一个size域。size[x]表示以x为根的子树的内部结点(包括x)数，即子树的大小。
+数组中某个元素s[i]的逆序数是指出现在s[i]之前，但是比s[i]大的元素的个数。
+很自然的想法，按1..n的顺序依次将s[i]插入到到顺序统计数中，每次插入一个元素s[i]后，可以求得现有树中的元素里比s[i]大的元素个数。
+累加后，即为逆序对数。</p>
+<p><strong>14.1-8</strong></p>
+<p>Q:现有一个圆上的n条弦，每条弦都是按其端点来定义的。请给出一个能在O(nlgn)时间内确定圆内相交弦的对数
+(例如，如果n条弦都是直径，它们相交于圆心，则正确的答案为组合数C(n,2))。假设任意两条弦都不会共享端点。</p>
+<p>A:我们先找出判断两条弦相交的必要条件。首先将各条弦的端点按照圆上的位置顺时针排序，那么一条弦就可以看成是一个区间。
+设两条弦为(p1,p2)和(q1,q2)，若p1&lt;q1&lt;p2&lt;q2，或者q1&lt;p1&lt;q2&lt;p2，则这两条弦相交。利用类似于上一题求逆序对数的方法，
+从小到大遍历这n条弦的2n个端点，如果当前端点是某条弦的起点，则将这条弦插入顺序统计树(以起点为key)中；若当前端点是某条弦的终点，
+则统计顺序统计树中比这条弦起点大的弦的条数，即与这条弦相交的弦的数目，然后将这条弦从顺序统计数中删除。
+(因为端点都是先做了排序处理，所以其实不需要利用顺序统计树这样复杂的数据结构，用一个链表也可以实现。)</p>
+<p><strong>14.2-6</strong></p>
+<p>Q:希望通过增加操作RB-ENUMERATE(x,a,b)来扩张红黑树。该操作输出所有的关键字k，使在以x为根的红黑树中有a&lt;=k&lt;=b。
+描述如何在O(m+lgn)时间里实现RB-ENUMERATE，其中m为输出的关键字个数，n为树中的内部结点数。</p>
+<p>A:因为红黑树实际上是一棵比较平衡的二叉查找树，所以只需要从根结点向下递归搜索即可。伪代码:</p>
+<div class="highlight"><pre><span class="n">RB</span><span class="o">-</span><span class="n">ENUMERATE</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">&lt;=</span><span class="n">x</span><span class="o">&lt;=</span><span class="n">b</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">RE</span><span class="o">-</span><span class="n">ENUMERATE</span><span class="p">(</span><span class="n">left</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">RE</span><span class="o">-</span><span class="n">ENUMERATE</span><span class="p">(</span><span class="n">right</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">x</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">a</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">RE</span><span class="o">-</span><span class="n">ENUMERATE</span><span class="p">(</span><span class="n">right</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">RE</span><span class="o">-</span><span class="n">ENUMERATE</span><span class="p">(</span><span class="n">left</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>14.3-6</strong></p>
+<p>Q:请说明如何来维护一个支持操作MIN-GAP的动态数集Q，使该操作能给出Q中最近的两个数之间的差幅。</p>
+<p>A:这道题的答案参考
+<a class="reference external" href="http://blog.csdn.net/mishifangxiangdefeng/article/details/7907597">算法导论-14.3-6-MIN-GAP</a>
+。</p>
+<p>在红黑树的基础上在每个结点上扩展3个域: min-gap[x]记录以x为根结点的树的min-gap。当x为叶子结点时，min-gap[x]=0x7fffffff；
+min-val[x]记录以x为根结点的树中最小的关键字；max-val[x]：记录以x为根结点的树中最大的关键字。扩展信息的维护见下图：</p>
+<div class="figure">
+<img alt="../statics/pics/chap10-14_1.gif" src="../statics/pics/chap10-14_1.gif" />
+</div>
+<p><strong>14.3-7</strong></p>
+<p>Q:VLSI数据库通常将一块集成电路表示成一组矩形。假设每个矩形的边都平行于x轴或y轴，因而矩形的表示中有最小和最大的x和y坐标。
+请给出一个能在O(lgn)时间里确定一组矩形中是否有两个重叠的算法。你给出的算法不一定要输出所有相交的矩形，
+但要能在一个矩形完全被另一个覆盖式给出正确的判断。(提示:将一条线移过所有的矩形)</p>
+<p>A:每个矩形可以用两个区间(x1,x2)和(y1,y2)表示。首先，两个矩形有重叠的必要条件是它们在x区间和y区间上都有重合。
+想象有一条平行于y轴的直线沿着x轴方向扫过，那么如果某一时刻，被这条直线穿过的所有矩形中有两个矩形在y区间上有重合，则说明这两个矩形重叠。
+我们用一棵区间树做辅助，用来存储当前直线穿过的所有矩形的y区间，初始为空。先对所有矩形的x区间的两个端点排序，然后对x从小到大遍历，
+如果遇到某个矩形的x1，那么判断该矩形的y区间是否与区间树中的某个区间重合，如果重合则输出重叠的矩形，然后将该矩形的y区间插入区间树。
+如果遇到某个矩形的x2，那么就将该矩形的y区间从区间树中删除。</p>
+<p><strong>14.1-最大重叠点</strong></p>
+<p>Q:假设希望对一组区间记录一个最大重叠点，亦即覆盖它的区间最多的那个点。</p>
+<p>a)证明:最大重叠点总存在于某段的端点上。</p>
+<p>b)设计一数据结构，能有效地支持操作INTERVAL-INSERT，INTERVAL-DELETE和返回最大重叠点操作FIND-DOM。
+(提示:将所有端点组织成红黑树。左端点关联+1值，而右端点关联-1值。附加一些维护最大重叠点的信息以扩张树中结点。)</p>
+<p>A:如何严格证明最大重叠点总存在于端点上不是很清楚，但是很容易想得出这个结论是正确的。</p>
+<p>所以要想找出n个区间的最大重叠点，即在2n个端点中查找被覆盖次数最多的那个端点。
+首先将这2n个端点排序，并以其作为关键字组织为红黑树。为每个结点关联一个p值，p[x]:
+如果结点x代表某个区间的左端点，则p[x]=1；如果是某个区间的右端点，则p[x]=-1。
+p的作用是为了方便统计覆盖端点x的区间数，我们只需要将比x小的所有端点的p值加起来，就可以得到覆盖x的区间数。
+这就相当于假设区间都与x轴平行，我们用一条垂直于x轴的直线扫过所有区间，某一时刻直线通过的区间数最大即为答案。</p>
+<p>现在的问题是如果高效地支持insert，delete和find-dom操作。。。暂时没找到答案。。</p>
+<p><strong>14.2-Josephus排列</strong></p>
+<p>Q:Josephus问题的定义如下:假设n个人排成环形，且有一正整数m&lt;=n。从某个指定的人开始，沿环报数，每遇到第m个人就让其出列，
+且报数进行下去。这个过程一直进行到所有人都出列为止。每个人出列的次序定义了整数1，2，...，n的(n,m)-Josephus排列。
+例如，(7,3)-Josephus排列为(3,6,2,7,5,1,4)。</p>
+<p>a)假设m为常数。请描述一个O(n)时间的算法，使之对给定的整数n，输出(n,m)-Josephus排列。</p>
+<p>b)假设m不是个常数。请描述一个O(nlgn)时间的算法，使给定的整数n和m，输出(n,m)-Josephus排列。</p>
+<p>A:这是著名的约瑟夫环问题。最简单的方法当然是用一个链表来模拟整个过程，复杂度为O(mn)。</p>
+<p>高级点的方法百度知道。</p>
+</div>
+		<div>
+			<h2>Comments</h2>
+		 				<div id="disqus_thread"></div>					<div>
+	</div>	
+		<footer>
+		  <p> Powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>, theme based on <a href="http://twitter.github.com/bootstrap/">Bootstrap, from Twitter</a>.</p>
+		  <p>&copy; hyhx2008 2011</p>
+		</footer>
+	  </div>
+   
+	</div>
+</body>
+</html>
