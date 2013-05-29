@@ -30,6 +30,7 @@
 									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
 							</ul>
@@ -91,6 +92,89 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  </div>
 	  <div class="content">
 			<div class="page-header"><h1>H.y's Blog <small>hyhx2008</small></h1></div>			
+<div class='article'>
+	<h2>Raspberry Pi系统安装及启动</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html">2013-05-29 21:27:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a>
+tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> <a href="http://hyhx2008.github.com/tag/raspbian.html">raspbian</a> </div>
+	<div class="summary"><p>最近有些无聊，心血来潮买了一个Raspberry Pi(树莓派)。Raspberry Pi是一款基于Linux系统的个人电脑，配备一枚700MHz的ARM处理器，
+512M内存，支持SD卡和Ethernet，拥有两个USB接口，以及 HDMI和RCA输出支持。</p>
+<p>首先秀一张开箱图:</p>
+<div class="figure">
+<img alt="../statics/pics/raspberrypi_start_1.png" src="../statics/pics/raspberrypi_start_1.png" />
+</div>
+<p><strong>1.安装raspbian系统到SD卡</strong></p>
+<p>树莓派用SD卡充当硬盘，为了速度，我专门买了一张16G class10的SD卡。</p>
+<p>树莓派支持多个系统，官方建议的是Raspbian，这是一个从Debian改过来的系统。首先需要在官网下载系统镜像
+<a class="reference external" href="http://www.raspberrypi.org/downloads">Dowload Raspbian</a>
+。</p>
+<p>然后我们需要一个工具
+<a class="reference external" href="http://sourceforge.net/projects/win32diskimager/">Win32 Disk Imager</a>
+将系统写入SD卡中。</p>
+<p>下载并解压，然后运行win32diskimager。工具的界面很简单，我们只需要在&quot;Image File&quot;中选择系统镜像的位置(注意镜像的路径中不能有中文)，
+在&quot;Device&quot;下选择SD卡的盘符，然后点击&quot;write&quot;按钮。</p>
+<p>接下来就是等待至工具提示&quot;Write Successful&quot;后，即可将SD卡安全移除。</p>
+<p>我们会发现SD卡的空间变成74MB了 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>Raspberry Pi中samba服务器的配置</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pizhong-sambafu-wu-qi-de-pei-zhi.html">2013-05-29 23:04:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a>
+tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi samba.html">raspberry-pi samba</a> </div>
+	<div class="summary"><p>为了可以在笔记本上访问树莓派的文件系统，我们可以在树莓派上安装samba服务器。</p>
+<p>因为Raspbian是从Debian改来的，所以参考Debian下samba服务器的配置。</p>
+<p><strong>1.安装samba</strong></p>
+<div class="highlight"><pre><span class="go">sudo apt-get install samba samba-common-bin</span>
+</pre></div>
+<p><strong>2.配置samba</strong></p>
+<p>首先需要为samba创建一个用户:</p>
+<div class="highlight"><pre><span class="go">sudo touch /etc/samba/smbpasswd</span>
+<span class="go">sudp smbpasswd -a pi</span>
+</pre></div>
+<p>然后我们需要编辑samba的配置文件(这里用到了vim，没有安装的话也可以用别的编辑器)</p>
+<div class="highlight"><pre><span class="go">sudo vim /etc/samba/smb.conf</span>
+</pre></div>
+<p>然后在配置文件最后加入以下内容:</p>
+<div class="highlight"><pre><span class="go">[home]</span>
+<span class="go">        comment = laowang&#39;s data</span>
+<span class="go">        path = /home</span>
+<span class="go">        valid users = pi</span>
+<span class="go">        public = no</span>
+<span class="go">        writable = yes</span>
+<span class="go">        printable = no</span>
+<span class="go">        create ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pizhong-sambafu-wu-qi-de-pei-zhi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>使用pelican生成github博客</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html">2012-11-11 22:20:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/tech.html">tech</a>
+tags: <a href="http://hyhx2008.github.com/tag/github.html">github</a> <a href="http://hyhx2008.github.com/tag/pelican.html">pelican</a> </div>
+	<div class="summary"><p>自从马星给我推荐在github上写博客到现在已经好久了，今天我终于算是学会了。
+我看人家都是用jekyll生成静态页面的，果然和专业到技术宅差得太多，自己尝试折腾了一天也没弄出什么名堂。
+马星觉得自己很菜，我居然比马星还菜。。。。。
+在马星的诱惑下，用了这个不知到他从哪找来的工具，说实话倒是挺好用的。</p>
+<p>这里记录一下生成博客的步骤（以下内容大多copy自
+<a class="reference external" href="http://x-wei.github.com/pelican_github_blog.html">马星的blog</a>
+）。</p>
+<p><strong>1.配置git</strong></p>
+<p>注册github后首先要配置git。可以参考
+<a class="reference external" href="https://help.github.com/articles/set-up-git#platform-linux">github:help:set up git</a>
+。</p>
+<p>设置用户名和邮箱，邮箱为注册github时的邮箱地址。</p>
+<div class="highlight"><pre><span class="gp">$</span>git config --global user.name <span class="s2">&quot;hy&quot;</span>
+
+<span class="gp">$</span>git config --global user.email <span class="s2">&quot;hyxxxxxx@163.com&quot;</span>
+</pre></div>
+<p>可以用下面的命令查看配置。</p>
+<div class="highlight"><pre><span class="gp">$</span>git config -l
+</pre></div>
+<p>github上说可以用https方法提交工程，但是没有成功过，所以还是需要利用ssh。这里需要生成ssh keys，
+具体步骤参考
+<a class="reference external" href="https://help.github.com/articles/generating-ssh-keys#platform-linux">github:help ...</a></p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html">more…</a>
+	</div>
+</div>	
 <div class='article'>
 	<h2>算法导论第10-14章习题答案</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html">2013-05-11 15:12:00</a>
@@ -254,79 +338,14 @@ tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> </div>
 <div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
-<div class='article'>
-	<h2>Ubuntu网络设置</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html">2013-04-15 21:35:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
-tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/network.html">network</a> </div>
-	<div class="summary"><p><strong>1.配置ip</strong></p>
-<p>ubuntu的网络配置信息放在 /etc/network/interfaces 中;</p>
-<p>如果配置动态获取ip，则在上述文件中加入以下内容：</p>
-<div class="highlight"><pre><span class="go">auto eth0</span>
-<span class="go">iface eth0 inet dhcp</span>
-</pre></div>
-<p>如果配置静态ip，则添加如下内容：</p>
-<div class="highlight"><pre><span class="go">auto eth0</span>
-<span class="go">iface eth0 inet static</span>
-<span class="go">address 192.168.1.155</span>
-<span class="go">netmask 255.255.255.0</span>
-<span class="go">gateway 192.168.1.1</span>
-</pre></div>
-<p>要是配置生效，需要重启网卡：</p>
-<div class="highlight"><pre><span class="go">ifconfig eth0 down</span>
-<span class="go">ifconfig eth0 up</span>
-</pre></div>
-<p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务</p>
-<div class="highlight"><pre><span class="go">/etc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Ubuntu下Java的安装与配置</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
-tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/java.html">java</a> </div>
-	<div class="summary"><p>第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。</p>
-<p><strong>1.下载</strong></p>
-<p>首先在Oracle官网上下载jdk，这里给一个链接：
-<a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">jdk7-downloads</a></p>
-<p>选择合适的jdk版本下载，这里我下载的是jdk-7u17-linux-i566.tar.gz。</p>
-<p><strong>2.安装</strong></p>
-<p>在任意文件夹下解压这个压缩包，例如在/usr/java下：</p>
-<div class="highlight"><pre><span class="go">sudo mkdir /usr/java</span>
-<span class="go">sudo cp ~/Downloads/jdk-7u17-linux-i586.tar.gz /usr/java/</span>
-<span class="go">cd /usr/java</span>
-<span class="go">sudo tar -xvf jdk-7u17-linux-i585.tar.gz</span>
-</pre></div>
-<p>这样jdk就安装在/usr/java/jdk1.7.0_17目录下。</p>
-<p><strong>3.修改环境变量</strong></p>
-<p>修改~/.bashrc文件：</p>
-<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>VMware虚拟机启动时总提示cann't connect to floopy0的问题</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">2012-11-13 17:26:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/tech.html">tech</a>
-tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/VMware.html">VMware</a> </div>
-	<div class="summary"><p>在VMware中装了ubuntu，启动时总提示不能连接到设备floopy0，关也关不掉，很讨厌。</p>
-<p>百度了一下解决办法: 修改虚拟机的.vmx文件。</p>
-<p>1.将floppy0.autodetect这项改为FALSE:</p>
-<div class="highlight"><pre><span class="go">floppy0.autodetect = &quot;FALSE&quot;</span>
-</pre></div>
-<p>2.添加一句:</p>
-<div class="highlight"><pre><span class="go">floppy0.startConnected = &quot;FALSE&quot;</span>
-</pre></div>
-<p>The End!!</p>
- <a class="btn primary xsmall" href="http://hyhx2008.github.com/vmwarexu-ni-ji-qi-dong-shi-zong-ti-shi-cannt-connect-to-floopy0de-wen-ti.html">more…</a>
-	</div>
-</div>	
 
 <div class="pagination">
 <ul>
 					<li class="prev"><a href="http://hyhx2008.github.com/author/hyhx2008.html">&larr; Previous</a></li>
 				<li class=""><a href="http://hyhx2008.github.com/author/hyhx2008.html">1</a></li>
 			<li class="active"><a href="http://hyhx2008.github.com/author/hyhx20082.html">2</a></li>
-				<li class="next disabled"><a href="#">&rarr; Next</a></li>
+			<li class=""><a href="http://hyhx2008.github.com/author/hyhx20083.html">3</a></li>
+				<li class="next"><a href="http://hyhx2008.github.com/author/hyhx20083.html">Next &rarr;</a></li>
 	</ul>
 </div>
 

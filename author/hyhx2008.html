@@ -30,6 +30,7 @@
 									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
 							</ul>
@@ -280,32 +281,29 @@ tags: <a href="http://hyhx2008.github.com/tag/google.html">google</a> <a href="h
 	</div>
 </div>	
 <div class='article'>
-	<h2>使用pelican生成github博客</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html">2012-11-11 22:20:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/tech.html">tech</a>
-tags: <a href="http://hyhx2008.github.com/tag/GitHub.html">GitHub</a> <a href="http://hyhx2008.github.com/tag/pelican.html">pelican</a> </div>
-	<div class="summary"><p>自从马星给我推荐在github上写博客到现在已经好久了，今天我终于算是学会了。
-我看人家都是用jekyll生成静态页面的，果然和专业到技术宅差得太多，自己尝试折腾了一天也没弄出什么名堂。
-马星觉得自己很菜，我居然比马星还菜。。。。。
-在马星的诱惑下，用了这个不知到他从哪找来的工具，说实话倒是挺好用的。</p>
-<p>这里记录一下生成博客的步骤（以下内容大多copy自
-<a class="reference external" href="http://x-wei.github.com/pelican_github_blog.html">马星的blog</a>
-）。</p>
-<p><strong>1.配置git</strong></p>
-<p>注册github后首先要配置git。可以参考
-<a class="reference external" href="https://help.github.com/articles/set-up-git#platform-linux">github:help:set up git</a>
-。</p>
-<p>设置用户名和邮箱，邮箱为注册github时的邮箱地址。</p>
-<div class="highlight"><pre><span class="gp">$</span>git config --global user.name <span class="s2">&quot;hy&quot;</span>
-
-<span class="gp">$</span>git config --global user.email <span class="s2">&quot;hyxxxxxx@163.com&quot;</span>
+	<h2>Raspberry Pi配置USB无线网卡连接wifi</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">2013-05-29 22:18:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a>
+tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> </div>
+	<div class="summary"><p>树莓派自身不带无线网卡，所以要想让树莓派连上无线网络，就需要插上一个USB无线网卡。</p>
+<p>首先可以在树莓派的
+<a class="reference external" href="http://elinux.org/RPi_VerifiedPeripherals#USB_Wi-Fi_Adapters">外设兼容列表</a>
+中选择一款兼容的USB无线网卡，最好是那种即插即用的(out of the box)，这样就不需要安装驱动了。
+在日本只能买到 Buffalo WLI-UC-GNM，本以为需要手动安装驱动，没想到直接被系统识别了。</p>
+<p>我们可以使用命令</p>
+<div class="highlight"><pre><span class="go">ifconfig -a</span>
 </pre></div>
-<p>可以用下面的命令查看配置。</p>
-<div class="highlight"><pre><span class="gp">$</span>git config -l
+<p>来查看接口信息。如果有wlan0这项，就说明新加的网卡已经被识别了。但是IP地址之类的信息还没有。</p>
+<p>接下来我们需要配置接口，即编辑配置文件。</p>
+<div class="highlight"><pre><span class="go">sudo nano /etc/network/interfaces</span>
 </pre></div>
-<p>github上说可以用https方法提交工程，但是没有成功过，所以还是需要利用ssh。这里需要生成ssh keys，
-具体步骤参考
-<a class="reference external" href="https://help.github.com/articles/generating-ssh-keys#platform-linux">github:help ...</a></p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html">more…</a>
+<p>将interfaces中的配置改为:</p>
+<div class="highlight"><pre><span class="go">auto lo</span>
+<span class="go">iface lo inet loopback</span>
+<span class="go">iface eth0 inet dhcp</span>
+<span class="go">auto wlan0</span>
+<span class="go">allow-hotplug wlan0</span>
+<span class="go">iface wlan0 inet dhcp ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">more…</a>
 	</div>
 </div>	
 
@@ -314,6 +312,7 @@ tags: <a href="http://hyhx2008.github.com/tag/GitHub.html">GitHub</a> <a href="h
 			<li class="prev disabled"><a href="#">&larr; Previous</a></li>
 				<li class="active"><a href="http://hyhx2008.github.com/author/hyhx2008.html">1</a></li>
 			<li class=""><a href="http://hyhx2008.github.com/author/hyhx20082.html">2</a></li>
+			<li class=""><a href="http://hyhx2008.github.com/author/hyhx20083.html">3</a></li>
 				<li class="next"><a href="http://hyhx2008.github.com/author/hyhx20082.html">Next &rarr;</a></li>
 	</ul>
 </div>

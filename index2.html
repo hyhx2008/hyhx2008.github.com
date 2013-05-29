@@ -30,6 +30,7 @@
 									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
 							</ul>
@@ -91,6 +92,82 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  </div>
 	  <div class="content">
 			<div class="page-header"><h1> H.y's Blog </h1></div>			
+<div class='article'>
+	<h2>PeerSim使用教程(5)-Event-drive(事件驱动)模型</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-5-event-driveshi-jian-qu-dong-mo-xing.html">2013-04-12 17:46:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/peersim.html">peersim</a>
+tags: <a href="http://hyhx2008.github.com/tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p><strong>1.简介</strong></p>
+<p>本教程使用Event-driven模型来演示一个简单的例子，仍然使用的是gossip-based平均数协议，对消息的发送将进行更细节的建模；通过与cycle-based模型的对比，可以发现本协议存在的问题。</p>
+<p>在Event-based模型中，除了时间管理和control传递给protocols的方式以外，其它与cycle-based模型相同。
+不可执行的Protocols(只用于存储数据，比如只存储邻居节点的linkable协议，或存储数值的vectors)可以以同样的方式应用和初始化，在peersim.cdsim包之外的controls也都可以使用。
+在默认情况下，在cycle-based模型中，controls会的每个周期中调用 ，但在event-based模型中，它们需要进行明确的调度，因为事件驱动模型并不存在周期的概念。</p>
+<p>显然，我们可以编写专用于Event-based模型的controls，即可以给协议发送事件(消息)。在很多情况下，这是必要的，因为系统经常完全或部分地由外部事件如用户的查询来驱动，这能很好地用由生成这些事件，并且驱动仿真执行的controls进行建模。</p>
+<p>有些组件是不可用的。例如依赖于静态类peersim.cdsim.CDState(它提供了读取cycle相关的全局状态的接口)的所有组件。
+我们的经验是，很多依赖于这个状态的cycle-based 组件可以经过简单的修改并删除这个依赖。</p>
+<p>然而，可能有些令人吃惊的是，实现了cycle-based接口的peersim.cdsim.CDProtocol也可以使用于event-based模型，但是必须指出，在大部份的情况下这样做没有什么意义。
+然而，这个特性的有用之处在于 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-5-event-driveshi-jian-qu-dong-mo-xing.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>PeerSim使用教程(4)-构建一个拓扑生成器</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html">2013-04-04 21:45:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/peersim.html">peersim</a>
+tags: <a href="http://hyhx2008.github.com/tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p>本文描述了在PeerSim中如何构建一个新的拓扑生成器。</p>
+<p><strong>1.什么是拓扑？为什么它很重要？</strong></p>
+<p>在一个大型的动态P2P系统中，节点没有关于整个网络的信息，而所有的节点都可能拥有一些邻居节点，即节点能”感知”的peers，这种”感知”的关系就定义了一个覆盖网络，这是P2P系统中的一个基本概念。</p>
+<p>很多P2P协议都需要在多个不同的网络拓扑上进行实验。PeerSim中的peersim.dynamic.Wire*类已经包含了很多拓扑结构，可以直接用来对linkable协议进行初始化，本教程将展示如何构建一个自定义的拓扑生成器。</p>
+<p><strong>2.一个模拟Internet的简单模型</strong></p>
+<p>下面我们将编写一个拓扑生成器来构建类似于Internet的树状拓扑，整个构建过程基于一个特定的，与位置相关的preferential attachment方法，编写规则很简单，并且会考虑几何和网络的限制以更好地模拟真实的网络。
+Preferential attachment由参数a来调整，这个参数能扩大或减少几何位置所带来的影响。</p>
+<p>这个规则的策略如下：给定一个单位正方形，将x0置于中心，即x0 = (0.5,0.5)，这个节点被称为root，令W()为与root相隔的跳数(hops)，对于i=1 … n-1，随机在单位正方形中选择一个xi，然后选择使下面的表达式值最小的节点xj来连接它：</p>
+<div class="figure">
+<img alt="../statics/pics/peersim_tutorial_4_figure_1.png" src="../statics/pics/peersim_tutorial_4_figure_1.png" />
+</div>
+<p>在这里dist ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-4-gou-jian-ge-tuo-bu-sheng-cheng-qi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>PeerSim使用教程(3)-编写一个新协议</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">2013-03-24 19:35:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/peersim.html">peersim</a>
+tags: <a href="http://hyhx2008.github.com/tag/PeerSim.html">PeerSim</a> </div>
+	<div class="summary"><p><strong>1.编写一个新协议</strong></p>
+<p>我们将要实现的协议是在PeerSim中基于Cycle-based模型的一个简单的负载均衡算法。节点的状态有两种值：本地负载(local load)和配额(quota)，其中配额是指节点在每个周期中允许传输的“负载”的大小。配额是必要的，是一个时间单元中能传输的负载上限。每个节点与和它距离最远的邻居节点交换配额值，这里“距离最远”是指与当前节点的负载差异最大。经过对比距离，协议将在负载均衡时选用push或pull的方式。</p>
+<p>在每个周期之后，配额值将会被存储。协议并不关心拓扑管理，它依赖于其它组件来访问邻居节点(例如，Newscast，或者由IdleProtocol实现的静态拓扑)。</p>
+<p><strong>1.1 必要的组件</strong></p>
+<p>一般来说只编写一个协议类是不足够的，还需要一些附加的组件。例如，为了在每个周期结束时为每个节点存储配额值，需要一个特定的Control对象。基本上来说，PeerSim是一个可替换的组件集合，所以在开发时需要注意模块化以让代码尽可能重用，出于这样的目的，我们这样设计下面的类：</p>
+<p><em>protocol</em></p>
+<blockquote>
+它基于peersim.vector.SimpleValueHolder，这是一个简单的基类，用于访问一个浮点变量。Aggreation协议也使用了同样的基类。</blockquote>
+<p><em>ResetQuota</em></p>
+<blockquote>
+用于在每个周期结束时存储每个节点配额的Control。</blockquote>
+<p><em>QuotaObserver ...</em></p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-3-bian-xie-ge-xin-xie-yi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
+	<h2>PeerSim使用教程(2)-解析Cycle-based模式仿真</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-2-jie-xi-cycle-basedmo-shi-fang-zhen.html">2013-03-21 20:10:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/peersim.html">peersim</a>
+tags: <a href="http://hyhx2008.github.com/tag/PeerSim.html">PeerSim</a> <a href="http://hyhx2008.github.com/tag/Cycle-based.html">Cycle-based</a> </div>
+	<div class="summary"><p>PeerSim提供的文档并不多，一共三篇，可以在其官网上下载，这里给一个链接:
+<a class="reference external" href="http://peersim.sourceforge.net/#docs">PeerSim: Documentation</a>
+，是学习PeerSim必看资料。</p>
+<p>英文有时不是很好理解，网上有个哥们将其翻译成中文了，不过他的网页最近好像失效了，这里和后面的教程基本上是整理了一下他的翻译，同时也感谢那位哥们的工作。</p>
+<p>本文介绍了PeerSim的基本概念，并解析了两个示例以更清晰地说明PeeSim的仿真流程。</p>
+<p>Peersim支持两种仿真模式，即Cycle-based模型和传统的Event-based模型，本文专注于前者的讲解。</p>
+<p>Cycle-based模型是一个简化的模型，拥有更好的伸缩性及性能，在拥有4GB内存的情况下，Event-driven模式目前最多支持十万节点级别，而Cycle-based模式则支持千万个节点级别。 但是Cycle-based模型缺少对传输层的仿真和并行处理，节点之间是直接通信的，仿真核心以一定的顺序周期性地给以节点控制。在运行时，可以进行任意的操作，如调用其它对象的方法并执行一些计算。</p>
+<p>Cycle-based模型损失了一些真实性，虽然一些简单的协议可以忽略这些差别，但是在选择使用这个模型时，需要注意这些区别。我们可以相对简单地将Cycle-based的仿真移植到Event-driven引擎上，但在本文中不讨论这个话题。</p>
+<p><strong>1.PeerSim仿真的生命周期</strong></p>
+<p>PeerSim鼓励基于接口的模块化编程，每一个组件都能被其它实现了相同接口的组件代替，一般的仿真过程如下：</p>
+<blockquote>
+<p>1&gt; 选择网络大小(即节点数量)。</p>
+<p>2&gt; 选择要实验的一个或多协议并进行初始化。</p>
+<p>3&gt; 选择一个或多个Control对象来监视感兴趣的属性，并在仿真时修改一些参数(比如，网络大小，协议的内部状态 ...</p></blockquote> <a class="btn primary xsmall" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-2-jie-xi-cycle-basedmo-shi-fang-zhen.html">more…</a>
+	</div>
+</div>	
 <div class='article'>
 	<h2>PeerSim使用教程(1)-入门</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-1-ru-men.html">2013-03-20 13:40:00</a>
@@ -181,7 +258,7 @@ tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="h
 	<h2>使用pelican生成github博客</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html">2012-11-11 22:20:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/tech.html">tech</a>
-tags: <a href="http://hyhx2008.github.com/tag/GitHub.html">GitHub</a> <a href="http://hyhx2008.github.com/tag/pelican.html">pelican</a> </div>
+tags: <a href="http://hyhx2008.github.com/tag/github.html">github</a> <a href="http://hyhx2008.github.com/tag/pelican.html">pelican</a> </div>
 	<div class="summary"><p>自从马星给我推荐在github上写博客到现在已经好久了，今天我终于算是学会了。
 我看人家都是用jekyll生成静态页面的，果然和专业到技术宅差得太多，自己尝试折腾了一天也没弄出什么名堂。
 马星觉得自己很菜，我居然比马星还菜。。。。。
@@ -237,110 +314,14 @@ tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> </div>
 <div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
-<div class='article'>
-	<h2>Hello World!</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/hello-world.html">2012-11-11 02:16:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/my.html">my</a>
-tags: <a href="http://hyhx2008.github.com/tag/GitHub.html">GitHub</a> </div>
-	<div class="summary"><p>终于建立起了我的github博客~!</p>
-<p>感谢马星手把手一步一步教我如何在github上写博客。</p>
-<p>说是博客，其实估计也没人看，就当做记笔记写总结到好地方了。</p>
-<p>以前都是用evernote写笔记的，但是在粘代码的时候不能语法高亮，所以听了马星的推荐在github上写博客，也算是赶个时髦吧～</p>
- <a class="btn primary xsmall" href="http://hyhx2008.github.com/hello-world.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Festival tts 使用总结</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/festival-tts-shi-yong-zong-jie.html">2012-08-24 22:00:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
-tags: <a href="http://hyhx2008.github.com/tag/festival.html">festival</a> </div>
-	<div class="summary"><p><a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/">Festival-tts</a>
-是一个免费的tts (text to speech) 工具，可以将字符串转为声音播放出来或者存为声音文件。</p>
-<p>首先安装:</p>
-<div class="highlight"><pre><span class="gp">$</span>sodu aptitude install festival
-<span class="gp">$</span>sudo aptitude install festival-dev
-</pre></div>
-<p>可以用下面的命令测试一下:</p>
-<div class="highlight"><pre><span class="gp">$</span><span class="nb">echo </span>hellow world | festival --tts
-</pre></div>
-<p>此时可以听到喇叭中念出hello world，如果没有声音可能是声卡驱动的问题。</p>
-<p>如果想在自己的程序中使用festival tts的功能，则需要用到festival提供的API，可以参考festiva的文档:
-<a class="reference external" href="http://www.cstr.ed.ac.uk/projects/festival/manual/festival_28.html#SEC126">festival:API</a>
-。</p>
-<p>这里以C++的API为例，介绍两个常用的函数。</p>
-<p>首先程序需要include一个头文件:</p>
-<div class="highlight"><pre><span class="cp">#include &lt;festival.h&gt;</span>
-</pre></div>
-<p>两个常用API为:</p>
-<div class="highlight"><pre><span class="n">festival_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">load_init_files</span><span class="p">,</span><span class="kt">int</span> <span class="n">heap_size</span><span class="p">);</span>
-
-<span class="n">festival_say_text</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">text</span><span class="p">);</span>
-</pre></div>
-<p>从函数名就可以看出这两个API的作用，第一个为初始化函数，需要在使用其他API之前调用 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/festival-tts-shi-yong-zong-jie.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>trace-cmd与kernelshark使用总结</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html">2012-07-22 22:00:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
-tags: <a href="http://hyhx2008.github.com/tag/trace-cmd.html">trace-cmd</a> <a href="http://hyhx2008.github.com/tag/kernelshark.html">kernelshark</a> </div>
-	<div class="summary"><p><strong>1.trace-cmd</strong></p>
-<p>trace-cmd是对ftrace的封装，是一个可以用来跟踪linux内核中事件(event)发生的时间、次数等的工具。</p>
-<p>首先需要安装trace-cmd:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install trace-cmd
-</pre></div>
-<p>使用也非常简单:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch
-</pre></div>
-<p>-e 参数指出需要跟踪的事件，这里的sched_switch指的是进程切换，还可以是hrtimer、irq等，例如:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo trace-cmd record -e sched_switch -e hrtimer*
-</pre></div>
-<p>命令输完回车后，trace-cmd就开始记录内核中事件的发生了，ctrl+C 停止跟踪，此时会生成一个trace.dat文件，相当于一个log吧。</p>
-<p>trace.dat里的内容不易读，trace-cmd提供分析trace.dat的功能:</p>
-<div class="highlight"><pre><span class="gp">$</span>trace-cmd report
-</pre></div>
-<p>就可以看到所跟踪的事件发生的情况了，和下图差不多。</p>
-<div class="figure">
-<img alt="../statics/pics/trace_cmd_kernelshark1.png" src="../statics/pics/trace_cmd_kernelshark1.png" />
-</div>
-<p>也可以重定向到一个文本文件中再做分析，比如:</p>
-<div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Linux内核编译步骤</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/linuxnei-he-bian-yi-bu-zou.html">2012-07-18 22:00:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
-tags: <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/kernel.html">kernel</a> <a href="http://hyhx2008.github.com/tag/compile.html">compile</a> </div>
-	<div class="summary"><p>实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。</p>
-<p>首先进入到内核源码的目录，然后按照以下步骤编译:</p>
-<p><strong>1.配置内核</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>make menuconfig
-</pre></div>
-<p>这条命令可以在一个GUI下设置用户需要的内核参数，并生成编译需要的.config配置文件。</p>
-<p><strong>2.编译内核</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>make -j 2
-</pre></div>
-<p>后面的-j参数指的是可以允许多少个module同时编译，-j 2 就是允许2个module同时编译，也可以省略-j参数。如果CPU是多核的话，可以加上该参数提高编译速度。</p>
-<p>接下来就是漫长的等待。。。</p>
-<p><strong>3.加入模块</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>sudo make modules_install
-<span class="gp">$</span>sudo make install
-</pre></div>
-<p><strong>4.更新引导文件</strong></p>
-<div class="highlight"><pre><span class="gp">$</span>sudo update-initramfs -c -k <span class="s2">&quot;kernel version&quot;</span>
-</pre></div>
-<p>这里的kernel version可以在make menuconfig的时候自己设置名称，具体应该写什么需要在/boot文件夹下查看:</p>
-<div class="highlight"><pre><span class="gp">$</span>ls -lF ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/linuxnei-he-bian-yi-bu-zou.html">more…</a>
-	</div>
-</div>	
 
 <div class="pagination">
 <ul>
 					<li class="prev"><a href="http://hyhx2008.github.com/index.html">&larr; Previous</a></li>
 				<li class=""><a href="http://hyhx2008.github.com/index.html">1</a></li>
 			<li class="active"><a href="http://hyhx2008.github.com/index2.html">2</a></li>
-				<li class="next disabled"><a href="#">&rarr; Next</a></li>
+			<li class=""><a href="http://hyhx2008.github.com/index3.html">3</a></li>
+				<li class="next"><a href="http://hyhx2008.github.com/index3.html">Next &rarr;</a></li>
 	</ul>
 </div>
 

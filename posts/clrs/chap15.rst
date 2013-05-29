@@ -49,7 +49,7 @@ A:这里给出两种算法。
             for k = 1 to i-1 do
                 if X[k]<X[i] and f[k]+1 > f[i] then
                 {
-                    f[i] = f[k+1];
+                    f[i] = f[k] + 1;
                     pre[i] = k;
                 }
         }

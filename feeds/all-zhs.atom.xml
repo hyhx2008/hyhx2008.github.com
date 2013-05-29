@@ -1,5 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/all-zhs.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-05-11T15:12:00+09:00</updated><entry><title>算法导论第10-14章习题答案</title><link href="http://hyhx2008.github.com/suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html" rel="alternate"></link><updated>2013-05-11T15:12:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-05-11:suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;10.1-6&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/all-zhs.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-05-29T23:04:00+09:00</updated><entry><title>Raspberry Pi中samba服务器的配置</title><link href="http://hyhx2008.github.com/raspberry-pizhong-sambafu-wu-qi-de-pei-zhi.html" rel="alternate"></link><updated>2013-05-29T23:04:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-05-29:raspberry-pizhong-sambafu-wu-qi-de-pei-zhi.html</id><summary type="html">&lt;p&gt;为了可以在笔记本上访问树莓派的文件系统，我们可以在树莓派上安装samba服务器。&lt;/p&gt;
+&lt;p&gt;因为Raspbian是从Debian改来的，所以参考Debian下samba服务器的配置。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.安装samba&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo apt-get install samba samba-common-bin&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;2.配置samba&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先需要为samba创建一个用户:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo touch /etc/samba/smbpasswd&lt;/span&gt;
+&lt;span class="go"&gt;sudp smbpasswd -a pi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后我们需要编辑samba的配置文件(这里用到了vim，没有安装的话也可以用别的编辑器)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo vim /etc/samba/smb.conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后在配置文件最后加入以下内容:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;[home]&lt;/span&gt;
+&lt;span class="go"&gt;        comment = laowang&amp;#39;s data&lt;/span&gt;
+&lt;span class="go"&gt;        path = /home&lt;/span&gt;
+&lt;span class="go"&gt;        valid users = pi&lt;/span&gt;
+&lt;span class="go"&gt;        public = no&lt;/span&gt;
+&lt;span class="go"&gt;        writable = yes&lt;/span&gt;
+&lt;span class="go"&gt;        printable = no&lt;/span&gt;
+&lt;span class="go"&gt;        create mask = 0777&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;中括号内的内容为这个共享的位置起一个名称；path指出了共享的目录。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.重启samba服务&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;最后我们需要重启samba使设置生效。并且修改共享目录的权限，使samba客户端可读可写。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo /etc/init.d/samba restart&lt;/span&gt;
+&lt;span class="go"&gt;sudo chmod 775 /home&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;4.通过客户端访问共享的文件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;树莓派联网后，我们就可以在同一个局域网下通过samba客户端访问树莓派共享的文件夹了。&lt;/p&gt;
+&lt;p&gt;windows下非常简单，只需要在计算机中添加一个网络位置即可。&lt;/p&gt;
+&lt;p&gt;我们也可以用手机或者平板电脑访问，android里好像有不错的软件可以作为samba客户端。ios下就只发现一个叫TIOD的软件，做得一般。&lt;/p&gt;
+</summary><category term="raspberry-pi samba"></category></entry><entry><title>Raspberry Pi配置USB无线网卡连接wifi</title><link href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html" rel="alternate"></link><updated>2013-05-29T22:18:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-05-29:raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html</id><summary type="html">&lt;p&gt;树莓派自身不带无线网卡，所以要想让树莓派连上无线网络，就需要插上一个USB无线网卡。&lt;/p&gt;
+&lt;p&gt;首先可以在树莓派的
+&lt;a class="reference external" href="http://elinux.org/RPi_VerifiedPeripherals#USB_Wi-Fi_Adapters"&gt;外设兼容列表&lt;/a&gt;
+中选择一款兼容的USB无线网卡，最好是那种即插即用的(out of the box)，这样就不需要安装驱动了。
+在日本只能买到 Buffalo WLI-UC-GNM，本以为需要手动安装驱动，没想到直接被系统识别了。&lt;/p&gt;
+&lt;p&gt;我们可以使用命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;ifconfig -a&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;来查看接口信息。如果有wlan0这项，就说明新加的网卡已经被识别了。但是IP地址之类的信息还没有。&lt;/p&gt;
+&lt;p&gt;接下来我们需要配置接口，即编辑配置文件。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo nano /etc/network/interfaces&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;将interfaces中的配置改为:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;auto lo&lt;/span&gt;
+&lt;span class="go"&gt;iface lo inet loopback&lt;/span&gt;
+&lt;span class="go"&gt;iface eth0 inet dhcp&lt;/span&gt;
+&lt;span class="go"&gt;auto wlan0&lt;/span&gt;
+&lt;span class="go"&gt;allow-hotplug wlan0&lt;/span&gt;
+&lt;span class="go"&gt;iface wlan0 inet dhcp&lt;/span&gt;
+&lt;span class="go"&gt;wpa-ssid “XX-Network”&lt;/span&gt;
+&lt;span class="go"&gt;wpa-psk “XX1234567″&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中wpa-ssid后引号中的内容为你的无线网络的名称，wpa-psk后引号中的内容为密码。(这里无线路由器需选择wpa加密方式)&lt;/p&gt;
+&lt;p&gt;最后我们需要重新启动树莓派:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo shutdown “now” -r&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;重新启动后，以上的设置才会生效，这时再次查看接口信息时，发现wlan0已经成功获得了IP地址。&lt;/p&gt;
+</summary><category term="raspberry-pi"></category></entry><entry><title>Raspberry Pi系统安装及启动</title><link href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html" rel="alternate"></link><updated>2013-05-29T21:27:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-05-29:raspberry-pixi-tong-an-zhuang-ji-qi-dong.html</id><summary type="html">&lt;p&gt;最近有些无聊，心血来潮买了一个Raspberry Pi(树莓派)。Raspberry Pi是一款基于Linux系统的个人电脑，配备一枚700MHz的ARM处理器，
+512M内存，支持SD卡和Ethernet，拥有两个USB接口，以及 HDMI和RCA输出支持。&lt;/p&gt;
+&lt;p&gt;首先秀一张开箱图:&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/raspberrypi_start_1.png" src="../statics/pics/raspberrypi_start_1.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;1.安装raspbian系统到SD卡&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;树莓派用SD卡充当硬盘，为了速度，我专门买了一张16G class10的SD卡。&lt;/p&gt;
+&lt;p&gt;树莓派支持多个系统，官方建议的是Raspbian，这是一个从Debian改过来的系统。首先需要在官网下载系统镜像
+&lt;a class="reference external" href="http://www.raspberrypi.org/downloads"&gt;Dowload Raspbian&lt;/a&gt;
+。&lt;/p&gt;
+&lt;p&gt;然后我们需要一个工具
+&lt;a class="reference external" href="http://sourceforge.net/projects/win32diskimager/"&gt;Win32 Disk Imager&lt;/a&gt;
+将系统写入SD卡中。&lt;/p&gt;
+&lt;p&gt;下载并解压，然后运行win32diskimager。工具的界面很简单，我们只需要在&amp;quot;Image File&amp;quot;中选择系统镜像的位置(注意镜像的路径中不能有中文)，
+在&amp;quot;Device&amp;quot;下选择SD卡的盘符，然后点击&amp;quot;write&amp;quot;按钮。&lt;/p&gt;
+&lt;p&gt;接下来就是等待至工具提示&amp;quot;Write Successful&amp;quot;后，即可将SD卡安全移除。&lt;/p&gt;
+&lt;p&gt;我们会发现SD卡的空间变成74MB了。。。百度了一下，高手的解释是windows下看不到linux的分区。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.初次启动Raspberry Pi&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将写入系统的SD卡插入树莓派，并连上键盘鼠标后，插上电源树莓派就会自动启动了。&lt;/p&gt;
+&lt;p&gt;由于是第一次启动，我们会看到一个raspi-config的配置工具。我们可以在这个工具中对系统进行一些配置。&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="../statics/pics/raspberrypi_start_2.gif" src="../statics/pics/raspberrypi_start_2.gif" /&gt;
+&lt;/div&gt;
+&lt;p&gt;如果以后需要更改某些配置，也可以在命令行中输入raspi-gonfig来运行这个工具。&lt;/p&gt;
+&lt;p&gt;这里不做详细展开，只是提一下哪些选项需要设置。&lt;/p&gt;
+&lt;p&gt;1&amp;gt; expand_rootfs 可以将文件系统扩展到整张SD卡中。&lt;/p&gt;
+&lt;p&gt;2&amp;gt; configure_keyboard 可以选择键盘布局。&lt;/p&gt;
+&lt;p&gt;3&amp;gt; change_pass 修改密码。&lt;/p&gt;
+&lt;p&gt;4&amp;gt; change_locale 选择字符编码方式。这里需要将默认的en_GB改为en_US.UTF-8。(用空格键选择和反选)&lt;/p&gt;
+&lt;p&gt;5&amp;gt; change_timezone 修改时区。&lt;/p&gt;
+&lt;p&gt;6&amp;gt; ssh 这里我启动了ssh server(enable ssh)，为了可以在笔记本上远程登录树莓派。&lt;/p&gt;
+&lt;p&gt;配置完成后选择Finish并按回车，就会进入登录界面，输入用户名(pi)和密码(默认是raspberry)即可进入系统的shell。&lt;/p&gt;
+&lt;p&gt;如果要进入图形界面，输入命令&amp;quot;startx&amp;quot;即可。&lt;/p&gt;
+&lt;p&gt;用树莓派可以做的事情有很多，这里给一个连接
+&lt;a class="reference external" href="http://linuxtoy.org/archives/cool-ideas-for-raspberry-pi.html"&gt;34 个使用 Raspberry Pi 的酷创意&lt;/a&gt;
+，以后有空了漫漫尝试。&lt;/p&gt;
+</summary><category term="raspberry-pi"></category><category term="raspbian"></category></entry><entry><title>windows下安装pelican</title><link href="http://hyhx2008.github.com/windowsxia-an-zhuang-pelican.html" rel="alternate"></link><updated>2013-05-29T20:23:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-05-29:windowsxia-an-zhuang-pelican.html</id><summary type="html">&lt;p&gt;用虚拟机在ubuntu下写了这么久的博客，实在是受不了电脑内存不够，一开虚拟机就开始卡的情况。&lt;/p&gt;
+&lt;p&gt;原来一直懒得搞，因为在linux下安装程序很方便。今天尝试了一下在windows下安装pelican，其实也不是很烦。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.安装python&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;pelican是用python开发的，所以首先要在windows下安装python。&lt;/p&gt;
+&lt;p&gt;在python官网上下载python安装包:
+&lt;a class="reference external" href="http://www.python.org/download/"&gt;Download Python&lt;/a&gt;
+。我是win8-64bit，所以选择Python3.3.2Windows X86-64 MSI Installer。安装的过程是全自动的，只需要选择路径和点下一步即可。&lt;/p&gt;
+&lt;p&gt;安装的过程中会询问是否将python添加到环境变量中，为了可以直接在cmd(命令提示符)中使用python命令，建议选是。如果不小心选错了，也可以手动
+将python添加到环境变量中去。在path中加入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;C:\Python33\Scripts;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;即可(此处路径为示例，有可能不一样)。&lt;/p&gt;
+&lt;p&gt;可以在cmd中输入python查看是否安装成功。(ctrl+c退出)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.安装pip&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;pip是一个帮助我们安装和管理python包的工具，我们通过pip来安装pelican。&lt;/p&gt;
+&lt;p&gt;首先在
+&lt;a class="reference external" href="https://pypi.python.org/pypi/pip"&gt;Download pip&lt;/a&gt;
+下载pip。&lt;/p&gt;
+&lt;p&gt;然后解压下载的压缩包，例如pip-1.3.1.tar.gz。运行cmd并进入解压目录，输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;python setup.py install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样pip就安装完成了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.安装pelican&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;有了pip再安装pelican就很容易了，只需要一条命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;pip install pelican&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样我们就在windows上安装了pelican。以后写博客就不再需要linux环境了。&lt;/p&gt;
+&lt;p&gt;如果不是很熟悉windows的cmd命令，这里推荐使用
+&lt;a class="reference external" href="http://www.cygwin.com/"&gt;cygwin&lt;/a&gt;
+。它可以在windows上模拟unix环境，并且可以安装大部分常用的
+工具及软件，比如git。安装完成后添加至环境变量，就可以在windows的cmd中使用linux的命令了。&lt;/p&gt;
+</summary><category term="pelican"></category><category term="github"></category></entry><entry><title>算法导论第10-14章习题答案</title><link href="http://hyhx2008.github.com/suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html" rel="alternate"></link><updated>2013-05-11T15:12:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-05-11:suan-fa-dao-lun-di-10-14zhang-xi-ti-da-an.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;10.1-6&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:说明如何用两个栈来实现一个队列，并分析有关队列操作的运行时间。&lt;/p&gt;
 &lt;p&gt;A:栈是先进后出，而队列是先进先出，一种自然的想法是，用一个栈来存储队列的元素，入队就和如栈一样；
 出队的时候先将这个栈的元素依次压出另一个栈内，然后将栈顶元素(即队首)弹出，然后再依次倒回原先的栈内。
@@ -125,7 +253,7 @@ p的作用是为了方便统计覆盖端点x的区间数，我们只需要将比
         &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
             &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;then&lt;/span&gt;
             &lt;span class="p"&gt;{&lt;/span&gt;
-                &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+                &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
                 &lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
             &lt;span class="p"&gt;}&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
@@ -2057,7 +2185,7 @@ order.observer myClass conn 1
 。&lt;/p&gt;
 &lt;p&gt;在linux环境下可以使用具有实时预览功能的ReText编辑器编辑reST文件，但是后来发现vim中支持reST文件的语法高亮，写起来也挺方便的。&lt;/p&gt;
 &lt;p&gt;The End!&lt;/p&gt;
-</summary><category term="GitHub"></category><category term="pelican"></category></entry><entry><title>Hello World!</title><link href="http://hyhx2008.github.com/hello-world.html" rel="alternate"></link><updated>2012-11-11T02:16:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-11:hello-world.html</id><summary type="html">&lt;p&gt;终于建立起了我的github博客~!&lt;/p&gt;
+</summary><category term="github"></category><category term="pelican"></category></entry><entry><title>Hello World!</title><link href="http://hyhx2008.github.com/hello-world.html" rel="alternate"></link><updated>2012-11-11T02:16:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-11-11:hello-world.html</id><summary type="html">&lt;p&gt;终于建立起了我的github博客~!&lt;/p&gt;
 &lt;p&gt;感谢马星手把手一步一步教我如何在github上写博客。&lt;/p&gt;
 &lt;p&gt;说是博客，其实估计也没人看，就当做记笔记写总结到好地方了。&lt;/p&gt;
 &lt;p&gt;以前都是用evernote写笔记的，但是在粘代码的时候不能语法高亮，所以听了马星的推荐在github上写博客，也算是赶个时髦吧～&lt;/p&gt;

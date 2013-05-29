@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>H.y's Blog</title>
+	<meta name="description" content="">
+	<meta name="author" content="hyhx2008">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://hyhx2008.github.com/theme/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="http://hyhx2008.github.com/theme/bootstrap.min.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/local.css" rel="stylesheet">
+	<link href="http://hyhx2008.github.com/theme/pygments.css" rel="stylesheet">
+	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+	<script type="text/javascript">
+	var disqus_identifier = "raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html";
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://hysblog.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+		
+	<link rel="shortcut icon" href="http://hyhx2008.github.com/theme/images/icons/icon1.png">
+</head>
+<body>
+		<a href="https://github.com/hyhx2008"><img style="position: absolute; top: 39px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+	<div class="topbar">
+	  <div class="topbar-inner">
+		<div class="container-fluid">
+		  <a class="brand" href="http://hyhx2008.github.com/index.html">H.y's Blog</a>
+			<ul class="nav">
+																										<li ><a href="http://hyhx2008.github.com/category/clrs.html">clrs</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
+									<li class="active"><a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
+							</ul>
+			<p class="pull-right"><a href="http://hyhx2008.github.com/archives.html">[archives]</a> <a href="http://hyhx2008.github.com/tags.html">[tags]</a></p>
+		</div>
+	  </div>
+	</div>
+
+	<div class="container-fluid">	
+	  <div class="span5 sidebar">
+		<div class="well">
+			<h3>Blogroll</h3>
+			<ul>
+								<li><a href="http://x-wei.github.com">x-wei</a></li>
+								<li><a href="http://farseerfc.github.com/">farseerfc</a></li>
+							</ul>
+			<div class="social">
+			<h3>Social</h3>
+			<ul>
+								<li><a href="https://github.com/hyhx2008">github</a></li>
+							</ul>
+			</div>
+			
+		</div>
+		
+		<div class="well">
+			<div class="search_sidebar">
+				<li class="nav-header"><h4><i class="icon-search"></i>Google Search</h4></li>
+<!-- Put the following javascript before the closing </head> tag. -->
+<script>
+  (function() {
+    var cx = '007947589229995882978:padodsakamc';
+    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<!-- Place this tag where you want both of the search box and the search results to render -->
+<gcse:search></gcse:search>
+			</div>
+
+			<div class="google_ads">
+				<li class="nav-header"><h4><i class="icon-search"></i>Google Ads</h4></li>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-5617943900713834";
+/* HY&#39;s github blog */
+google_ad_slot = "7280262031";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+			</div>
+		</div>
+
+	  </div>
+	  <div class="content">
+							<div class='article'>
+		<div class="page-header"><h1>Raspberry Pi配置USB无线网卡连接wifi</h1></div>
+		<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">2013-05-29 22:18:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry pi.html">raspberry pi</a>
+tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> </div>
+		<div><p>树莓派自身不带无线网卡，所以要想让树莓派连上无线网络，就需要插上一个USB无线网卡。</p>
+<p>首先可以在树莓派的
+<a class="reference external" href="http://elinux.org/RPi_VerifiedPeripherals#USB_Wi-Fi_Adapters">外设兼容列表</a>
+中选择一款兼容的USB无线网卡，最好是那种即插即用的(out of the box)，这样就不需要安装驱动了。
+在日本只能买到 Buffalo WLI-UC-GNM，本以为需要手动安装驱动，没想到直接被系统识别了。</p>
+<p>我们可以使用命令</p>
+<div class="highlight"><pre><span class="go">ifconfig -a</span>
+</pre></div>
+<p>来查看接口信息。如果有wlan0这项，就说明新加的网卡已经被识别了。但是IP地址之类的信息还没有。</p>
+<p>接下来我们需要配置接口，即编辑配置文件。</p>
+<div class="highlight"><pre><span class="go">sudo nano /etc/network/interfaces</span>
+</pre></div>
+<p>将interfaces中的配置改为:</p>
+<div class="highlight"><pre><span class="go">auto lo</span>
+<span class="go">iface lo inet loopback</span>
+<span class="go">iface eth0 inet dhcp</span>
+<span class="go">auto wlan0</span>
+<span class="go">allow-hotplug wlan0</span>
+<span class="go">iface wlan0 inet dhcp</span>
+<span class="go">wpa-ssid “XX-Network”</span>
+<span class="go">wpa-psk “XX1234567″</span>
+</pre></div>
+<p>其中wpa-ssid后引号中的内容为你的无线网络的名称，wpa-psk后引号中的内容为密码。(这里无线路由器需选择wpa加密方式)</p>
+<p>最后我们需要重新启动树莓派:</p>
+<div class="highlight"><pre><span class="go">sudo shutdown “now” -r</span>
+</pre></div>
+<p>重新启动后，以上的设置才会生效，这时再次查看接口信息时，发现wlan0已经成功获得了IP地址。</p>
+</div>
+		<div>
+			<h2>Comments</h2>
+		 				<div id="disqus_thread"></div>					<div>
+	</div>	
+		<footer>
+		  <p> Powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>, theme based on <a href="http://twitter.github.com/bootstrap/">Bootstrap, from Twitter</a>.</p>
+		  <p>&copy; hyhx2008 2011</p>
+		</footer>
+	  </div>
+   
+	</div>
+</body>
+</html>
