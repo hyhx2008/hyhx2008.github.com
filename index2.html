@@ -93,6 +93,29 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  <div class="content">
 			<div class="page-header"><h1> H.y's Blog </h1></div>			
 <div class='article'>
+	<h2>Ubuntu下Java的安装与配置</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
+tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/java.html">java</a> </div>
+	<div class="summary"><p>第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。</p>
+<p><strong>1.下载</strong></p>
+<p>首先在Oracle官网上下载jdk，这里给一个链接：
+<a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">jdk7-downloads</a></p>
+<p>选择合适的jdk版本下载，这里我下载的是jdk-7u17-linux-i566.tar.gz。</p>
+<p><strong>2.安装</strong></p>
+<p>在任意文件夹下解压这个压缩包，例如在/usr/java下：</p>
+<div class="highlight"><pre><span class="go">sudo mkdir /usr/java</span>
+<span class="go">sudo cp ~/Downloads/jdk-7u17-linux-i586.tar.gz /usr/java/</span>
+<span class="go">cd /usr/java</span>
+<span class="go">sudo tar -xvf jdk-7u17-linux-i585.tar.gz</span>
+</pre></div>
+<p>这样jdk就安装在/usr/java/jdk1.7.0_17目录下。</p>
+<p><strong>3.修改环境变量</strong></p>
+<p>修改~/.bashrc文件：</p>
+<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
 	<h2>PeerSim使用教程(5)-Event-drive(事件驱动)模型</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/peersimshi-yong-jiao-cheng-5-event-driveshi-jian-qu-dong-mo-xing.html">2013-04-12 17:46:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/peersim.html">peersim</a>
@@ -281,37 +304,6 @@ tags: <a href="http://hyhx2008.github.com/tag/github.html">github</a> <a href="h
 <p>github上说可以用https方法提交工程，但是没有成功过，所以还是需要利用ssh。这里需要生成ssh keys，
 具体步骤参考
 <a class="reference external" href="https://help.github.com/articles/generating-ssh-keys#platform-linux">github:help ...</a></p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/shi-yong-pelicansheng-cheng-githubbo-ke.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>重新安装ubuntu后的todo list</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
-tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> </div>
-	<div class="summary"><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
-<p>写在这里做个提醒吧，以后再慢慢添加。</p>
-<p>1.安装aptitude</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo apt-get install aptitude
-</pre></div>
-<p>2.安装vim</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install vim
-</pre></div>
-<p>并修改/usr/share/vim/vimrc 。</p>
-<p>3.添加sudoers</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo visudo
-</pre></div>
-<p>加入 hy ALL = （ALL）ALL。</p>
-<p>ubuntu下好像这样做后还是不能使用su命令切换到root，百度解决办法:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo passwd
-</pre></div>
-<p>修改一下密码就好了。</p>
-<p>4.安装openssh</p>
-<p>为了能让secureCRT连上虚拟机里的ubuntu，需要安装openssh。</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install openssh-server openssh-client
-</pre></div>
-<p>再用ifconfig查一下ip，填到secureCRT里就好了。</p>
-<p>5.安装中文输入法</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
 

@@ -91,7 +91,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 	  </div>
 	  <div class="content">
-			<div class="page-header"><h1>H.y's Blog <small>raspberry-pi</small></h1></div>			
+			<div class="page-header"><h1>H.y's Blog <small>transmission</small></h1></div>			
 <div class='article'>
 	<h2>将Raspberry Pi作为BT下载机</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">2013-05-30 21:54:00</a>
@@ -114,57 +114,6 @@ tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a
 <p>2&gt; &quot;rpc-authentication-required&quot; : true  远程控制时需要验证</p>
 <p>3&gt; &quot;rpc-enabled&quot; : true  开启远程控制</p>
 <p>4&gt; &quot;rpc-password&quot; &amp; &quot;rpc-username ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Raspberry Pi配置USB无线网卡连接wifi</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">2013-05-29 22:18:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
-tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> </div>
-	<div class="summary"><p>树莓派自身不带无线网卡，所以要想让树莓派连上无线网络，就需要插上一个USB无线网卡。</p>
-<p>首先可以在树莓派的
-<a class="reference external" href="http://elinux.org/RPi_VerifiedPeripherals#USB_Wi-Fi_Adapters">外设兼容列表</a>
-中选择一款兼容的USB无线网卡，最好是那种即插即用的(out of the box)，这样就不需要安装驱动了。
-在日本只能买到 Buffalo WLI-UC-GNM，本以为需要手动安装驱动，没想到直接被系统识别了。</p>
-<p>我们可以使用命令</p>
-<div class="highlight"><pre><span class="go">ifconfig -a</span>
-</pre></div>
-<p>来查看接口信息。如果有wlan0这项，就说明新加的网卡已经被识别了。但是IP地址之类的信息还没有。</p>
-<p>接下来我们需要配置接口，即编辑配置文件。</p>
-<div class="highlight"><pre><span class="go">sudo nano /etc/network/interfaces</span>
-</pre></div>
-<p>将interfaces中的配置改为:</p>
-<div class="highlight"><pre><span class="go">auto lo</span>
-<span class="go">iface lo inet loopback</span>
-<span class="go">iface eth0 inet dhcp</span>
-<span class="go">auto wlan0</span>
-<span class="go">allow-hotplug wlan0</span>
-<span class="go">iface wlan0 inet dhcp ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Raspberry Pi系统安装及启动</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html">2013-05-29 21:27:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
-tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> <a href="http://hyhx2008.github.com/tag/raspbian.html">raspbian</a> </div>
-	<div class="summary"><p>最近有些无聊，心血来潮买了一个Raspberry Pi(树莓派)。Raspberry Pi是一款基于Linux系统的个人电脑，配备一枚700MHz的ARM处理器，
-512M内存，支持SD卡和Ethernet，拥有两个USB接口，以及 HDMI和RCA输出支持。</p>
-<p>首先秀一张开箱图:</p>
-<div class="figure">
-<img alt="../statics/pics/raspberrypi_start_1.png" src="../statics/pics/raspberrypi_start_1.png" />
-</div>
-<p><strong>1.安装raspbian系统到SD卡</strong></p>
-<p>树莓派用SD卡充当硬盘，为了速度，我专门买了一张16G class10的SD卡。</p>
-<p>树莓派支持多个系统，官方建议的是Raspbian，这是一个从Debian改过来的系统。首先需要在官网下载系统镜像
-<a class="reference external" href="http://www.raspberrypi.org/downloads">Dowload Raspbian</a>
-。</p>
-<p>然后我们需要一个工具
-<a class="reference external" href="http://sourceforge.net/projects/win32diskimager/">Win32 Disk Imager</a>
-将系统写入SD卡中。</p>
-<p>下载并解压，然后运行win32diskimager。工具的界面很简单，我们只需要在&quot;Image File&quot;中选择系统镜像的位置(注意镜像的路径中不能有中文)，
-在&quot;Device&quot;下选择SD卡的盘符，然后点击&quot;write&quot;按钮。</p>
-<p>接下来就是等待至工具提示&quot;Write Successful&quot;后，即可将SD卡安全移除。</p>
-<p>我们会发现SD卡的空间变成74MB了 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html">more…</a>
 	</div>
 </div>	
 

@@ -93,6 +93,30 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  <div class="content">
 			<div class="page-header"><h1> H.y's Blog </h1></div>			
 <div class='article'>
+	<h2>将Raspberry Pi作为BT下载机</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">2013-05-30 21:54:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
+tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> <a href="http://hyhx2008.github.com/tag/transmission.html">transmission</a> </div>
+	<div class="summary"><p>今天尝试了一个有用的功能，就是将树莓派作为bt下载机。</p>
+<p>由于树莓派耗电低，没噪音，可以让它一直开着下载bt资源。</p>
+<p>一个名为
+` Transmission &lt;<a class="reference external" href="http://www.transmissionbt.com/">http://www.transmissionbt.com/</a>&gt;`_
+的软件为我们提供了这个功能。它不但能作为树莓派上的bt客户端，还可以通过web图形界面进行控制，非常方便。</p>
+<p><strong>1.安装Transmission</strong></p>
+<div class="highlight"><pre><span class="go">sudo apt-get install transmission-daemon</span>
+</pre></div>
+<p><strong>2.配置Transmission</strong></p>
+<p>Transmission的配置是通过编辑其配置文件实现的，</p>
+<div class="highlight"><pre><span class="go">sudo vim /etc/transmission-daemon/settings.json</span>
+</pre></div>
+<p>可配置的选项有很多，这里挑几个常用的讲一下。</p>
+<p>1&gt; &quot;download-dir&quot; : &quot;/home/pi/bt&quot;  设置下载后的资源保存的路径。</p>
+<p>2&gt; &quot;rpc-authentication-required&quot; : true  远程控制时需要验证</p>
+<p>3&gt; &quot;rpc-enabled&quot; : true  开启远程控制</p>
+<p>4&gt; &quot;rpc-password&quot; &amp; &quot;rpc-username ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
 	<h2>Raspberry Pi中samba服务器的配置</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pizhong-sambafu-wu-qi-de-pei-zhi.html">2013-05-29 23:04:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
@@ -300,29 +324,6 @@ tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="h
 </pre></div>
 <p>接着用ifconfig命令查看ip是否配置成功，若还有没有配置成功，则需重启下网络服务</p>
 <div class="highlight"><pre><span class="go">/etc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Ubuntu下Java的安装与配置</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">2013-04-15 21:03:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
-tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> <a href="http://hyhx2008.github.com/tag/linux.html">linux</a> <a href="http://hyhx2008.github.com/tag/java.html">java</a> </div>
-	<div class="summary"><p>第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。</p>
-<p><strong>1.下载</strong></p>
-<p>首先在Oracle官网上下载jdk，这里给一个链接：
-<a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">jdk7-downloads</a></p>
-<p>选择合适的jdk版本下载，这里我下载的是jdk-7u17-linux-i566.tar.gz。</p>
-<p><strong>2.安装</strong></p>
-<p>在任意文件夹下解压这个压缩包，例如在/usr/java下：</p>
-<div class="highlight"><pre><span class="go">sudo mkdir /usr/java</span>
-<span class="go">sudo cp ~/Downloads/jdk-7u17-linux-i586.tar.gz /usr/java/</span>
-<span class="go">cd /usr/java</span>
-<span class="go">sudo tar -xvf jdk-7u17-linux-i585.tar.gz</span>
-</pre></div>
-<p>这样jdk就安装在/usr/java/jdk1.7.0_17目录下。</p>
-<p><strong>3.修改环境变量</strong></p>
-<p>修改~/.bashrc文件：</p>
-<div class="highlight"><pre><span class="go">vim ~/.bashrc ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html">more…</a>
 	</div>
 </div>	
 

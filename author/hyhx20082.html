@@ -93,6 +93,32 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  <div class="content">
 			<div class="page-header"><h1>H.y's Blog <small>hyhx2008</small></h1></div>			
 <div class='article'>
+	<h2>Raspberry Pi配置USB无线网卡连接wifi</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">2013-05-29 22:18:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
+tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> </div>
+	<div class="summary"><p>树莓派自身不带无线网卡，所以要想让树莓派连上无线网络，就需要插上一个USB无线网卡。</p>
+<p>首先可以在树莓派的
+<a class="reference external" href="http://elinux.org/RPi_VerifiedPeripherals#USB_Wi-Fi_Adapters">外设兼容列表</a>
+中选择一款兼容的USB无线网卡，最好是那种即插即用的(out of the box)，这样就不需要安装驱动了。
+在日本只能买到 Buffalo WLI-UC-GNM，本以为需要手动安装驱动，没想到直接被系统识别了。</p>
+<p>我们可以使用命令</p>
+<div class="highlight"><pre><span class="go">ifconfig -a</span>
+</pre></div>
+<p>来查看接口信息。如果有wlan0这项，就说明新加的网卡已经被识别了。但是IP地址之类的信息还没有。</p>
+<p>接下来我们需要配置接口，即编辑配置文件。</p>
+<div class="highlight"><pre><span class="go">sudo nano /etc/network/interfaces</span>
+</pre></div>
+<p>将interfaces中的配置改为:</p>
+<div class="highlight"><pre><span class="go">auto lo</span>
+<span class="go">iface lo inet loopback</span>
+<span class="go">iface eth0 inet dhcp</span>
+<span class="go">auto wlan0</span>
+<span class="go">allow-hotplug wlan0</span>
+<span class="go">iface wlan0 inet dhcp ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
 	<h2>Raspberry Pi系统安装及启动</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html">2013-05-29 21:27:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
@@ -305,37 +331,6 @@ tags: <a href="http://hyhx2008.github.com/tag/trace-cmd.html">trace-cmd</a> <a h
 </div>
 <p>也可以重定向到一个文本文件中再做分析，比如:</p>
 <div class="highlight"><pre><span class="gp">$</span>trace-cmd ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/trace-cmdyu-kernelsharkshi-yong-zong-jie.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>重新安装ubuntu后的todo list</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">2012-11-11 21:44:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a>
-tags: <a href="http://hyhx2008.github.com/tag/ubuntu.html">ubuntu</a> </div>
-	<div class="summary"><p>经常把虚拟机里ubuntu搞坏，重装后总记不清还要做什么设置，安什么软件。</p>
-<p>写在这里做个提醒吧，以后再慢慢添加。</p>
-<p>1.安装aptitude</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo apt-get install aptitude
-</pre></div>
-<p>2.安装vim</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install vim
-</pre></div>
-<p>并修改/usr/share/vim/vimrc 。</p>
-<p>3.添加sudoers</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo visudo
-</pre></div>
-<p>加入 hy ALL = （ALL）ALL。</p>
-<p>ubuntu下好像这样做后还是不能使用su命令切换到root，百度解决办法:</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo passwd
-</pre></div>
-<p>修改一下密码就好了。</p>
-<p>4.安装openssh</p>
-<p>为了能让secureCRT连上虚拟机里的ubuntu，需要安装openssh。</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo aptitude install openssh-server openssh-client
-</pre></div>
-<p>再用ifconfig查一下ip，填到secureCRT里就好了。</p>
-<p>5.安装中文输入法</p>
-<div class="highlight"><pre><span class="gp">$</span>sudo ...</pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/ubuntu_reinstall_todo-zh.html">more…</a>
 	</div>
 </div>	
 

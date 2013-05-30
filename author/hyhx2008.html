@@ -135,6 +135,30 @@ tags: <a href="http://hyhx2008.github.com/tag/GitHub.html">GitHub</a> </div>
 	</div>
 </div>	
 <div class='article'>
+	<h2>将Raspberry Pi作为BT下载机</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">2013-05-30 21:54:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
+tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> <a href="http://hyhx2008.github.com/tag/transmission.html">transmission</a> </div>
+	<div class="summary"><p>今天尝试了一个有用的功能，就是将树莓派作为bt下载机。</p>
+<p>由于树莓派耗电低，没噪音，可以让它一直开着下载bt资源。</p>
+<p>一个名为
+` Transmission &lt;<a class="reference external" href="http://www.transmissionbt.com/">http://www.transmissionbt.com/</a>&gt;`_
+的软件为我们提供了这个功能。它不但能作为树莓派上的bt客户端，还可以通过web图形界面进行控制，非常方便。</p>
+<p><strong>1.安装Transmission</strong></p>
+<div class="highlight"><pre><span class="go">sudo apt-get install transmission-daemon</span>
+</pre></div>
+<p><strong>2.配置Transmission</strong></p>
+<p>Transmission的配置是通过编辑其配置文件实现的，</p>
+<div class="highlight"><pre><span class="go">sudo vim /etc/transmission-daemon/settings.json</span>
+</pre></div>
+<p>可配置的选项有很多，这里挑几个常用的讲一下。</p>
+<p>1&gt; &quot;download-dir&quot; : &quot;/home/pi/bt&quot;  设置下载后的资源保存的路径。</p>
+<p>2&gt; &quot;rpc-authentication-required&quot; : true  远程控制时需要验证</p>
+<p>3&gt; &quot;rpc-enabled&quot; : true  开启远程控制</p>
+<p>4&gt; &quot;rpc-password&quot; &amp; &quot;rpc-username ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">more…</a>
+	</div>
+</div>	
+<div class='article'>
 	<h2>Linux内核编译步骤</h2>
 	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/linuxnei-he-bian-yi-bu-zou.html">2012-07-18 22:00:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
@@ -278,32 +302,6 @@ tags: <a href="http://hyhx2008.github.com/tag/google.html">google</a> <a href="h
 <p>我瞎折腾了一会儿，也在左边添加了个畸形的自定义搜索框。。。</p>
 <p>The End！！</p>
  <a class="btn primary xsmall" href="http://hyhx2008.github.com/rang-googlehe-bai-du-jian-suo-zi-ji-de-wang-zhan.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Raspberry Pi配置USB无线网卡连接wifi</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">2013-05-29 22:18:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
-tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> </div>
-	<div class="summary"><p>树莓派自身不带无线网卡，所以要想让树莓派连上无线网络，就需要插上一个USB无线网卡。</p>
-<p>首先可以在树莓派的
-<a class="reference external" href="http://elinux.org/RPi_VerifiedPeripherals#USB_Wi-Fi_Adapters">外设兼容列表</a>
-中选择一款兼容的USB无线网卡，最好是那种即插即用的(out of the box)，这样就不需要安装驱动了。
-在日本只能买到 Buffalo WLI-UC-GNM，本以为需要手动安装驱动，没想到直接被系统识别了。</p>
-<p>我们可以使用命令</p>
-<div class="highlight"><pre><span class="go">ifconfig -a</span>
-</pre></div>
-<p>来查看接口信息。如果有wlan0这项，就说明新加的网卡已经被识别了。但是IP地址之类的信息还没有。</p>
-<p>接下来我们需要配置接口，即编辑配置文件。</p>
-<div class="highlight"><pre><span class="go">sudo nano /etc/network/interfaces</span>
-</pre></div>
-<p>将interfaces中的配置改为:</p>
-<div class="highlight"><pre><span class="go">auto lo</span>
-<span class="go">iface lo inet loopback</span>
-<span class="go">iface eth0 inet dhcp</span>
-<span class="go">auto wlan0</span>
-<span class="go">allow-hotplug wlan0</span>
-<span class="go">iface wlan0 inet dhcp ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">more…</a>
 	</div>
 </div>	
 

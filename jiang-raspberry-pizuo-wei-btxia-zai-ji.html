@@ -16,7 +16,15 @@
 	<link href="http://hyhx2008.github.com/theme/local.css" rel="stylesheet">
 	<link href="http://hyhx2008.github.com/theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
-			
+	<script type="text/javascript">
+	var disqus_identifier = "jiang-raspberry-pizuo-wei-btxia-zai-ji.html";
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://hysblog.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+		
 	<link rel="shortcut icon" href="http://hyhx2008.github.com/theme/images/icons/icon1.png">
 </head>
 <body>
@@ -30,7 +38,7 @@
 									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
-									<li ><a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a></li>
+									<li class="active"><a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
 							</ul>
@@ -91,13 +99,12 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 	  </div>
 	  <div class="content">
-			<div class="page-header"><h1>H.y's Blog <small>raspberry-pi</small></h1></div>			
-<div class='article'>
-	<h2>将Raspberry Pi作为BT下载机</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">2013-05-30 21:54:00</a>
+							<div class='article'>
+		<div class="page-header"><h1>将Raspberry Pi作为BT下载机</h1></div>
+		<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">2013-05-30 21:54:00</a>
 by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
 tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> <a href="http://hyhx2008.github.com/tag/transmission.html">transmission</a> </div>
-	<div class="summary"><p>今天尝试了一个有用的功能，就是将树莓派作为bt下载机。</p>
+		<div><p>今天尝试了一个有用的功能，就是将树莓派作为bt下载机。</p>
 <p>由于树莓派耗电低，没噪音，可以让它一直开着下载bt资源。</p>
 <p>一个名为
 ` Transmission &lt;<a class="reference external" href="http://www.transmissionbt.com/">http://www.transmissionbt.com/</a>&gt;`_
@@ -113,62 +120,23 @@ tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a
 <p>1&gt; &quot;download-dir&quot; : &quot;/home/pi/bt&quot;  设置下载后的资源保存的路径。</p>
 <p>2&gt; &quot;rpc-authentication-required&quot; : true  远程控制时需要验证</p>
 <p>3&gt; &quot;rpc-enabled&quot; : true  开启远程控制</p>
-<p>4&gt; &quot;rpc-password&quot; &amp; &quot;rpc-username ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Raspberry Pi配置USB无线网卡连接wifi</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">2013-05-29 22:18:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
-tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> </div>
-	<div class="summary"><p>树莓派自身不带无线网卡，所以要想让树莓派连上无线网络，就需要插上一个USB无线网卡。</p>
-<p>首先可以在树莓派的
-<a class="reference external" href="http://elinux.org/RPi_VerifiedPeripherals#USB_Wi-Fi_Adapters">外设兼容列表</a>
-中选择一款兼容的USB无线网卡，最好是那种即插即用的(out of the box)，这样就不需要安装驱动了。
-在日本只能买到 Buffalo WLI-UC-GNM，本以为需要手动安装驱动，没想到直接被系统识别了。</p>
-<p>我们可以使用命令</p>
-<div class="highlight"><pre><span class="go">ifconfig -a</span>
+<p>4&gt; &quot;rpc-password&quot; &amp; &quot;rpc-username&quot; 这两项设置验证时的用户名和密码</p>
+<p>5&gt; &quot;rpc-whitelist-enabled&quot;: false 关闭白名单功能(即允许从任何ip地址远程控制)</p>
+<p>更详细的配置参数解释可以参考百度文库中的一篇文章:
+<a class="reference external" href="http://wenku.baidu.com/view/075739d949649b6648d747d9.html">树莓派bt下载机</a></p>
+<p><strong>3.加载配置并重启服务</strong></p>
+<div class="highlight"><pre><span class="go">sudo service transmission-daemon reload</span>
+<span class="go">sudo service transmission-daemon restart</span>
 </pre></div>
-<p>来查看接口信息。如果有wlan0这项，就说明新加的网卡已经被识别了。但是IP地址之类的信息还没有。</p>
-<p>接下来我们需要配置接口，即编辑配置文件。</p>
-<div class="highlight"><pre><span class="go">sudo nano /etc/network/interfaces</span>
-</pre></div>
-<p>将interfaces中的配置改为:</p>
-<div class="highlight"><pre><span class="go">auto lo</span>
-<span class="go">iface lo inet loopback</span>
-<span class="go">iface eth0 inet dhcp</span>
-<span class="go">auto wlan0</span>
-<span class="go">allow-hotplug wlan0</span>
-<span class="go">iface wlan0 inet dhcp ...</span></pre></div> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pipei-zhi-usbwu-xian-wang-qia-lian-jie-wifi.html">more…</a>
-	</div>
-</div>	
-<div class='article'>
-	<h2>Raspberry Pi系统安装及启动</h2>
-	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html">2013-05-29 21:27:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
-tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> <a href="http://hyhx2008.github.com/tag/raspbian.html">raspbian</a> </div>
-	<div class="summary"><p>最近有些无聊，心血来潮买了一个Raspberry Pi(树莓派)。Raspberry Pi是一款基于Linux系统的个人电脑，配备一枚700MHz的ARM处理器，
-512M内存，支持SD卡和Ethernet，拥有两个USB接口，以及 HDMI和RCA输出支持。</p>
-<p>首先秀一张开箱图:</p>
-<div class="figure">
-<img alt="../statics/pics/raspberrypi_start_1.png" src="../statics/pics/raspberrypi_start_1.png" />
+<p>至此bt下载机就配置好了，现在我们可以在局域网中任何一台设备的浏览器中访问树莓派的IP地址加9091端口进入Transmission的web界面，比如192.168.1.115:9091
+用户名和密码即为配置文件中所设置的(如果没有改动，默认都为transmission)。</p>
+<p>Transmission的web界面非常简单，我们只需要提供.torrent种子文件或者是提供种子文件的链接地址，即可让树莓派执行下载任务。</p>
+<p>The End！</p>
 </div>
-<p><strong>1.安装raspbian系统到SD卡</strong></p>
-<p>树莓派用SD卡充当硬盘，为了速度，我专门买了一张16G class10的SD卡。</p>
-<p>树莓派支持多个系统，官方建议的是Raspbian，这是一个从Debian改过来的系统。首先需要在官网下载系统镜像
-<a class="reference external" href="http://www.raspberrypi.org/downloads">Dowload Raspbian</a>
-。</p>
-<p>然后我们需要一个工具
-<a class="reference external" href="http://sourceforge.net/projects/win32diskimager/">Win32 Disk Imager</a>
-将系统写入SD卡中。</p>
-<p>下载并解压，然后运行win32diskimager。工具的界面很简单，我们只需要在&quot;Image File&quot;中选择系统镜像的位置(注意镜像的路径中不能有中文)，
-在&quot;Device&quot;下选择SD卡的盘符，然后点击&quot;write&quot;按钮。</p>
-<p>接下来就是等待至工具提示&quot;Write Successful&quot;后，即可将SD卡安全移除。</p>
-<p>我们会发现SD卡的空间变成74MB了 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/raspberry-pixi-tong-an-zhuang-ji-qi-dong.html">more…</a>
-	</div>
-</div>	
-
-
+		<div>
+			<h2>Comments</h2>
+		 				<div id="disqus_thread"></div>					<div>
+	</div>	
 		<footer>
 		  <p> Powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>, theme based on <a href="http://twitter.github.com/bootstrap/">Bootstrap, from Twitter</a>.</p>
 		  <p>&copy; hyhx2008 2011</p>
