@@ -25,7 +25,29 @@
 &lt;p&gt;要添加dns服务器地址，如202.112.125.53，则在上述文件中加入&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;nameserver  202.112.125.53&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</summary><category term="ubuntu"></category><category term="linux"></category><category term="network"></category></entry><entry><title>Ubuntu下Java的安装与配置</title><link href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html" rel="alternate"></link><updated>2013-04-15T21:03:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-15:ubuntuxia-javade-an-zhuang-yu-pei-zhi.html</id><summary type="html">&lt;p&gt;第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.设置代理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;公司里链接外网需要设置http代理， ubuntu下可以用系统的GUI设置代理，但是这样终端中依旧无法连接外网，例如apt-get命令都不能使用。 百度了一下有以下设置方法供参考：&lt;/p&gt;
+&lt;p&gt;1） 如果仅仅是想配置apt-get命令的代理，可以在/etc/apt/apt.conf.d文件夹中修改（没有则新建）80proxy配置文件，在文件中加入以下内容。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;Acquire::http::Proxy &amp;quot;http://username:passwd@133.144.14.240:8888/&amp;quot;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这里的proxy IP和端口号仅为示例，需按自身情况修改。注意不要忘记行末的分号。&lt;/p&gt;
+&lt;p&gt;2） 如果是想要终端暂时联网，只需要在终端中键入以下命令。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;export http_proxy=&amp;quot;http://username:passwd@133.144.14.240:8888/&amp;quot;&lt;/span&gt;
+&lt;span class="go"&gt;export https_proxy=&amp;quot;http://username:passwd@133.144.14.240:8888/&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果有需要也可以加入其他协议的代理，如ftp。&lt;/p&gt;
+&lt;p&gt;3） 上面第二种方法是临时改变环境变量，将终端关闭或者新开一个终端后则不起作用，需要重新设置。一劳永逸的方法是直接在.bashrc文件中修改环境变量。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt; &lt;/span&gt;vim .bashrc
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在文件末尾加入以下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;http_proxy=http://username:passwd@133.144.14.240:8888/&lt;/span&gt;
+&lt;span class="go"&gt;export http_proxy&lt;/span&gt;
+
+&lt;span class="go"&gt;https_proxy=http://username:passwd@133.144.14.240:8888/&lt;/span&gt;
+&lt;span class="go"&gt;export https_proxy&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</summary><category term="ubuntu"></category><category term="linux"></category></entry><entry><title>Ubuntu下Java的安装与配置</title><link href="http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html" rel="alternate"></link><updated>2013-04-15T21:03:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-15:ubuntuxia-javade-an-zhuang-yu-pei-zhi.html</id><summary type="html">&lt;p&gt;第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;1.下载&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;首先在Oracle官网上下载jdk，这里给一个链接：
 &lt;a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html"&gt;jdk7-downloads&lt;/a&gt;&lt;/p&gt;

@@ -20,6 +20,7 @@ Preferential attachment由参数a来调整，这个参数能扩大或减少几�
 这个规则的策略如下：给定一个单位正方形，将x0置于中心，即x0 = (0.5,0.5)，这个节点被称为root，令W()为与root相隔的跳数(hops)，对于i=1 … n-1，随机在单位正方形中选择一个xi，然后选择使下面的表达式值最小的节点xj来连接它：
 
 .. figure:: ../statics/pics/peersim_tutorial_4_figure_1.png
+	:alt: figure 1
 
 在这里dist()是欧几里德距离而a (alpha)是权重参数，显然，
 

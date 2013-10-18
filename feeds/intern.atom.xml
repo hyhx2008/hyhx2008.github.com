@@ -216,7 +216,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;就可以看到所跟踪的事件发生的情况了，和下图差不多。&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/trace_cmd_kernelshark1.png" src="../statics/pics/trace_cmd_kernelshark1.png" /&gt;
+&lt;img alt="" src="../statics/pics/trace_cmd_kernelshark1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;也可以重定向到一个文本文件中再做分析，比如:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;trace-cmd report &amp;gt; report.txt
@@ -233,7 +233,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;即可看到图形化界面了:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/trace_cmd_kernelshark2.png" src="../statics/pics/trace_cmd_kernelshark2.png" /&gt;
+&lt;img alt="" src="../statics/pics/trace_cmd_kernelshark2.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;The End!!&lt;/p&gt;
 </summary><category term="trace-cmd"></category><category term="kernelshark"></category></entry><entry><title>Linux内核编译步骤</title><link href="http://hyhx2008.github.com/linuxnei-he-bian-yi-bu-zou.html" rel="alternate"></link><updated>2012-07-18T22:00:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2012-07-18:linuxnei-he-bian-yi-bu-zou.html</id><summary type="html">&lt;p&gt;实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。&lt;/p&gt;

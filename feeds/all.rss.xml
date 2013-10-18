@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 30 May 2013 21:54:00 +0900</lastBuildDate><item><title>将Raspberry Pi作为BT下载机</title><link>http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html</link><description>&lt;p&gt;今天尝试了一个有用的功能，就是将树莓派作为bt下载机。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 30 May 2013 21:54:00 +0900</lastBuildDate><item><title>将Raspberry Pi作为BT下载机</title><link>http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html</link><description>&lt;p&gt;今天尝试了一个有用的功能，就是将树莓派作为bt下载机。&lt;/p&gt;
 &lt;p&gt;由于树莓派耗电低，没噪音，可以让它一直开着下载bt资源。&lt;/p&gt;
 &lt;p&gt;一个名为
 ` Transmission &amp;lt;&lt;a class="reference external" href="http://www.transmissionbt.com/"&gt;http://www.transmissionbt.com/&lt;/a&gt;&amp;gt;`_
@@ -91,7 +91,7 @@
 512M内存，支持SD卡和Ethernet，拥有两个USB接口，以及 HDMI和RCA输出支持。&lt;/p&gt;
 &lt;p&gt;首先秀一张开箱图:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/raspberrypi_start_1.png" src="../statics/pics/raspberrypi_start_1.png" /&gt;
+&lt;img alt="" src="../statics/pics/raspberrypi_start_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;1.安装raspbian系统到SD卡&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;树莓派用SD卡充当硬盘，为了速度，我专门买了一张16G class10的SD卡。&lt;/p&gt;
@@ -109,7 +109,7 @@
 &lt;p&gt;将写入系统的SD卡插入树莓派，并连上键盘鼠标后，插上电源树莓派就会自动启动了。&lt;/p&gt;
 &lt;p&gt;由于是第一次启动，我们会看到一个raspi-config的配置工具。我们可以在这个工具中对系统进行一些配置。&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/raspberrypi_start_2.gif" src="../statics/pics/raspberrypi_start_2.gif" /&gt;
+&lt;img alt="" src="../statics/pics/raspberrypi_start_2.gif" /&gt;
 &lt;/div&gt;
 &lt;p&gt;如果以后需要更改某些配置，也可以在命令行中输入raspi-gonfig来运行这个工具。&lt;/p&gt;
 &lt;p&gt;这里不做详细展开，只是提一下哪些选项需要设置。&lt;/p&gt;
@@ -218,7 +218,7 @@
 &lt;p&gt;在红黑树的基础上在每个结点上扩展3个域: min-gap[x]记录以x为根结点的树的min-gap。当x为叶子结点时，min-gap[x]=0x7fffffff；
 min-val[x]记录以x为根结点的树中最小的关键字；max-val[x]：记录以x为根结点的树中最大的关键字。扩展信息的维护见下图：&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/chap10-14_1.gif" src="../statics/pics/chap10-14_1.gif" /&gt;
+&lt;img alt="" src="../statics/pics/chap10-14_1.gif" /&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;14.3-7&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Q:VLSI数据库通常将一块集成电路表示成一组矩形。假设每个矩形的边都平行于x轴或y轴，因而矩形的表示中有最小和最大的x和y坐标。
@@ -439,7 +439,7 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 &lt;p&gt;Q:假设我们不是要排序一个数组，而只是要求数组中的元素一般情况下都是层递增序的。
 更准确地说，称一个包含n个元素的数组A为k排序的(k-sorted)，如果对所有i=1,2, ..., n-k，有下式成立:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/chap6-9_1.png" src="../statics/pics/chap6-9_1.png" /&gt;
+&lt;img alt="" src="../statics/pics/chap6-9_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;a)给出一个算法，它能在O(nlg(n/k))时间内，对一个n元素的数组进行k排序。&lt;/p&gt;
 &lt;p&gt;b)说明一个长度为n的k排序的数组可以在O(nlgk)内排序。&lt;/p&gt;
@@ -527,7 +527,7 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 从每口井中都有一条喷油管道沿最短路径与主管道直接连接(或南或北)，如下图所示。给定各口井的x坐标和y坐标，
 应如何选择主管道的最优位置(使得各喷管长度总和最小的位置)？&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/chap6-9_2.png" src="../statics/pics/chap6-9_2.png" /&gt;
+&lt;img alt="" src="../statics/pics/chap6-9_2.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;A:第一感觉是求中位数，但是也不知道为什么。百度了一下，看到一个非常好的解释:&lt;/p&gt;
 &lt;p&gt;为了简化这道题，不考虑油井的x坐标，假设所有的油井都在一条与管道垂直的线上。
@@ -659,7 +659,29 @@ Young氏矩阵中可能会有一些 ∞ 的数据项，表示不存在的元素�
 &lt;p&gt;要添加dns服务器地址，如202.112.125.53，则在上述文件中加入&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;nameserver  202.112.125.53&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Mon, 15 Apr 2013 21:35:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-15:ubuntuwang-luo-she-zhi.html</guid><category>ubuntu</category><category>linux</category><category>network</category></item><item><title>Ubuntu下Java的安装与配置</title><link>http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html</link><description>&lt;p&gt;第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.设置代理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;公司里链接外网需要设置http代理， ubuntu下可以用系统的GUI设置代理，但是这样终端中依旧无法连接外网，例如apt-get命令都不能使用。 百度了一下有以下设置方法供参考：&lt;/p&gt;
+&lt;p&gt;1） 如果仅仅是想配置apt-get命令的代理，可以在/etc/apt/apt.conf.d文件夹中修改（没有则新建）80proxy配置文件，在文件中加入以下内容。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;Acquire::http::Proxy &amp;quot;http://username:passwd@133.144.14.240:8888/&amp;quot;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这里的proxy IP和端口号仅为示例，需按自身情况修改。注意不要忘记行末的分号。&lt;/p&gt;
+&lt;p&gt;2） 如果是想要终端暂时联网，只需要在终端中键入以下命令。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;export http_proxy=&amp;quot;http://username:passwd@133.144.14.240:8888/&amp;quot;&lt;/span&gt;
+&lt;span class="go"&gt;export https_proxy=&amp;quot;http://username:passwd@133.144.14.240:8888/&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果有需要也可以加入其他协议的代理，如ftp。&lt;/p&gt;
+&lt;p&gt;3） 上面第二种方法是临时改变环境变量，将终端关闭或者新开一个终端后则不起作用，需要重新设置。一劳永逸的方法是直接在.bashrc文件中修改环境变量。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt; &lt;/span&gt;vim .bashrc
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在文件末尾加入以下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;http_proxy=http://username:passwd@133.144.14.240:8888/&lt;/span&gt;
+&lt;span class="go"&gt;export http_proxy&lt;/span&gt;
+
+&lt;span class="go"&gt;https_proxy=http://username:passwd@133.144.14.240:8888/&lt;/span&gt;
+&lt;span class="go"&gt;export https_proxy&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Mon, 15 Apr 2013 21:35:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-04-15:ubuntuwang-luo-she-zhi.html</guid><category>ubuntu</category><category>linux</category></item><item><title>Ubuntu下Java的安装与配置</title><link>http://hyhx2008.github.com/ubuntuxia-javade-an-zhuang-yu-pei-zhi.html</link><description>&lt;p&gt;第一次在linux环境下安装jdk，这里记录一下安装和配置的过程供以后参考。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;1.下载&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;首先在Oracle官网上下载jdk，这里给一个链接：
 &lt;a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html"&gt;jdk7-downloads&lt;/a&gt;&lt;/p&gt;
@@ -946,7 +968,7 @@ PeerSim用一个64位的long 长整型来表示时间，在启动时它为0，�
 Preferential attachment由参数a来调整，这个参数能扩大或减少几何位置所带来的影响。&lt;/p&gt;
 &lt;p&gt;这个规则的策略如下：给定一个单位正方形，将x0置于中心，即x0 = (0.5,0.5)，这个节点被称为root，令W()为与root相隔的跳数(hops)，对于i=1 … n-1，随机在单位正方形中选择一个xi，然后选择使下面的表达式值最小的节点xj来连接它：&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/peersim_tutorial_4_figure_1.png" src="../statics/pics/peersim_tutorial_4_figure_1.png" /&gt;
+&lt;img alt="figure 1" src="../statics/pics/peersim_tutorial_4_figure_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;在这里dist()是欧几里德距离而a (alpha)是权重参数，显然，&lt;/p&gt;
 &lt;p&gt;W(xi) = W(xj) + 1&lt;/p&gt;
@@ -1257,15 +1279,15 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;control&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="n"&gt;degree&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/peersim_tutorial_4_figure_2.png" src="../statics/pics/peersim_tutorial_4_figure_2.png" /&gt;
+&lt;img alt="" src="../statics/pics/peersim_tutorial_4_figure_2.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Figure 1: Topology and in-degree distribution with a 4&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/peersim_tutorial_4_figure_3.png" src="../statics/pics/peersim_tutorial_4_figure_3.png" /&gt;
+&lt;img alt="" src="../statics/pics/peersim_tutorial_4_figure_3.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Figure 2: Topology and in-degree distribution with a 20&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/peersim_tutorial_4_figure_4.png" src="../statics/pics/peersim_tutorial_4_figure_4.png" /&gt;
+&lt;img alt="" src="../statics/pics/peersim_tutorial_4_figure_4.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Figure 3: Topology and in-degree distribution with a 100&lt;/p&gt;
 &lt;p&gt;它根据init.0部分的参数生成了具有10000个节点的覆盖网络。下面的图展示了在a不同的情况下生成的拓扑。
@@ -1664,7 +1686,7 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 &lt;/blockquote&gt;
 &lt;p&gt;在仿真时创建的对象都是实现了一个或多个接口的类的实例，主要的接口如下表所示：&lt;/p&gt;
 &lt;div class="figure align-center"&gt;
-&lt;img alt="../statics/pics/peersim_tutorial_2_table_1.png" src="../statics/pics/peersim_tutorial_2_table_1.png" /&gt;
+&lt;img alt="" src="../statics/pics/peersim_tutorial_2_table_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Cycle-based仿真的生命周期是这样的：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1675,7 +1697,7 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 &lt;p&gt;下图展示了对controls和protocols的调度，其中C代表Control而P代表一个Protocol。图下方的数字代表PeerSim的周期，在最后一个周期后，可以运行一个Control来获取最后的快照(snapshot)。&lt;/p&gt;
 &lt;p&gt;下图展示了对controls和protocols的调度，其中C代表Control而P代表一个Protocol。图下方的数字代表PeerSim的周期，在最后一个周期后，可以运行一个Control来获取最后的快照(snapshot)。&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/peersim_tutorial_2_figure_1.png" src="../statics/pics/peersim_tutorial_2_figure_1.png" /&gt;
+&lt;img alt="" src="../statics/pics/peersim_tutorial_2_figure_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;在一个Control收集数据时，数据将会被格式化并发送到标准输出或重定向到一个文件以进行后续的处理。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;2.配置文件&lt;/strong&gt;&lt;/p&gt;
@@ -1939,7 +1961,7 @@ order.observer myClass conn 1
 &lt;p&gt;2&amp;gt; 将peersim-1.0.5中的src文件夹内的全部内容(包括两个包，peersim和example)拖入工程的src文件夹下。&lt;/p&gt;
 &lt;p&gt;3&amp;gt; 将peersim-1.0.5中的三个jar包(peersim-1.0.5.jar, djep-1.0.0.jar, jep-2.3.0.jar)拖入工程并build path添加到工程内，如下图所示:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/peersim_tutorial_1.png" src="../statics/pics/peersim_tutorial_1.png" /&gt;
+&lt;img alt="" src="../statics/pics/peersim_tutorial_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;(文件夹内还有一个jar包peersim-doclet.jar，添加后运行时会出错，不知道这个jar有何用处)&lt;/p&gt;
 &lt;p&gt;4&amp;gt; peersim-1.0.5中的example文件夹内有4个配置文件的样例，以config-example1.txt为例，将其拖入工程根目录下。&lt;/p&gt;
@@ -2332,7 +2354,7 @@ order.observer myClass conn 1
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;就可以看到所跟踪的事件发生的情况了，和下图差不多。&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/trace_cmd_kernelshark1.png" src="../statics/pics/trace_cmd_kernelshark1.png" /&gt;
+&lt;img alt="" src="../statics/pics/trace_cmd_kernelshark1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;也可以重定向到一个文本文件中再做分析，比如:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt;trace-cmd report &amp;gt; report.txt
@@ -2349,7 +2371,7 @@ order.observer myClass conn 1
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;即可看到图形化界面了:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="../statics/pics/trace_cmd_kernelshark2.png" src="../statics/pics/trace_cmd_kernelshark2.png" /&gt;
+&lt;img alt="" src="../statics/pics/trace_cmd_kernelshark2.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;The End!!&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 22 Jul 2012 22:00:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2012-07-22:trace-cmdyu-kernelsharkshi-yong-zong-jie.html</guid><category>trace-cmd</category><category>kernelshark</category></item><item><title>Linux内核编译步骤</title><link>http://hyhx2008.github.com/linuxnei-he-bian-yi-bu-zou.html</link><description>&lt;p&gt;实习的时候需要用到3.0.35-rt56版本的linux内核，这里总结一下Debian下Linux内核编译的步骤, ubuntu下可能略有不同。&lt;/p&gt;
