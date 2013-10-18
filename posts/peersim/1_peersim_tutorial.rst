@@ -28,6 +28,7 @@ PeerSim实际上是一个java的工程，我们可以在其官方网站上下载
 3> 将peersim-1.0.5中的三个jar包(peersim-1.0.5.jar, djep-1.0.0.jar, jep-2.3.0.jar)拖入工程并build path添加到工程内，如下图所示:
 
 .. figure:: ../statics/pics/peersim_tutorial_1.png
+	:alt: figure
 
 (文件夹内还有一个jar包peersim-doclet.jar，添加后运行时会出错，不知道这个jar有何用处)
 

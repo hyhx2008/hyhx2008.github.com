@@ -10,6 +10,7 @@ Raspberry Pi系统安装及启动
 首先秀一张开箱图:
 
 .. figure:: ../statics/pics/raspberrypi_start_1.png
+	:alt: figure
 
 **1.安装raspbian系统到SD卡**
 
@@ -37,6 +38,7 @@ Raspberry Pi系统安装及启动
 由于是第一次启动，我们会看到一个raspi-config的配置工具。我们可以在这个工具中对系统进行一些配置。
 
 .. figure:: ../statics/pics/raspberrypi_start_2.gif
+	:alt: figure
 
 如果以后需要更改某些配置，也可以在命令行中输入raspi-gonfig来运行这个工具。
 

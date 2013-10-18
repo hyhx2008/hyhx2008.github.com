@@ -34,6 +34,7 @@ PeerSim鼓励基于接口的模块化编程，每一个组件都能被其它实�
 
 .. figure:: ../statics/pics/peersim_tutorial_2_table_1.png
 	:align: center
+	:alt: figure
 
 Cycle-based仿真的生命周期是这样的：
 
@@ -49,7 +50,7 @@ Cycle-based仿真的生命周期是这样的：
 下图展示了对controls和protocols的调度，其中C代表Control而P代表一个Protocol。图下方的数字代表PeerSim的周期，在最后一个周期后，可以运行一个Control来获取最后的快照(snapshot)。
 
 .. figure:: ../statics/pics/peersim_tutorial_2_figure_1.png
-
+	:alt: figure
 在一个Control收集数据时，数据将会被格式化并发送到标准输出或重定向到一个文件以进行后续的处理。
 
 **2.配置文件**

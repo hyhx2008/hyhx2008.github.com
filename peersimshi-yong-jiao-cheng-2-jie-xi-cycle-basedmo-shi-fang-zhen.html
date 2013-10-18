@@ -122,7 +122,7 @@ tags: <a href="http://hyhx2008.github.com/tag/PeerSim.html">PeerSim</a> <a href=
 </blockquote>
 <p>在仿真时创建的对象都是实现了一个或多个接口的类的实例，主要的接口如下表所示：</p>
 <div class="figure align-center">
-<img alt="" src="../statics/pics/peersim_tutorial_2_table_1.png" />
+<img alt="figure" src="../statics/pics/peersim_tutorial_2_table_1.png" />
 </div>
 <p>Cycle-based仿真的生命周期是这样的：</p>
 <blockquote>
@@ -133,8 +133,11 @@ tags: <a href="http://hyhx2008.github.com/tag/PeerSim.html">PeerSim</a> <a href=
 <p>下图展示了对controls和protocols的调度，其中C代表Control而P代表一个Protocol。图下方的数字代表PeerSim的周期，在最后一个周期后，可以运行一个Control来获取最后的快照(snapshot)。</p>
 <p>下图展示了对controls和protocols的调度，其中C代表Control而P代表一个Protocol。图下方的数字代表PeerSim的周期，在最后一个周期后，可以运行一个Control来获取最后的快照(snapshot)。</p>
 <div class="figure">
-<img alt="" src="../statics/pics/peersim_tutorial_2_figure_1.png" />
+<img alt="figure" src="../statics/pics/peersim_tutorial_2_figure_1.png" />
 </div>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/woody/github/hyhx2008.github.com/posts/peersim/2_peersim_tutorial.rst</tt>, line 54)</p>
+Explicit markup ends without a blank line; unexpected unindent.</div>
 <p>在一个Control收集数据时，数据将会被格式化并发送到标准输出或重定向到一个文件以进行后续的处理。</p>
 <p><strong>2.配置文件</strong></p>
 <p>配置文件只是一个普通的ASCII文本，本质上就是一组由key-value对组成的java.util.Properties，以#开头的行代表注释。</p>

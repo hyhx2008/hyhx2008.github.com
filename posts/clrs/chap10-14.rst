@@ -98,7 +98,7 @@ A:这道题的答案参考
 min-val[x]记录以x为根结点的树中最小的关键字；max-val[x]：记录以x为根结点的树中最大的关键字。扩展信息的维护见下图：
 
 .. figure:: ../statics/pics/chap10-14_1.gif
-
+	:alt: figure
 
 **14.3-7**
 

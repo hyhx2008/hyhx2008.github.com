@@ -91,7 +91,7 @@
 512M内存，支持SD卡和Ethernet，拥有两个USB接口，以及 HDMI和RCA输出支持。&lt;/p&gt;
 &lt;p&gt;首先秀一张开箱图:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="" src="../statics/pics/raspberrypi_start_1.png" /&gt;
+&lt;img alt="figure" src="../statics/pics/raspberrypi_start_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;1.安装raspbian系统到SD卡&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;树莓派用SD卡充当硬盘，为了速度，我专门买了一张16G class10的SD卡。&lt;/p&gt;
@@ -109,7 +109,7 @@
 &lt;p&gt;将写入系统的SD卡插入树莓派，并连上键盘鼠标后，插上电源树莓派就会自动启动了。&lt;/p&gt;
 &lt;p&gt;由于是第一次启动，我们会看到一个raspi-config的配置工具。我们可以在这个工具中对系统进行一些配置。&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="" src="../statics/pics/raspberrypi_start_2.gif" /&gt;
+&lt;img alt="figure" src="../statics/pics/raspberrypi_start_2.gif" /&gt;
 &lt;/div&gt;
 &lt;p&gt;如果以后需要更改某些配置，也可以在命令行中输入raspi-gonfig来运行这个工具。&lt;/p&gt;
 &lt;p&gt;这里不做详细展开，只是提一下哪些选项需要设置。&lt;/p&gt;

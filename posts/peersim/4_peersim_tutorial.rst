@@ -370,14 +370,17 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 	include.control io degree
 
 .. figure:: ../statics/pics/peersim_tutorial_4_figure_2.png
+	:alt: Figure 1: Topology and in-degree distribution with a 4
 
 Figure 1: Topology and in-degree distribution with a 4
 
 .. figure:: ../statics/pics/peersim_tutorial_4_figure_3.png
+	:alt: Figure 2: Topology and in-degree distribution with a 20
 
 Figure 2: Topology and in-degree distribution with a 20
 
 .. figure:: ../statics/pics/peersim_tutorial_4_figure_4.png
+	:alt: Figure 3: Topology and in-degree distribution with a 100
 
 Figure 3: Topology and in-degree distribution with a 100
 

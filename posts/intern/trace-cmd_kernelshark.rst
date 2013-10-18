@@ -37,6 +37,7 @@ trace.dat里的内容不易读，trace-cmd提供分析trace.dat的功能:
 就可以看到所跟踪的事件发生的情况了，和下图差不多。
 
 .. figure:: ../statics/pics/trace_cmd_kernelshark1.png
+	:alt: figure
 	
 也可以重定向到一个文本文件中再做分析，比如:
 
@@ -68,5 +69,6 @@ kernelshark提供了对trace.dat的可视化分析，首先安装:
 即可看到图形化界面了:
 
 .. figure:: ../statics/pics/trace_cmd_kernelshark2.png
+	:alt: figure
 
 The End!!

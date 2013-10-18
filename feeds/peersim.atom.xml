@@ -551,15 +551,15 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;control&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="n"&gt;degree&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="" src="../statics/pics/peersim_tutorial_4_figure_2.png" /&gt;
+&lt;img alt="Figure 1: Topology and in-degree distribution with a 4" src="../statics/pics/peersim_tutorial_4_figure_2.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Figure 1: Topology and in-degree distribution with a 4&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="" src="../statics/pics/peersim_tutorial_4_figure_3.png" /&gt;
+&lt;img alt="Figure 2: Topology and in-degree distribution with a 20" src="../statics/pics/peersim_tutorial_4_figure_3.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Figure 2: Topology and in-degree distribution with a 20&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="" src="../statics/pics/peersim_tutorial_4_figure_4.png" /&gt;
+&lt;img alt="Figure 3: Topology and in-degree distribution with a 100" src="../statics/pics/peersim_tutorial_4_figure_4.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Figure 3: Topology and in-degree distribution with a 100&lt;/p&gt;
 &lt;p&gt;它根据init.0部分的参数生成了具有10000个节点的覆盖网络。下面的图展示了在a不同的情况下生成的拓扑。
@@ -958,7 +958,7 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 &lt;/blockquote&gt;
 &lt;p&gt;在仿真时创建的对象都是实现了一个或多个接口的类的实例，主要的接口如下表所示：&lt;/p&gt;
 &lt;div class="figure align-center"&gt;
-&lt;img alt="" src="../statics/pics/peersim_tutorial_2_table_1.png" /&gt;
+&lt;img alt="figure" src="../statics/pics/peersim_tutorial_2_table_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;Cycle-based仿真的生命周期是这样的：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -969,8 +969,11 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 &lt;p&gt;下图展示了对controls和protocols的调度，其中C代表Control而P代表一个Protocol。图下方的数字代表PeerSim的周期，在最后一个周期后，可以运行一个Control来获取最后的快照(snapshot)。&lt;/p&gt;
 &lt;p&gt;下图展示了对controls和protocols的调度，其中C代表Control而P代表一个Protocol。图下方的数字代表PeerSim的周期，在最后一个周期后，可以运行一个Control来获取最后的快照(snapshot)。&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="" src="../statics/pics/peersim_tutorial_2_figure_1.png" /&gt;
+&lt;img alt="figure" src="../statics/pics/peersim_tutorial_2_figure_1.png" /&gt;
 &lt;/div&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;/home/woody/github/hyhx2008.github.com/posts/peersim/2_peersim_tutorial.rst&lt;/tt&gt;, line 54)&lt;/p&gt;
+Explicit markup ends without a blank line; unexpected unindent.&lt;/div&gt;
 &lt;p&gt;在一个Control收集数据时，数据将会被格式化并发送到标准输出或重定向到一个文件以进行后续的处理。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;2.配置文件&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;配置文件只是一个普通的ASCII文本，本质上就是一组由key-value对组成的java.util.Properties，以#开头的行代表注释。&lt;/p&gt;
@@ -1233,7 +1236,7 @@ order.observer myClass conn 1
 &lt;p&gt;2&amp;gt; 将peersim-1.0.5中的src文件夹内的全部内容(包括两个包，peersim和example)拖入工程的src文件夹下。&lt;/p&gt;
 &lt;p&gt;3&amp;gt; 将peersim-1.0.5中的三个jar包(peersim-1.0.5.jar, djep-1.0.0.jar, jep-2.3.0.jar)拖入工程并build path添加到工程内，如下图所示:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="" src="../statics/pics/peersim_tutorial_1.png" /&gt;
+&lt;img alt="figure" src="../statics/pics/peersim_tutorial_1.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;(文件夹内还有一个jar包peersim-doclet.jar，添加后运行时会出错，不知道这个jar有何用处)&lt;/p&gt;
 &lt;p&gt;4&amp;gt; peersim-1.0.5中的example文件夹内有4个配置文件的样例，以config-example1.txt为例，将其拖入工程根目录下。&lt;/p&gt;
