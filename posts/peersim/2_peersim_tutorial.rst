@@ -51,6 +51,7 @@ Cycle-based仿真的生命周期是这样的：
 
 .. figure:: ../statics/pics/peersim_tutorial_2_figure_1.png
 	:alt: figure
+	
 在一个Control收集数据时，数据将会被格式化并发送到标准输出或重定向到一个文件以进行后续的处理。
 
 **2.配置文件**

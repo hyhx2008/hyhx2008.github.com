@@ -971,9 +971,6 @@ InetObserver实现了Control接口和对应的execute方法，我们继承了pee
 &lt;div class="figure"&gt;
 &lt;img alt="figure" src="../statics/pics/peersim_tutorial_2_figure_1.png" /&gt;
 &lt;/div&gt;
-&lt;div class="system-message"&gt;
-&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;/home/woody/github/hyhx2008.github.com/posts/peersim/2_peersim_tutorial.rst&lt;/tt&gt;, line 54)&lt;/p&gt;
-Explicit markup ends without a blank line; unexpected unindent.&lt;/div&gt;
 &lt;p&gt;在一个Control收集数据时，数据将会被格式化并发送到标准输出或重定向到一个文件以进行后续的处理。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;2.配置文件&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;配置文件只是一个普通的ASCII文本，本质上就是一组由key-value对组成的java.util.Properties，以#开头的行代表注释。&lt;/p&gt;
