@@ -118,8 +118,34 @@ tags: <a href="http://hyhx2008.github.com/tag/jenkins.html">jenkins</a> <a href=
 <p>2&gt; Gitlab随后触发jenkins master结点进行一次build。(通过web hook或者定时检测)</p>
 <p>3&gt; jenkins master结点将这个build任务分配给若干个注册的slave结点中的一个，这个slave结点根据一个事先设置好的脚本进行build。这个脚本可以做的事情很多，比如编译，测试，生成测试报告等等。这些原本需要手动完成的任务都可以交给jenkins来做。</p>
 <p>4&gt; 我们在build中要进行编译，这里使用了分布式编译器distcc来加快编译速度。</p>
-<p>notes:jenkins的工作原理是先将源代码从gitlab中拷贝一份到本地，然后根据设置的脚本进行build。我们可以看出，整个系统的关键就是那个build脚本，用来告诉jenkins在一次集成中需要执行的任务。</p>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>notes:<a href="#id3"><span class="problematic" id="id4">**</span></a>jenkins的工作原理是先将源代码从gitlab中拷贝一份到本地，然后根据设置的脚本进行build。我们可以看出，整个系统的关键就是那个build脚本，用来告诉jenkins在一次集成中需要执行的任务。</p>
+<div class="system-message" id="id1">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/woody/github/hyhx2008.github.com/posts/intern/build_ci_env.rst</tt>, line 32); <em><a href="#id2">backlink</a></em></p>
+Inline strong start-string without end-string.</div>
+<div class="system-message" id="id3">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/woody/github/hyhx2008.github.com/posts/intern/build_ci_env.rst</tt>, line 32); <em><a href="#id4">backlink</a></em></p>
+Inline strong start-string without end-string.</div>
 <p><strong>2.Jenkins的安装与配置</strong></p>
+<p><strong>1&gt; 安装Jenkins</strong></p>
+<p>首先说如何安装
+<a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Home">jenjins</a>
+，一定要安装最新版本才不会出各种奇怪的问题，参考官网wiki,
+<a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Ubuntu">Installing Jenkins on Ubuntu</a>
+上的指示，</p>
+<div class="highlight"><pre><span class="gp">$</span> wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+<span class="gp">$</span> sudo sh -c <span class="s1">&#39;echo deb http://pkg.jenkins-ci.org/debian binary/ &gt; /etc/apt/sources.list.d/jenkins.list&#39;</span>
+<span class="gp">$</span> sudo apt-get update
+<span class="gp">$</span> sudo apt-get install jenkins
+</pre></div>
+<p>即可以得到最新版的jenkins。</p>
+<p>Jenkins安装完毕后，可以通过浏览器访问其Dashboard，例如192.168.16.183：8080，IP地址即为Jenkins所在机器的IP地址。</p>
+<p><strong>2&gt; Jenkins插件安装</strong></p>
+<p>Jenkins其实没有什么需要特别配置的，由于这次任务中需要利用Jenkins与git，gitlab协作，所以需要安装一些插件。在主面板上点击Manage Jenkins -&gt; Manage Plugins。</p>
+<p>由于公司使用代理连接外网，首先需要为Jenkins插件安装配置proxy。点击Advanced标签即进入proxy设置页面。</p>
+<p>Aailable标签下就是可以安装的插件。</p>
+<p>要让Jenkins可以自动build git repo中的代码，需要安装GIT Client Plugin和GIT Plugin。</p>
+<p>要想Jenkins可以收到Gitlab发来的hook从而自动build，需要安装 Gitlab Hook Plugin。</p>
+<p>要让Jenkins可以在build完成之后根据TAP（test anything protocol）文件生成graph，需要安装 TAP Plugin。</p>
 <p><strong>3.Gitlab的安装与配置</strong></p>
 <p><strong>4.distcc的安装与配置</strong></p>
 </div>

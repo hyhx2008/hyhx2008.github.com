@@ -13,8 +13,34 @@
 &lt;p&gt;2&amp;gt; Gitlab随后触发jenkins master结点进行一次build。(通过web hook或者定时检测)&lt;/p&gt;
 &lt;p&gt;3&amp;gt; jenkins master结点将这个build任务分配给若干个注册的slave结点中的一个，这个slave结点根据一个事先设置好的脚本进行build。这个脚本可以做的事情很多，比如编译，测试，生成测试报告等等。这些原本需要手动完成的任务都可以交给jenkins来做。&lt;/p&gt;
 &lt;p&gt;4&amp;gt; 我们在build中要进行编译，这里使用了分布式编译器distcc来加快编译速度。&lt;/p&gt;
-&lt;p&gt;notes:jenkins的工作原理是先将源代码从gitlab中拷贝一份到本地，然后根据设置的脚本进行build。我们可以看出，整个系统的关键就是那个build脚本，用来告诉jenkins在一次集成中需要执行的任务。&lt;/p&gt;
+&lt;p&gt;&lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;**&lt;/span&gt;&lt;/a&gt;notes:&lt;a href="#id3"&gt;&lt;span class="problematic" id="id4"&gt;**&lt;/span&gt;&lt;/a&gt;jenkins的工作原理是先将源代码从gitlab中拷贝一份到本地，然后根据设置的脚本进行build。我们可以看出，整个系统的关键就是那个build脚本，用来告诉jenkins在一次集成中需要执行的任务。&lt;/p&gt;
+&lt;div class="system-message" id="id1"&gt;
+&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;/home/woody/github/hyhx2008.github.com/posts/intern/build_ci_env.rst&lt;/tt&gt;, line 32); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+Inline strong start-string without end-string.&lt;/div&gt;
+&lt;div class="system-message" id="id3"&gt;
+&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;/home/woody/github/hyhx2008.github.com/posts/intern/build_ci_env.rst&lt;/tt&gt;, line 32); &lt;em&gt;&lt;a href="#id4"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+Inline strong start-string without end-string.&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;2.Jenkins的安装与配置&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1&amp;gt; 安装Jenkins&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先说如何安装
+&lt;a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Home"&gt;jenjins&lt;/a&gt;
+，一定要安装最新版本才不会出各种奇怪的问题，参考官网wiki,
+&lt;a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Ubuntu"&gt;Installing Jenkins on Ubuntu&lt;/a&gt;
+上的指示，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo sh -c &lt;span class="s1"&gt;&amp;#39;echo deb http://pkg.jenkins-ci.org/debian binary/ &amp;gt; /etc/apt/sources.list.d/jenkins.list&amp;#39;&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo apt-get update
+&lt;span class="gp"&gt;$&lt;/span&gt; sudo apt-get install jenkins
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;即可以得到最新版的jenkins。&lt;/p&gt;
+&lt;p&gt;Jenkins安装完毕后，可以通过浏览器访问其Dashboard，例如192.168.16.183：8080，IP地址即为Jenkins所在机器的IP地址。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2&amp;gt; Jenkins插件安装&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Jenkins其实没有什么需要特别配置的，由于这次任务中需要利用Jenkins与git，gitlab协作，所以需要安装一些插件。在主面板上点击Manage Jenkins -&amp;gt; Manage Plugins。&lt;/p&gt;
+&lt;p&gt;由于公司使用代理连接外网，首先需要为Jenkins插件安装配置proxy。点击Advanced标签即进入proxy设置页面。&lt;/p&gt;
+&lt;p&gt;Aailable标签下就是可以安装的插件。&lt;/p&gt;
+&lt;p&gt;要让Jenkins可以自动build git repo中的代码，需要安装GIT Client Plugin和GIT Plugin。&lt;/p&gt;
+&lt;p&gt;要想Jenkins可以收到Gitlab发来的hook从而自动build，需要安装 Gitlab Hook Plugin。&lt;/p&gt;
+&lt;p&gt;要让Jenkins可以在build完成之后根据TAP（test anything protocol）文件生成graph，需要安装 TAP Plugin。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;3.Gitlab的安装与配置&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;4.distcc的安装与配置&lt;/strong&gt;&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Sun, 08 Sep 2013 22:04:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2013-09-08:li-yong-jenkinsgitlabda-jian-chi-xu-ji-cheng-cihuan-jing.html</guid><category>jenkins</category><category>gitlab</category><category>distcc</category><category>ci</category></item><item><title>将Raspberry Pi作为BT下载机</title><link>http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html</link><description>&lt;p&gt;今天尝试了一个有用的功能，就是将树莓派作为bt下载机。&lt;/p&gt;

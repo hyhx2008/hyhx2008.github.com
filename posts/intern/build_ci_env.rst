@@ -29,9 +29,43 @@
 
 4> 我们在build中要进行编译，这里使用了分布式编译器distcc来加快编译速度。
 
-notes:jenkins的工作原理是先将源代码从gitlab中拷贝一份到本地，然后根据设置的脚本进行build。我们可以看出，整个系统的关键就是那个build脚本，用来告诉jenkins在一次集成中需要执行的任务。
+**notes:**jenkins的工作原理是先将源代码从gitlab中拷贝一份到本地，然后根据设置的脚本进行build。我们可以看出，整个系统的关键就是那个build脚本，用来告诉jenkins在一次集成中需要执行的任务。
 
 **2.Jenkins的安装与配置**
+
+**1> 安装Jenkins**
+
+首先说如何安装
+`jenjins <https://wiki.jenkins-ci.org/display/JENKINS/Home>`_
+，一定要安装最新版本才不会出各种奇怪的问题，参考官网wiki,
+`Installing Jenkins on Ubuntu <https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Ubuntu>`_
+上的指示，
+
+.. code-block:: console
+	
+	$ wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+	$ sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+	$ sudo apt-get update
+	$ sudo apt-get install jenkins
+	
+即可以得到最新版的jenkins。
+
+Jenkins安装完毕后，可以通过浏览器访问其Dashboard，例如192.168.16.183：8080，IP地址即为Jenkins所在机器的IP地址。
+
+**2> Jenkins插件安装**
+
+Jenkins其实没有什么需要特别配置的，由于这次任务中需要利用Jenkins与git，gitlab协作，所以需要安装一些插件。在主面板上点击Manage Jenkins -> Manage Plugins。
+
+由于公司使用代理连接外网，首先需要为Jenkins插件安装配置proxy。点击Advanced标签即进入proxy设置页面。
+
+Aailable标签下就是可以安装的插件。
+
+要让Jenkins可以自动build git repo中的代码，需要安装GIT Client Plugin和GIT Plugin。
+
+要想Jenkins可以收到Gitlab发来的hook从而自动build，需要安装 Gitlab Hook Plugin。
+
+要让Jenkins可以在build完成之后根据TAP（test anything protocol）文件生成graph，需要安装 TAP Plugin。
+
 
 **3.Gitlab的安装与配置**
 
