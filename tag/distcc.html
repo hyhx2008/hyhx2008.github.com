@@ -16,15 +16,7 @@
 	<link href="http://hyhx2008.github.com/theme/local.css" rel="stylesheet">
 	<link href="http://hyhx2008.github.com/theme/pygments.css" rel="stylesheet">
 	<script>var _gaq=[['_setAccount','UA-36075477-1'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
-	<script type="text/javascript">
-	var disqus_identifier = "jiang-raspberry-pizuo-wei-btxia-zai-ji.html";
-	(function() {
-		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		dsq.src = 'http://hysblog.disqus.com/embed.js';
-		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	})();
-</script>
-		
+			
 	<link rel="shortcut icon" href="http://hyhx2008.github.com/theme/images/icons/icon1.png">
 </head>
 <body>
@@ -38,7 +30,7 @@
 									<li ><a href="http://hyhx2008.github.com/category/intern.html">intern</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/my.html">my</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/peersim.html">peersim</a></li>
-									<li class="active"><a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a></li>
+									<li ><a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/tech.html">tech</a></li>
 									<li ><a href="http://hyhx2008.github.com/category/ubuntu.html">ubuntu</a></li>
 							</ul>
@@ -99,44 +91,31 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 	  </div>
 	  <div class="content">
-							<div class='article'>
-		<div class="page-header"><h1>将Raspberry Pi作为BT下载机</h1></div>
-		<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/jiang-raspberry-pizuo-wei-btxia-zai-ji.html">2013-05-30 21:54:00</a>
-by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/raspberry-pi.html">raspberry-pi</a>
-tags: <a href="http://hyhx2008.github.com/tag/raspberry-pi.html">raspberry-pi</a> <a href="http://hyhx2008.github.com/tag/transmission.html">transmission</a> </div>
-		<div><p>今天尝试了一个有用的功能，就是将树莓派作为bt下载机。</p>
-<p>由于树莓派耗电低，没噪音，可以让它一直开着下载bt资源。</p>
-<p>一个名为
-` Transmission &lt;<a class="reference external" href="http://www.transmissionbt.com/">http://www.transmissionbt.com/</a>&gt;`_
-的软件为我们提供了这个功能。它不但能作为树莓派上的bt客户端，还可以通过web图形界面进行控制，非常方便。</p>
-<p><strong>1.安装Transmission</strong></p>
-<div class="highlight"><pre><span class="go">sudo apt-get install transmission-daemon</span>
-</pre></div>
-<p><strong>2.配置Transmission</strong></p>
-<p>Transmission的配置是通过编辑其配置文件实现的，</p>
-<div class="highlight"><pre><span class="go">sudo vim /etc/transmission-daemon/settings.json</span>
-</pre></div>
-<p>可配置的选项有很多，这里挑几个常用的讲一下。</p>
-<p>1&gt; &quot;download-dir&quot; : &quot;/home/pi/bt&quot;  设置下载后的资源保存的路径。</p>
-<p>2&gt; &quot;rpc-authentication-required&quot; : true  远程控制时需要验证</p>
-<p>3&gt; &quot;rpc-enabled&quot; : true  开启远程控制</p>
-<p>4&gt; &quot;rpc-password&quot; &amp; &quot;rpc-username&quot; 这两项设置验证时的用户名和密码</p>
-<p>5&gt; &quot;rpc-whitelist-enabled&quot;: false 关闭白名单功能(即允许从任何ip地址远程控制)</p>
-<p>更详细的配置参数解释可以参考百度文库中的一篇文章:
-<a class="reference external" href="http://wenku.baidu.com/view/075739d949649b6648d747d9.html">树莓派bt下载机</a></p>
-<p><strong>3.加载配置并重启服务</strong></p>
-<div class="highlight"><pre><span class="go">sudo service transmission-daemon reload</span>
-<span class="go">sudo service transmission-daemon restart</span>
-</pre></div>
-<p>至此bt下载机就配置好了，现在我们可以在局域网中任何一台设备的浏览器中访问树莓派的IP地址加9091端口进入Transmission的web界面，比如192.168.1.115:9091
-用户名和密码即为配置文件中所设置的(如果没有改动，默认都为transmission)。</p>
-<p>Transmission的web界面非常简单，我们只需要提供.torrent种子文件或者是提供种子文件的链接地址，即可让树莓派执行下载任务。</p>
-<p>The End！</p>
+			<div class="page-header"><h1>H.y's Blog <small>distcc</small></h1></div>			
+<div class='article'>
+	<h2>利用Jenkins+Gitlab搭建持续集成(CI)环境</h2>
+	<div class="well small">Permalink: <a class="more" href="http://hyhx2008.github.com/li-yong-jenkinsgitlabda-jian-chi-xu-ji-cheng-cihuan-jing.html">2013-09-08 22:04:00</a>
+by <a class="url fn" href="http://hyhx2008.github.com/author/hyhx2008.html">hyhx2008</a>in <a href="http://hyhx2008.github.com/category/intern.html">intern</a>
+tags: <a href="http://hyhx2008.github.com/tag/jenkins.html">jenkins</a> <a href="http://hyhx2008.github.com/tag/gitlab.html">gitlab</a> <a href="http://hyhx2008.github.com/tag/distcc.html">distcc</a> <a href="http://hyhx2008.github.com/tag/ci.html">ci</a> </div>
+	<div class="summary"><p>这次实习的任务之一就是搭建一个持续集成(Continuous Integration)环境。</p>
+<p>我们选择Jenkins作为持续集成工具，其优点是提供web GUI配置界面，方便配置，还可以安装很多第三方插件（plugin）进行定制与扩展，功能强大。</p>
+<p>其次选择Gitlab作为git server。Gitlab的功能和Github差不多，但是是开源的，可以用来搭建私有git server，也提供非常强大的web GUI，比如开发者互相review源代码的时候就会很方便。</p>
+<p>本文首先介绍整个系统的结构，然后再一一叙述各个组件的安装及使用方法。</p>
+<p><strong>1.系统概览</strong></p>
+<p>系统结构如下图所示:</p>
+<div class="figure">
+<img alt="figure_1" src="../statics/pics/ci_1.png" />
 </div>
-		<div>
-			<h2>Comments</h2>
-		 				<div id="disqus_thread"></div>					<div>
-	</div>	
+<p>系统的工作流程大概分为以下几步:</p>
+<p>1&gt; 开发者将新版本push到git server (Gitlab)。</p>
+<p>2&gt; Gitlab随后触发jenkins master结点进行一次build。(通过web hook或者定时检测)</p>
+<p>3&gt; jenkins master结点将这个build任务分配给若干个注册的slave结点中的一个，这个slave结点根据一个事先设置好的脚本进行build。这个脚本可以做的事情很多，比如编译，测试，生成测试报告等等。这些原本需要手动完成的任务都可以交给jenkins来做。</p>
+<p>4&gt; 我们在build中要进行编译，这里使用了分布式编译器distcc来加快编译速度。</p>
+<p>notes:jenkins的工作原理是先将源代码从gitlab中拷贝一份到本地 ...</p> <a class="btn primary xsmall" href="http://hyhx2008.github.com/li-yong-jenkinsgitlabda-jian-chi-xu-ji-cheng-cihuan-jing.html">more…</a>
+	</div>
+</div>	
+
+
 		<footer>
 		  <p> Powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>, theme based on <a href="http://twitter.github.com/bootstrap/">Bootstrap, from Twitter</a>.</p>
 		  <p>&copy; hyhx2008 2011</p>
