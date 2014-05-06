@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2013-04-15T21:35:00+09:00</updated><entry><title>Ubuntu网络设置</title><link href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html" rel="alternate"></link><updated>2013-04-15T21:35:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-15:ubuntuwang-luo-she-zhi.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;1.配置ip&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>H.y's Blog</title><link href="http://hyhx2008.github.com/" rel="alternate"></link><link href="http://hyhx2008.github.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://hyhx2008.github.com/</id><updated>2014-04-15T21:03:00+09:00</updated><entry><title>Ubuntu下配置远程桌面xrdp</title><link href="http://hyhx2008.github.com/ubuntuxia-pei-zhi-yuan-cheng-zhuo-mian-xrdp.html" rel="alternate"></link><updated>2014-04-15T21:03:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2014-04-15:ubuntuxia-pei-zhi-yuan-cheng-zhuo-mian-xrdp.html</id><summary type="html">&lt;p&gt;想通过windows的远程桌面访问ubunt的桌面，尝试VNC不成功，于是百度出利用xrdp也可以实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.安装&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo apt-get install xrdp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;2.配置&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;配置文件在/etc/xrdp/xrdp.ini中，我没有进行特别的修改。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.安装gnome桌面环境&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;只安装xrdp后就进行连接（端口号3389）时，只会显示一个桌面背景。。。能做的操作就是新建文件夹。。。&lt;/p&gt;
+&lt;p&gt;百度之后说是因为ubuntu13.04的桌面环境不支持，所以需要换成gnome。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo apt-get install gnome-session-fallback&lt;/span&gt;
+&lt;span class="go"&gt;    echo &amp;quot;gnome-session --session=gnome-fallback&amp;quot; &amp;gt; ~/.xsession&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;4.重启xrdp&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo service xrdp restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The end！！&lt;/p&gt;
+</summary><category term="ubuntu"></category><category term="linux"></category><category term="remote desktop"></category><category term="xrdp"></category></entry><entry><title>Ubuntu网络设置</title><link href="http://hyhx2008.github.com/ubuntuwang-luo-she-zhi.html" rel="alternate"></link><updated>2013-04-15T21:35:00+09:00</updated><author><name>hyhx2008</name></author><id>tag:hyhx2008.github.com,2013-04-15:ubuntuwang-luo-she-zhi.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;1.配置ip&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;ubuntu的网络配置信息放在 /etc/network/interfaces 中;&lt;/p&gt;
 &lt;p&gt;如果配置动态获取ip，则在上述文件中加入以下内容：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;auto eth0&lt;/span&gt;

@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 08 Sep 2013 22:04:00 +0900</lastBuildDate><item><title>利用Jenkins+Gitlab搭建持续集成(CI)环境</title><link>http://hyhx2008.github.com/li-yong-jenkinsgitlabda-jian-chi-xu-ji-cheng-cihuan-jing.html</link><description>&lt;p&gt;这次实习的任务之一就是搭建一个持续集成(Continuous Integration)环境。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>H.y's Blog</title><link>http://hyhx2008.github.com/</link><description></description><atom:link href="http://hyhx2008.github.com/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 15 Apr 2014 21:03:00 +0900</lastBuildDate><item><title>Ubuntu下配置远程桌面xrdp</title><link>http://hyhx2008.github.com/ubuntuxia-pei-zhi-yuan-cheng-zhuo-mian-xrdp.html</link><description>&lt;p&gt;想通过windows的远程桌面访问ubunt的桌面，尝试VNC不成功，于是百度出利用xrdp也可以实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.安装&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo apt-get install xrdp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;2.配置&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;配置文件在/etc/xrdp/xrdp.ini中，我没有进行特别的修改。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.安装gnome桌面环境&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;只安装xrdp后就进行连接（端口号3389）时，只会显示一个桌面背景。。。能做的操作就是新建文件夹。。。&lt;/p&gt;
+&lt;p&gt;百度之后说是因为ubuntu13.04的桌面环境不支持，所以需要换成gnome。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo apt-get install gnome-session-fallback&lt;/span&gt;
+&lt;span class="go"&gt;    echo &amp;quot;gnome-session --session=gnome-fallback&amp;quot; &amp;gt; ~/.xsession&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;4.重启xrdp&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;sudo service xrdp restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The end！！&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">hyhx2008</dc:creator><pubDate>Tue, 15 Apr 2014 21:03:00 +0900</pubDate><guid>tag:hyhx2008.github.com,2014-04-15:ubuntuxia-pei-zhi-yuan-cheng-zhuo-mian-xrdp.html</guid><category>ubuntu</category><category>linux</category><category>remote desktop</category><category>xrdp</category></item><item><title>利用Jenkins+Gitlab搭建持续集成(CI)环境</title><link>http://hyhx2008.github.com/li-yong-jenkinsgitlabda-jian-chi-xu-ji-cheng-cihuan-jing.html</link><description>&lt;p&gt;这次实习的任务之一就是搭建一个持续集成(Continuous Integration)环境。&lt;/p&gt;
 &lt;p&gt;我们选择Jenkins作为持续集成工具，其优点是提供web GUI配置界面，方便配置，还可以安装很多第三方插件（plugin）进行定制与扩展，功能强大。&lt;/p&gt;
 &lt;p&gt;其次选择Gitlab作为git server。Gitlab的功能和Github差不多，但是是开源的，可以用来搭建私有git server，也提供非常强大的web GUI，比如开发者互相review源代码的时候就会很方便。&lt;/p&gt;
 &lt;p&gt;本文首先介绍整个系统的结构，然后再一一叙述各个组件的安装及使用方法。&lt;/p&gt;
